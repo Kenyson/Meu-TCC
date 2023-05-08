@@ -1,0 +1,29 @@
+<div class="bg">
+  <div class="container">
+    <table class="table table-bordered table-rounded">
+      <thead class="bg-gray text-black">
+        <tr>
+          <th>Nome Paciente</th>
+          <th>Medicamento</th>
+          <th>Indicação</th>
+          <th>Posologia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let paciente of pacientes" class="bg-light">
+          <td>{{ paciente.nome }}</td>
+          <td>{{ paciente.medicamento }}</td>
+          <td>{{ paciente.indicacao }}</td>
+          <td>{{ paciente.posologia }}</td>
+        </tr>
+      </tbody>
+      <tfoot class="bg-gray">
+        <tr>
+          <td colspan="4" class="col-12">
+            <button class="table-btn" (click)="newPaciente()">Novo Paciente</button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

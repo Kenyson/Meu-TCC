@@ -1,0 +1,18 @@
+.bg {
+  background-image: linear-gradient(to right, #6e45e2, #88d3ce);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+.bg-gray{
+  background-color: gray;
+}
+
+.table-btn{
+  background-color: lightgray;
+  align-items: left;
+  width: 200px;
+}
