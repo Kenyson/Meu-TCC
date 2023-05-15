@@ -1,41 +1,28 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 interface Item {
-  nome: string;
-  medicamento: string;
-  indicacao: string;
-  posologia: string;
+[prop: string]: any; // permite que as propriedades sejam dinâmicas
 }
 
 interface Coluna {
-  nome: string;
-  propriedade: keyof Item;
+nome: string;
+propriedade: string;
 }
 
 @Component({
-  selector: 'app-pms-grid',
-  templateUrl: './pms-grid.component.html',
-  styleUrls: ['./pms-grid.component.css']
+selector: 'app-pms-grid',
+templateUrl: './pms-grid.component.html',
+styleUrls: ['./pms-grid.component.css']
 })
 export class PmsGridComponent {
-  items: Item[] = [
-    { nome: 'João', medicamento: 'Paracetamol', indicacao: 'Febre', posologia: '1 comprimido a cada 6 horas' },
-    { nome: 'Maria', medicamento: 'Dipirona', indicacao: 'Dor de cabeça', posologia: '1 comprimido a cada 8 horas' },
-    { nome: 'Pedro', medicamento: 'Amoxicilina', indicacao: 'Infecção', posologia: '1 comprimido a cada 12 horas' },
-  ];
+@Input() items: Item[] = []; // recebe as linhas
+@Input() colunas: Coluna[] = []; // recebe as colunas
 
-  colunas: Coluna[] = [
-    { nome: 'Nome Paciente', propriedade: 'nome' },
-    { nome: 'Medicamento', propriedade: 'medicamento' },
-    { nome: 'Indicação', propriedade: 'indicacao' },
-    { nome: 'Posologia', propriedade: 'posologia' },
-  ];
-
-  newItem() {
-    this.items.push({ nome: 'Novo item', medicamento: 'Medicamento X', indicacao: '50', posologia: '10' });
-  }
-
-  newPaciente() {
-    console.log('Botão clicado!');
-  }
+newItem() {
+const newItem: Item = {};
+this.colunas.forEach(coluna => {
+newItem[coluna.propriedade] = '';
+});
+this.items.push(newItem);
+}
 }

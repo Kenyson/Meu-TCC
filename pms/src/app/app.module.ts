@@ -7,6 +7,7 @@ import { PmsHeaderComponent } from './components/pms-header/pms-header.component
 import { PmsFooterComponent } from './components/pms-footer/pms-footer.component';
 import { PmsBodyComponent } from './components/pms-body/pms-body.component';
 import { PmsGridComponent } from './components/pms-grid/pms-grid.component';
+import { PmsPatientComponent } from './components/pms-patient/pms-patient.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { PmsGridComponent } from './components/pms-grid/pms-grid.component';
     PmsFooterComponent,
     PmsBodyComponent,
     PmsGridComponent,
+    PmsPatientComponent,
   ],
   imports: [
     BrowserModule,
