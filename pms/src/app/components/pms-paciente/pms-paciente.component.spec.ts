@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PmsPatientComponent } from './pms-patient.component';
+import { PmsPacienteComponent } from './pms-paciente.component';
 
-describe('PmsPatientComponent', () => {
-  let component: PmsPatientComponent;
-  let fixture: ComponentFixture<PmsPatientComponent>;
+describe('PmsPacienteComponent', () => {
+  let component: PmsPacienteComponent;
+  let fixture: ComponentFixture<PmsPacienteComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PmsPatientComponent ]
+      declarations: [ PmsPacienteComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PmsPatientComponent);
+    fixture = TestBed.createComponent(PmsPacienteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

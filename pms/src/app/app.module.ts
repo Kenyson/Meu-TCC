@@ -7,7 +7,10 @@ import { PmsHeaderComponent } from './components/pms-header/pms-header.component
 import { PmsFooterComponent } from './components/pms-footer/pms-footer.component';
 import { PmsBodyComponent } from './components/pms-body/pms-body.component';
 import { PmsGridComponent } from './components/pms-grid/pms-grid.component';
-import { PmsPatientComponent } from './components/pms-patient/pms-patient.component';
+import { PmsPacienteComponent } from './components/pms-paciente/pms-paciente.component';
+import { PmsMedicoComponent } from './components/pms-medico/pms-medico.component';
+import { PmsNewPacienteComponent } from './components/pms-medico/pms-new-paciente/pms-new-paciente.component';
+
 
 
 @NgModule({
@@ -17,7 +20,9 @@ import { PmsPatientComponent } from './components/pms-patient/pms-patient.compon
     PmsFooterComponent,
     PmsBodyComponent,
     PmsGridComponent,
-    PmsPatientComponent,
+    PmsPacienteComponent,
+    PmsMedicoComponent,
+    PmsNewPacienteComponent,
   ],
   imports: [
     BrowserModule,
