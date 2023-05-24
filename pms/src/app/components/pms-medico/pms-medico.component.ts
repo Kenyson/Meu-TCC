@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { PmsNewPacienteComponent } from './pms-new-paciente/pms-new-paciente.component';
 
 
 @Component({
   selector: 'app-pms-medico',
   templateUrl: './pms-medico.component.html',
-  styleUrls: ['./pms-medico.component.css']
+  styleUrls: ['./pms-medico.component.css'],
 })
 export class PmsMedicoComponent {
-  //Tela que aparece para o Médico
+  constructor(private modalService: NgbModal) {}
+
   colunas = [
     { nome: 'Nome Paciente', propriedade: 'nome' },
     { nome: 'Medicamento', propriedade: 'medicamento' },
@@ -22,6 +25,13 @@ export class PmsMedicoComponent {
   ];
 
   novoPaciente() {
-    console.log('chamou novo elemento no médico')
+    console.log(this.modalService)
+    const modalRef = this.modalService.open(PmsNewPacienteComponent)
+    modalRef.result.then((result) => {
+      console.log('Sucesso:', result);
+    }, (reason) => {
+      // Handle the dismiss event or any error that occurred
+      console.log('Falha:', reason);
+    });
   }
 }
