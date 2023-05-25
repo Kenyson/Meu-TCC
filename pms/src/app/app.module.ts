@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { NgbModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +10,8 @@ import { PmsGridComponent } from './components/pms-grid/pms-grid.component';
 import { PmsPacienteComponent } from './components/pms-paciente/pms-paciente.component';
 import { PmsMedicoComponent } from './components/pms-medico/pms-medico.component';
 import { PmsNewPacienteComponent } from './components/pms-medico/pms-new-paciente/pms-new-paciente.component';
+
+
 
 @NgModule({
   declarations: [
@@ -26,11 +26,9 @@ import { PmsNewPacienteComponent } from './components/pms-medico/pms-new-pacient
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    NgbModule,
     AppRoutingModule
   ],
-  providers: [NgbModal],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
