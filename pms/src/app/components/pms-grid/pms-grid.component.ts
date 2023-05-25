@@ -21,5 +21,36 @@ export class PmsGridComponent {
   @Input() novoItemFuncao: () => void = () => {};
   @Input() mostrarBotao: boolean = true;
 
+  paginaAtual: number = 1;
+  itensPorPagina: number = 20;
 
+  get itensExibidos(): Item[] {
+    const startIndex = (this.paginaAtual - 1) * this.itensPorPagina;
+    const endIndex = startIndex + this.itensPorPagina;
+    return this.items.slice(startIndex, endIndex);
+  }
+
+  get totalPaginas(): number {
+    return Math.ceil(this.items.length / this.itensPorPagina);
+  }
+
+  get paginas(): number[] {
+    return Array.from({ length: this.totalPaginas }, (_, i) => i + 1);
+  }
+
+  proximaPagina() {
+    if (this.paginaAtual < this.totalPaginas) {
+      this.paginaAtual++;
+    }
+  }
+
+  paginaAnterior() {
+    if (this.paginaAtual > 1) {
+      this.paginaAtual--;
+    }
+  }
+
+  selecionarPagina(pagina: number) {
+    this.paginaAtual = pagina;
+  }
 }

@@ -7,7 +7,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of items" class="bg-light">
+        <tr *ngFor="let item of itensExibidos" class="bg-light">
           <td *ngFor="let coluna of colunas">{{ item[coluna.propriedade] }}</td>
         </tr>
       </tbody>
@@ -15,6 +15,11 @@
         <tr>
           <td [attr.colspan]="colunas.length" class="col-12">
              <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
+             <div class="pagination" style="float: right;">
+               <button class="pagination-btn" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">&lt;</button>
+               <button *ngFor="let pagina of paginas" class="pagination-btn" (click)="selecionarPagina(pagina)" [ngClass]="{ 'active': pagina === paginaAtual }">{{ pagina }}</button>
+               <button class="pagination-btn" (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">&gt;</button>
+             </div>
           </td>
         </tr>
       </tfoot>
