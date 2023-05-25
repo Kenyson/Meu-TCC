@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-interface Item {
+export interface Item {
   [prop: string]: any;
 }
 
@@ -20,9 +20,10 @@ export class PmsGridComponent {
   @Input() novoItemNome: string = '';
   @Input() novoItemFuncao: () => void = () => {};
   @Input() mostrarBotao: boolean = true;
+  @Output() onItemClicadoDuplo: EventEmitter<Item> = new EventEmitter<Item>();
 
   paginaAtual: number = 1;
-  itensPorPagina: number = 20;
+  itensPorPagina: number = 10;
 
   get itensExibidos(): Item[] {
     const startIndex = (this.paginaAtual - 1) * this.itensPorPagina;
