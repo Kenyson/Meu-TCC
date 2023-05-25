@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-
 @Component({
   selector: 'app-pms-medico',
   templateUrl: './pms-medico.component.html',

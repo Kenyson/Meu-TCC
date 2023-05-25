@@ -14,7 +14,7 @@
       <tfoot class="bg-gray">
         <tr>
           <td [attr.colspan]="colunas.length" class="col-12">
-            <button class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
+             <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
           </td>
         </tr>
       </tfoot>

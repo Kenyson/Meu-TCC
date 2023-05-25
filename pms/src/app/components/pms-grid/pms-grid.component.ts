@@ -19,12 +19,7 @@ export class PmsGridComponent {
   @Input() colunas: Coluna[] = [];
   @Input() novoItemNome: string = '';
   @Input() novoItemFuncao: () => void = () => {};
+  @Input() mostrarBotao: boolean = true;
 
- /* newItem() {
-    const newItem: Item = {};
-    this.colunas.forEach(coluna => {
-      newItem[coluna.propriedade] = '';
-    });
-    this.items.push(newItem);
-  }*/
+
 }
