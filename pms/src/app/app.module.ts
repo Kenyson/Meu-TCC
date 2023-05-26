@@ -12,6 +12,7 @@ import { PmsGridComponent } from './components/pms-grid/pms-grid.component';
 import { PmsPacienteComponent } from './components/pms-paciente/pms-paciente.component';
 import { PmsMedicoComponent } from './components/pms-medico/pms-medico.component';
 import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-paciente.component';
+import { LoginComponent } from './components/login/login.component';
 
 
 
@@ -25,6 +26,7 @@ import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-p
     PmsPacienteComponent,
     PmsMedicoComponent,
     PmsNewPacienteComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
