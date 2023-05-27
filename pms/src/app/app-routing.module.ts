@@ -8,25 +8,30 @@ import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-p
 
 const routes: Routes = [
   {
-    path:'login',
-    component:LoginComponent
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
   {
-    path:'cadastro',
-    component:CadastroComponent
+    path: 'login',
+    component: LoginComponent,
   },
   {
-    path:'medico',
-    component:PmsMedicoComponent
+    path: 'cadastro',
+    component: CadastroComponent,
   },
   {
-    path:'paciente',
-    component:PmsPacienteComponent
+    path: 'medico',
+    component: PmsMedicoComponent,
   },
   {
-    path:'newPaciente',
-    component:PmsNewPacienteComponent
-  }
+    path: 'paciente',
+    component: PmsPacienteComponent,
+  },
+  {
+    path: 'newPaciente',
+    component: PmsNewPacienteComponent,
+  },
 ];
 
 @NgModule({
