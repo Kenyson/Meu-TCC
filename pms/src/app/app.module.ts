@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,8 +14,6 @@ import { PmsMedicoComponent } from './components/pms-medico/pms-medico.component
 import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-paciente.component';
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
-
-
 
 @NgModule({
   declarations: [
@@ -33,6 +31,7 @@ import { CadastroComponent } from './components/cadastro/cadastro.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [],

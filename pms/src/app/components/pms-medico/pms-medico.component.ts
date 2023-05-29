@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+interface Paciente {
+  id: number;
+  nome: string;
+  medicamento: string;
+  indicacao: string;
+  posologia: string;
+}
 
 @Component({
   selector: 'app-pms-medico',
   templateUrl: './pms-medico.component.html',
   styleUrls: ['./pms-medico.component.css']
 })
-export class PmsMedicoComponent {
-  //Tela que aparece para o Médico
+export class PmsMedicoComponent implements OnInit {
   colunas = [
     { nome: 'Nome Paciente', propriedade: 'nome' },
     { nome: 'Medicamento', propriedade: 'medicamento' },
@@ -14,13 +22,34 @@ export class PmsMedicoComponent {
     { nome: 'Posologia', propriedade: 'posologia' },
   ];
 
-  items = [
-    { nome: 'João', medicamento: 'Paracetamol', indicacao: 'Febre', posologia: '1 comprimido a cada 6 horas' },
-    { nome: 'Maria', medicamento: 'Dipirona', indicacao: 'Dor de cabeça', posologia: '1 comprimido a cada 8 horas' },
-    { nome: 'Pedro', medicamento: 'Amoxicilina', indicacao: 'Infecção', posologia: '1 comprimido a cada 12 horas' },
-  ];
+  items: Paciente[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.obterPacientes();
+  }
+
+  obterPacientes() {
+    this.http.get<Paciente[]>('http://localhost:3000/pacientes')
+      .subscribe(pacientes => {
+        this.items = pacientes;
+      });
+  }
 
   novoPaciente() {
-    console.log('chamou novo elemento no médico')
+    const novoPaciente: Paciente = {
+      id: 0,
+      nome: 'Novo Paciente',
+      medicamento: 'Medicamento',
+      indicacao: 'Indicação',
+      posologia: 'Posologia'
+    };
+
+    this.http.post<Paciente>('http://localhost:3000/pacientes', novoPaciente)
+      .subscribe(response => {
+        console.log('Novo paciente criado:', response);
+        this.obterPacientes();
+      });
   }
 }
