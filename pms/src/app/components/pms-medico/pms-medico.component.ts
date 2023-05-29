@@ -40,10 +40,7 @@ export class PmsMedicoComponent implements OnInit {
 
   novaReceita() {
     console.log('chamou')
-    console.log(this.router)
-    if (this.router) {
-      this.router.navigate(['/newPaciente']);
-    }
+
   }
 
 }
