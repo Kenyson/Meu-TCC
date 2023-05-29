@@ -20,6 +20,7 @@ export class PmsGridComponent {
   @Input() novoItemNome: string = '';
   @Input() novoItemFuncao: () => void = () => {};
   @Input() mostrarBotao: boolean = true;
+  @Input() routerLink: string | any[] = '';
   @Output() onItemClicadoDuplo: EventEmitter<Item> = new EventEmitter<Item>();
 
   paginaAtual: number = 1;
