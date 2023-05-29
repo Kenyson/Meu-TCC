@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-pms-new-paciente',
@@ -7,16 +8,23 @@ import { Component } from '@angular/core';
 })
 export class PmsNewPacienteComponent {
   paciente = {
-    nome: '',
+    nomePaciente: '',
     medicamento: '',
     indicacao: '',
     posologia: ''
   };
 
+  constructor(private http: HttpClient) {}
 
   submitForm() {
-    // Aqui você pode fazer a lógica para enviar os dados para o backend
-    // Por exemplo, usando um serviço de API para fazer a chamada HTTP POST
-    console.log(this.paciente);
+    this.http.post('http://localhost:3000/receitas', this.paciente)
+      .subscribe(
+        (novaReceita: any) => {
+          console.log('Receita salva:', novaReceita);
+        },
+        (error) => {
+          console.error('Erro ao salvar a receita:', error);
+        }
+      );
   }
 }
