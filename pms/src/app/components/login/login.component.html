@@ -1,4 +1,5 @@
 <app-pms-header></app-pms-header>
+
 <div class="container-fluid">
   <div class="row justify-content-center align-items-center" style="height: 100vh;">
     <div class="col-sm-6 col-md-4">
@@ -25,7 +26,6 @@
                   <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
                 </select>
               </div>
-
             </div>
             <div *ngIf="selectedOption === 'paciente'">
               <div class="form-group">
@@ -38,7 +38,10 @@
               <input type="password" id="password" class="form-control" name="password" required>
             </div>
             <div class="text-center">
-              <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+              <button type="submit" [routerLink]="testLogin()" class="btn btn-primary btn-block" style="margin-top: 10px;">Entrar</button>
+            </div>
+            <div class="text-center mt-3">
+              <p class="text-danger">{{ mensagemErro }}</p>
             </div>
           </form>
         </div>
@@ -46,4 +49,5 @@
     </div>
   </div>
 </div>
+
 <app-pms-footer></app-pms-footer>
