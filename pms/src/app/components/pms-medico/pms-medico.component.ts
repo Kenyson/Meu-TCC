@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-interface Receita {
+interface Paciente {
   id: number;
-  nomePaciente: string;
-  medicamento: string;
-  indicacao: string;
-  posologia: string;
+  nome: string;
+  idade: number;
+  cpf: string;
+  telefone: string;
 }
 
 @Component({
@@ -17,30 +17,32 @@ interface Receita {
 })
 export class PmsMedicoComponent implements OnInit {
   colunas = [
-    { nome: 'Nome Paciente', propriedade: 'nomePaciente' },
-    { nome: 'Medicamento', propriedade: 'medicamento' },
-    { nome: 'Indicação', propriedade: 'indicacao' },
-    { nome: 'Posologia', propriedade: 'posologia' },
+    { nome: 'Nome Paciente', propriedade: 'nome' },
+    { nome: 'Idade', propriedade: 'idade' },
+    { nome: 'CPF', propriedade: 'cpf' },
+    { nome: 'Telefone', propriedade: 'telefone' },
   ];
 
-  items: Receita[] = [];
+  items: Paciente[] = [];
 
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
-    this.obterReceitas();
+    this.obterPacientes();
   }
 
-  obterReceitas() {
-    this.http.get<Receita[]>('http://localhost:3000/receitas')
-      .subscribe(receitas => {
-        this.items = receitas;
+  obterPacientes() {
+    this.http.get<Paciente[]>('http://localhost:3000/pacientes')
+      .subscribe(pacientes => {
+        this.items = pacientes;
       });
   }
 
-  novaReceita() {
-    console.log('chamou')
-
+  redirecionarNovoPaciente() {
+    this.router.navigate(['/newPaciente']);
   }
-
+//paciente: Paciente
+  redirecionarPaciente() {
+    this.router.navigate(['/paciente']);
+  }
 }

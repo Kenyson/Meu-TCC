@@ -24,55 +24,45 @@ export class LoginComponent {
     this.mensagemErro = '';
   }
 
-  testLogin(){
+  testLogin() {
     if (this.selectedOption === 'medico') {
-
       const crm = (document.getElementById('crm') as HTMLInputElement).value;
       const estado = this.selectedEstado;
 
-
       if (crm === '123456' && estado === 'São Paulo') {
-
-       return '/medico'
-
+        return '/medico';
       } else {
-
-
-        return '/login'
+        return '/login';
       }
     } else if (this.selectedOption === 'paciente') {
-
-
       const cpf = (document.getElementById('cpf') as HTMLInputElement).value;
 
-
       if (cpf === '12345678900') {
-
-        return '/paciente'
+        return '/paciente';
       } else {
-
-
-        return '/login'
+        return '/login';
       }
-    }return '/login'
+    }
+    return '/login';
   }
 
   submitForm() {
-    if (this.selectedOption === 'medico') {
+    const password = (document.getElementById('password') as HTMLInputElement).value;
 
+    if (this.selectedOption === 'medico') {
       const crm = (document.getElementById('crm') as HTMLInputElement).value;
       const estado = this.selectedEstado;
 
-      if (crm === '123456' && estado === 'São Paulo') {
-        this.router.navigate(['/pagina-medico']);
+      if (crm === '123456' && estado === 'São Paulo' && password === 'senhaMedico') {
+        this.router.navigate(['/medico']);
       } else {
         this.mensagemErro = 'Credenciais inválidas. Por favor, tente novamente.';
       }
     } else if (this.selectedOption === 'paciente') {
-
       const cpf = (document.getElementById('cpf') as HTMLInputElement).value;
-      if (cpf === '12345678900') {
-        this.router.navigate(['/pagina-paciente']);
+
+      if (cpf === '12345678900' && password === 'senhaPaciente') {
+        this.router.navigate(['/paciente']);
       } else {
         this.mensagemErro = 'Credenciais inválidas. Por favor, tente novamente.';
       }

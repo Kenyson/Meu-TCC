@@ -1,19 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-interface Paciente {
+interface Receita {
   id: number;
-  nome: string;
-  medicamento: string;
-  indicacao: string;
+  nomeComercial: string;
+  principioAtivo: string;
   posologia: string;
-}
-
-interface Item {
-  nome: string;
-  medicamento: string;
   indicacao: string;
-  posologia: string;
+  dataPrescricao: Date;
+  medico: string;
 }
 
 @Component({
@@ -23,28 +18,26 @@ interface Item {
 })
 export class PmsPacienteComponent implements OnInit {
   colunas = [
-    { nome: 'Nome Paciente', propriedade: 'nome' },
-    { nome: 'Medicamento', propriedade: 'medicamento' },
-    { nome: 'Indicação', propriedade: 'indicacao' },
+    { nome: 'Nome Comercial', propriedade: 'nomeComercial' },
+    { nome: 'Princípio Ativo', propriedade: 'principioAtivo' },
     { nome: 'Posologia', propriedade: 'posologia' },
+    { nome: 'Indicação', propriedade: 'indicacao' },
+    { nome: 'Data da Prescrição', propriedade: 'dataPrescricao' },
+    { nome: 'Médico', propriedade: 'medico' },
   ];
 
-  items: Paciente[] = [];
+  items: Receita[] = [];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.obterPacientes();
+    this.obterReceitas();
   }
 
-  obterPacientes() {
-    this.http.get<Paciente[]>('http://localhost:3000/pacientes')
-      .subscribe(pacientes => {
-        this.items = pacientes;
+  obterReceitas() {
+    this.http.get<Receita[]>('http://localhost:3000/receitas')
+      .subscribe(receitas => {
+        this.items = receitas;
       });
-  }
-
-  funcaoItemClicadoDuplo(item: Item) {
-
   }
 }

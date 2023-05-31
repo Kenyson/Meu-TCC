@@ -5,15 +5,60 @@ const cors = require('cors');
 const porta = 3000;
 
 const pacientes = [
-  { id: 1, nome: 'João', medicamento: 'Paracetamol', indicacao: 'Febre', posologia: '1 comprimido a cada 6 horas' },
-  { id: 2, nome: 'Maria', medicamento: 'Dipirona', indicacao: 'Dor de cabeça', posologia: '1 comprimido a cada 8 horas' },
-  { id: 3, nome: 'Pedro', medicamento: 'Amoxicilina', indicacao: 'Infecção', posologia: '1 comprimido a cada 12 horas' },
+  {
+     id: 1,
+    nome: 'João',
+    idade: 30,
+    cpf: '1234567890',
+    telefone: '999999999'
+  },
+  {
+     id: 2,
+    nome: 'Maria',
+    idade: 25,
+    cpf: '0987654321',
+    telefone: '888888888'
+  },
+  {
+     id: 3,
+    nome: 'Pedro',
+    idade: 35,
+    cpf: '5678901234',
+    telefone: '777777777'
+  },
 ];
 
 const receitas = [
-  { id: 1, nomePaciente: 'João', medicamento: 'Paracetamol', indicacao: 'Febre', posologia: '1 comprimido a cada 6 horas' },
-  { id: 2, nomePaciente: 'Maria', medicamento: 'Dipirona', indicacao: 'Dor de cabeça', posologia: '1 comprimido a cada 8 horas' },
-  { id: 3, nomePaciente: 'Pedro', medicamento: 'Amoxicilina', indicacao: 'Infecção', posologia: '1 comprimido a cada 12 horas' },
+  {
+    id: 1,
+    nomePaciente: 'João',
+    nomeComercial: 'Paracetamol',
+    principioAtivo: 'Paracetamol',
+    posologia: '1 comprimido a cada 6 horas',
+    indicacao: 'Febre',
+    dataPrescricao: '2023-05-29',
+    medico: 'Dr. Médico'
+  },
+  {
+    id: 2,
+    nomePaciente: 'Maria',
+    nomeComercial: 'Dipirona',
+    principioAtivo: 'Dipirona',
+    posologia: '1 comprimido a cada 8 horas',
+    indicacao: 'Dor de cabeça',
+    dataPrescricao: '2023-05-29',
+    medico: 'Dr. Médico'
+  },
+  {
+    id: 3,
+    nomePaciente: 'Pedro',
+    nomeComercial: 'Amoxicilina',
+    principioAtivo: 'Amoxicilina',
+    posologia: '1 comprimido a cada 12 horas',
+    indicacao: 'Infecção',
+    dataPrescricao: '2023-05-29',
+    medico: 'Dr. Médico'
+  }
 ];
 
 app.use(express.json());

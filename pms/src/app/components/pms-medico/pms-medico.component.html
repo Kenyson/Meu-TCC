@@ -2,8 +2,8 @@
 <app-pms-grid
   [colunas]="colunas"
   [items]="items"
-  [novoItemNome]="'Nova Receita'"
-  [novoItemFuncao]="novaReceita"
-  [routerLink]="'/newPaciente'"
+  [novoItemNome]="'Novo Paciente'"
+  [novoItemFuncao]="redirecionarNovoPaciente"
+  (itemClicadoDuplo)="redirecionarPaciente()"
 ></app-pms-grid>
 <app-pms-footer></app-pms-footer>
