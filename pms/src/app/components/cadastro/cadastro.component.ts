@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
@@ -10,17 +11,34 @@ export class CadastroComponent {
   medicoData: any = {};
   pacienteData: any = {};
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.selectedOption = 'medico';
   }
 
   submitForm() {
     if (this.selectedOption === 'medico') {
-      // Enviar os dados do médico para o backend (por exemplo, usando uma requisição HTTP POST)
       console.log(this.medicoData);
+      // Enviar os dados do médico para o backend
+      this.http.post('http://localhost:3000/medicos', this.medicoData)
+        .subscribe(
+          response => {
+            console.log('Médico cadastrado com sucesso:', response);
+          },
+          error => {
+            console.error('Erro ao cadastrar médico:', error);
+          }
+        );
     } else if (this.selectedOption === 'paciente') {
-      // Enviar os dados do paciente para o backend (por exemplo, usando uma requisição HTTP POST)
-      console.log(this.pacienteData);
+      // Enviar os dados do paciente para o backend
+      this.http.post('http://localhost:3000/pacientes', this.pacienteData)
+        .subscribe(
+          response => {
+            console.log('Paciente cadastrado com sucesso:', response);
+          },
+          error => {
+            console.error('Erro ao cadastrar paciente:', error);
+          }
+        );
     }
   }
 }
