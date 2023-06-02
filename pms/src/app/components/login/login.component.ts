@@ -1,5 +1,25 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+
+interface Medico {
+  crm: number;
+  estado: string;
+  nome: string;
+  sobrenome: string;
+  telefone: string;
+  especialidade: string;
+  senha: string;
+}
+
+interface Paciente {
+  id: number;
+  nome: string;
+  idade: number;
+  cpf: string;
+  telefone: string;
+  senha: string;
+}
 
 @Component({
   selector: 'app-login',
@@ -12,7 +32,7 @@ export class LoginComponent {
   selectedEstado: string;
   mensagemErro: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private http: HttpClient) {
     this.selectedOption = 'medico';
     this.estados = ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'];
     this.selectedEstado = '';
@@ -24,28 +44,6 @@ export class LoginComponent {
     this.mensagemErro = '';
   }
 
-  testLogin() {
-    if (this.selectedOption === 'medico') {
-      const crm = (document.getElementById('crm') as HTMLInputElement).value;
-      const estado = this.selectedEstado;
-
-      if (crm === '123456' && estado === 'São Paulo') {
-        return '/medico';
-      } else {
-        return '/login';
-      }
-    } else if (this.selectedOption === 'paciente') {
-      const cpf = (document.getElementById('cpf') as HTMLInputElement).value;
-
-      if (cpf === '12345678900') {
-        return '/paciente';
-      } else {
-        return '/login';
-      }
-    }
-    return '/login';
-  }
-
   submitForm() {
     const password = (document.getElementById('password') as HTMLInputElement).value;
 
@@ -53,19 +51,31 @@ export class LoginComponent {
       const crm = (document.getElementById('crm') as HTMLInputElement).value;
       const estado = this.selectedEstado;
 
-      if (crm === '123456' && estado === 'São Paulo' && password === 'senhaMedico') {
-        this.router.navigate(['/medico']);
-      } else {
-        this.mensagemErro = 'Credenciais inválidas. Por favor, tente novamente.';
-      }
+      this.http.post<any>('http://localhost:3000/login', { crm, estado, password, userType: 'medico' })
+        .subscribe(response => {
+          if (response.success) {
+            this.router.navigate(['/medico']);
+          } else {
+            this.mensagemErro = 'Credenciais inválidas. Por favor, tente novamente.';
+          }
+        }, error => {
+          console.error(error);
+          this.mensagemErro = 'Erro ao efetuar login.';
+        });
     } else if (this.selectedOption === 'paciente') {
       const cpf = (document.getElementById('cpf') as HTMLInputElement).value;
 
-      if (cpf === '12345678900' && password === 'senhaPaciente') {
-        this.router.navigate(['/paciente']);
-      } else {
-        this.mensagemErro = 'Credenciais inválidas. Por favor, tente novamente.';
-      }
+      this.http.post<any>('http://localhost:3000/login', { cpf, password, userType: 'paciente' })
+        .subscribe(response => {
+          if (response.success) {
+            this.router.navigate(['/paciente']);
+          } else {
+            this.mensagemErro = 'Credenciais inválidas. Por favor, tente novamente.';
+          }
+        }, error => {
+          console.error(error);
+          this.mensagemErro = 'Erro ao efetuar login.';
+        });
     }
   }
 }

@@ -31,7 +31,8 @@ db.serialize(() => {
       sobrenome TEXT,
       cpf TEXT,
       data_nascimento TEXT,
-      telefone TEXT
+      telefone TEXT,
+      senha TEXT
     )
   `);
 
@@ -94,8 +95,8 @@ app.get('/pacientes', (req, res) => {
 app.post('/pacientes', (req, res) => {
   const novoPaciente = req.body;
   db.run(
-    'INSERT INTO pacientes (nome, sobrenome, cpf, data_nascimento, telefone) VALUES (?, ?, ?, ?, ?)',
-    [novoPaciente.nome, novoPaciente.sobrenome, novoPaciente.cpf, novoPaciente.data_nascimento, novoPaciente.telefone],
+    'INSERT INTO pacientes (nome, sobrenome, cpf, data_nascimento, telefone, senha) VALUES (?, ?, ?, ?, ?, ?)',
+    [novoPaciente.nome, novoPaciente.sobrenome, novoPaciente.cpf, novoPaciente.data_nascimento, novoPaciente.telefone, novoPaciente.senha],
     function (err) {
       if (err) {
         console.error(err);
@@ -106,6 +107,50 @@ app.post('/pacientes', (req, res) => {
       }
     }
   );
+});
+
+app.post('/login', (req, res) => {
+  const { userType, password } = req.body;
+  console.log(req.body);
+
+  if (userType === 'medico') {
+    const { crm, estado } = req.body;
+    db.get(
+      'SELECT * FROM medico WHERE crm = ? AND estado = ? AND senha = ?',
+      [crm, estado, password],
+      (err, row) => {
+        console.log(row, err)
+        if (err) {
+          console.error(err);
+          res.status(500).send('Erro ao autenticar médico.');
+        } else {
+          if (row) {
+            res.status(200).json({ success: true, message: 'Login médico bem-sucedido.' });
+          } else {
+            res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+          }
+        }
+      }
+    );
+  } else if (userType === 'paciente') {
+    const { cpf } = req.body;
+    db.get(
+      'SELECT * FROM pacientes WHERE cpf = ? AND senha = ?',
+      [cpf, password],
+      (err, row) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send('Erro ao autenticar paciente.');
+        } else {
+          if (row) {
+            res.status(200).json({ success: true, message: 'Login paciente bem-sucedido.' });
+          } else {
+            res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+          }
+        }
+      }
+    );
+  }
 });
 
 app.get('/receitas', (req, res) => {
@@ -123,16 +168,7 @@ app.post('/receitas', (req, res) => {
   const novaReceita = req.body;
   db.run(
     'INSERT INTO receitas (nome_comercial, principio_ativo, indicacao, medico_id, paciente_id, data_prescricao, posologia, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [
-      novaReceita.nome_comercial,
-      novaReceita.principio_ativo,
-      novaReceita.indicacao,
-      novaReceita.medico_id,
-      novaReceita.paciente_id,
-      novaReceita.data_prescricao,
-      novaReceita.posologia,
-      novaReceita.observacoes
-    ],
+    [novaReceita.nome_comercial, novaReceita.principio_ativo, novaReceita.indicacao, novaReceita.medico_id, novaReceita.paciente_id, novaReceita.data_prescricao, novaReceita.posologia, novaReceita.observacoes],
     function (err) {
       if (err) {
         console.error(err);
@@ -146,5 +182,5 @@ app.post('/receitas', (req, res) => {
 });
 
 app.listen(porta, () => {
-  console.log(`Servidor rodando na porta ${porta}`);
+  console.log(`Servidor executando em http://localhost:${porta}`);
 });
