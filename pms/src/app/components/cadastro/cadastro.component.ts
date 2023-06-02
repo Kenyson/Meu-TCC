@@ -16,6 +16,8 @@ export class CadastroComponent {
   }
 
   submitForm() {
+
+    console.log('foi chamado')
     if (this.selectedOption === 'medico') {
       console.log(this.medicoData);
       // Enviar os dados do médico para o backend
@@ -29,7 +31,9 @@ export class CadastroComponent {
           }
         );
     } else if (this.selectedOption === 'paciente') {
+      console.log(this.pacienteData)
       // Enviar os dados do paciente para o backend
+      console.log(this.pacienteData)
       this.http.post('http://localhost:3000/pacientes', this.pacienteData)
         .subscribe(
           response => {

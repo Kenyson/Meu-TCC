@@ -71,6 +71,14 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" class="form-control" name="email" [(ngModel)]="medicoData.email" required>
               </div>
+              <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" class="form-control" name="password" [(ngModel)]="medicoData.senha" required>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirmação da Senha:</label>
+                <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="medicoData.Confirmsenha" required>
+              </div>
             </div>
             <div *ngIf="selectedOption === 'paciente'">
               <div class="form-group">
@@ -101,15 +109,16 @@
                 <label for="endereco">Endereço:</label>
                 <input type="text" id="endereco" class="form-control" name="endereco" [(ngModel)]="pacienteData.endereco" required>
               </div>
+              <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" class="form-control" name="password" [(ngModel)]="pacienteData.senha" required>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword">Confirmação da Senha:</label>
+                <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="pacienteData.Confirmsenha" required>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="password">Senha:</label>
-              <input type="password" id="password" class="form-control" name="password" [(ngModel)]="medicoData.senha" required>
-            </div>
-            <div class="form-group">
-              <label for="confirmPassword">Confirmação da Senha:</label>
-              <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" required>
-            </div>
+
             <div class="text-center" style="margin-top: 10px;">
               <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
             </div>

@@ -96,7 +96,7 @@ app.post('/pacientes', (req, res) => {
   const novoPaciente = req.body;
   db.run(
     'INSERT INTO pacientes (nome, sobrenome, cpf, data_nascimento, telefone, senha) VALUES (?, ?, ?, ?, ?, ?)',
-    [novoPaciente.nome, novoPaciente.sobrenome, novoPaciente.cpf, novoPaciente.data_nascimento, novoPaciente.telefone, novoPaciente.senha],
+    [novoPaciente.nome, novoPaciente.sobrenome, novoPaciente.cpf, novoPaciente.dataNascimento, novoPaciente.telefone, novoPaciente.senha],
     function (err) {
       if (err) {
         console.error(err);
@@ -109,9 +109,9 @@ app.post('/pacientes', (req, res) => {
   );
 });
 
+
 app.post('/login', (req, res) => {
   const { userType, password } = req.body;
-  console.log(req.body);
 
   if (userType === 'medico') {
     const { crm, estado } = req.body;
@@ -119,7 +119,6 @@ app.post('/login', (req, res) => {
       'SELECT * FROM medico WHERE crm = ? AND estado = ? AND senha = ?',
       [crm, estado, password],
       (err, row) => {
-        console.log(row, err)
         if (err) {
           console.error(err);
           res.status(500).send('Erro ao autenticar médico.');
@@ -150,6 +149,8 @@ app.post('/login', (req, res) => {
         }
       }
     );
+  } else {
+    res.status(400).send('Tipo de usuário inválido.');
   }
 });
 
@@ -180,7 +181,6 @@ app.post('/receitas', (req, res) => {
     }
   );
 });
-
 app.listen(porta, () => {
-  console.log(`Servidor executando em http://localhost:${porta}`);
+  console.log(`Servidor está executando na porta ${porta}`);
 });
