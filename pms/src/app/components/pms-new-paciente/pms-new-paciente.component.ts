@@ -7,17 +7,36 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./pms-new-paciente.component.css']
 })
 export class PmsNewPacienteComponent {
+  cpf: string = '';
+  cpfExists: boolean = false;
   paciente = {
-    nomePaciente: '',
-    medicamento: '',
-    indicacao: '',
-    posologia: ''
+    nome: '',
+    cpf: '',
+    telefone: '',
   };
 
   constructor(private http: HttpClient) {}
 
+  checkExistingCPF() {
+    this.http.get<any[]>('http://localhost:3000/pacientes?cpf=' + this.cpf)
+      .subscribe(
+        (response: any[]) => {
+          if (response.length > 0) {
+            this.cpfExists = true;
+            console.log(response)
+            this.paciente = response[0];
+          } else {
+            this.cpfExists = false;
+          }
+        },
+        (error) => {
+          console.error('Erro ao verificar o CPF:', error);
+        }
+      );
+  }
+
   submitForm() {
-    this.http.post('http://localhost:3000/receitas', this.paciente)
+    this.http.post('http://localhost:3000/pacientes', this.paciente)
       .subscribe(
         (novaReceita: any) => {
           console.log('Receita salva:', novaReceita);

@@ -56,7 +56,7 @@ db.serialize(() => {
 app.post('/medicos', (req, res) => {
   const novoMedico = req.body;
   db.run(
-    'INSERT INTO medico (crm, estado, nome, sobrenome, telefone, especialidade, senha) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    'INSERT INTO medico (crm, estado, nome, sobrenome, telefone, especialidade, senha) VALUES (?, ?, ?, ?, ?, ?)',
     [novoMedico.crm, novoMedico.estado, novoMedico.nome, novoMedico.sobrenome, novoMedico.telefone, novoMedico.especialidade, novoMedico.senha],
     function (err) {
       if (err) {
@@ -71,7 +71,7 @@ app.post('/medicos', (req, res) => {
 });
 
 app.get('/medicos', (req, res) => {
-  db.all('SELECT * FROM medico', (err, rows) => {
+  db.all('SELECT crm, estado, nome, sobrenome, telefone, especialidade FROM medico', (err, rows) => {
     if (err) {
       console.error(err);
       res.status(500).send('Erro ao obter médicos do banco de dados.');
@@ -82,7 +82,7 @@ app.get('/medicos', (req, res) => {
 });
 
 app.get('/pacientes', (req, res) => {
-  db.all('SELECT * FROM pacientes', (err, rows) => {
+  db.all('SELECT id, nome, sobrenome, cpf, data_nascimento, telefone FROM pacientes', (err, rows) => {
     if (err) {
       console.error(err);
       res.status(500).send('Erro ao obter pacientes do banco de dados.');
@@ -91,6 +91,7 @@ app.get('/pacientes', (req, res) => {
     }
   });
 });
+
 
 app.post('/pacientes', (req, res) => {
   const novoPaciente = req.body;

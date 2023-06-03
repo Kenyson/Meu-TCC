@@ -38,12 +38,5 @@ export class PmsMedicoComponent implements OnInit {
       });
   }
 
-  redirecionarNovoPaciente() {
-    console.log('chamou aqui')
-    this.router.navigate(['/medico']);
-  }
-//paciente: Paciente
-  redirecionarPaciente() {
-    this.router.navigate(['/paciente']);
-  }
+
 }

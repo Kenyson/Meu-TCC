@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 interface Receita {
@@ -28,7 +29,7 @@ export class PmsPacienteComponent implements OnInit {
 
   items: Receita[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   ngOnInit() {
     this.obterReceitas();
