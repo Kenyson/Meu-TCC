@@ -8,8 +8,16 @@ interface Medico {
 }
 
 interface Paciente {
-  nome: string;
   cpf: string;
+  nome: string;
+}
+
+interface MedicoLogado extends Medico {
+  id: string;
+}
+
+interface PacienteLogado extends Paciente {
+  id: string;
 }
 
 @Injectable({
@@ -18,7 +26,7 @@ interface Paciente {
 export class AuthService {
   private readonly STORAGE_KEY = 'authData';
 
-  public usuarioLogado: Medico | Paciente | null = null;
+  public usuarioLogado: MedicoLogado | PacienteLogado | null = null;
   mensagemErro: string = '';
 
   constructor(private router: Router) {
@@ -38,7 +46,7 @@ export class AuthService {
       })
       .then((response: AxiosResponse<any>) => {
         if (response.data.success) {
-          this.usuarioLogado = { crm, nome: response.data.nome };
+          this.usuarioLogado = { id: response.data.crm, crm, nome: response.data.nome };
           this.saveDataToStorage();
           this.router.navigate(['/medico']);
         } else {
@@ -60,7 +68,7 @@ export class AuthService {
       })
       .then((response: AxiosResponse<any>) => {
         if (response.data.success) {
-          this.usuarioLogado = { nome: response.data.nome, cpf };
+          this.usuarioLogado = { id: response.data.cpf, nome: response.data.nome, cpf };
           this.saveDataToStorage();
           this.router.navigate(['/paciente']);
         } else {
@@ -92,7 +100,10 @@ export class AuthService {
   }
 
   private saveDataToStorage(): void {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.usuarioLogado));
+    if (this.usuarioLogado !== null) {
+      const { id, ...data } = this.usuarioLogado;
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+    }
   }
 
   private clearDataFromStorage(): void {
