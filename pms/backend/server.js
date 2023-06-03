@@ -117,7 +117,7 @@ app.post('/login', (req, res) => {
   if (userType === 'medico') {
     const { crm, estado } = req.body;
     db.get(
-      'SELECT * FROM medico WHERE crm = ? AND estado = ? AND senha = ?',
+      'SELECT crm, estado, nome, sobrenome FROM medico WHERE crm = ? AND estado = ? AND senha = ?',
       [crm, estado, password],
       (err, row) => {
         if (err) {
@@ -125,7 +125,14 @@ app.post('/login', (req, res) => {
           res.status(500).send('Erro ao autenticar médico.');
         } else {
           if (row) {
-            res.status(200).json({ success: true, message: 'Login médico bem-sucedido.' });
+            res.status(200).json({
+              success: true,
+              message: 'Login médico bem-sucedido.',
+              crm: row.crm,
+              estado: row.estado,
+              nome: row.nome,
+              sobrenome: row.sobrenome
+            });
           } else {
             res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
           }
@@ -135,7 +142,7 @@ app.post('/login', (req, res) => {
   } else if (userType === 'paciente') {
     const { cpf } = req.body;
     db.get(
-      'SELECT * FROM pacientes WHERE cpf = ? AND senha = ?',
+      'SELECT id, cpf, nome, sobrenome FROM pacientes WHERE cpf = ? AND senha = ?',
       [cpf, password],
       (err, row) => {
         if (err) {
@@ -143,7 +150,14 @@ app.post('/login', (req, res) => {
           res.status(500).send('Erro ao autenticar paciente.');
         } else {
           if (row) {
-            res.status(200).json({ success: true, message: 'Login paciente bem-sucedido.' });
+            res.status(200).json({
+              success: true,
+              message: 'Login paciente bem-sucedido.',
+              id: row.id,
+              cpf: row.cpf,
+              nome: row.nome,
+              sobrenome: row.sobrenome
+            });
           } else {
             res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
           }
@@ -154,6 +168,7 @@ app.post('/login', (req, res) => {
     res.status(400).send('Tipo de usuário inválido.');
   }
 });
+
 
 app.get('/receitas', (req, res) => {
   db.all('SELECT * FROM receitas', (err, rows) => {

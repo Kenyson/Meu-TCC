@@ -15,6 +15,7 @@ import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-p
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { PmsNewReceitaComponent } from './components/pms-new-receita/pms-new-receita.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { PmsNewReceitaComponent } from './components/pms-new-receita/pms-new-rec
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
