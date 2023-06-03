@@ -27,6 +27,13 @@ export class LoginComponent {
     this.crm = '';
     this.cpf = '';
     this.password = '';
+
+    // Verificar se o usuário já está logado
+    if (this.authService.isMedicoLoggedIn()) {
+      this.router.navigate(['/medico']); // Redirecionar para a tela de médico
+    } else if (this.authService.isPacienteLoggedIn()) {
+      this.router.navigate(['/paciente']); // Redirecionar para a tela de paciente
+    }
   }
 
   changeOption(option: string) {

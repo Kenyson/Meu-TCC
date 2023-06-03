@@ -56,14 +56,14 @@ db.serialize(() => {
 app.post('/medicos', (req, res) => {
   const novoMedico = req.body;
   db.run(
-    'INSERT INTO medico (crm, estado, nome, sobrenome, telefone, especialidade, senha) VALUES (?, ?, ?, ?, ?, ?)',
+    'INSERT INTO medico (crm, estado, nome, sobrenome, telefone, especialidade, senha) VALUES (?, ?, ?, ?, ?, ?, ?)',
     [novoMedico.crm, novoMedico.estado, novoMedico.nome, novoMedico.sobrenome, novoMedico.telefone, novoMedico.especialidade, novoMedico.senha],
     function (err) {
       if (err) {
         console.error(err);
         res.status(500).send('Erro ao adicionar médico ao banco de dados.');
       } else {
-        novoMedico.id = this.lastID;
+        novoMedico.crm = this.lastID; // Correção: Definir o valor do crm com o ID gerado
         res.status(201).json(novoMedico);
       }
     }
@@ -92,6 +92,19 @@ app.get('/pacientes', (req, res) => {
   });
 });
 
+// Rota para retornar pacientes filtrados por uma característica específica
+app.get('/pacientes/filtrar', (req, res) => {
+  const { caracteristica, valor } = req.query;
+  const query = `SELECT id, nome, sobrenome, cpf, data_nascimento, telefone FROM pacientes WHERE ${caracteristica} = ?`;
+  db.all(query, [valor], (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erro ao obter pacientes filtrados do banco de dados.');
+    } else {
+      res.json(rows);
+    }
+  });
+});
 
 app.post('/pacientes', (req, res) => {
   const novoPaciente = req.body;
@@ -109,7 +122,6 @@ app.post('/pacientes', (req, res) => {
     }
   );
 });
-
 
 app.post('/login', (req, res) => {
   const { userType, password } = req.body;
@@ -169,12 +181,25 @@ app.post('/login', (req, res) => {
   }
 });
 
-
 app.get('/receitas', (req, res) => {
   db.all('SELECT * FROM receitas', (err, rows) => {
     if (err) {
       console.error(err);
       res.status(500).send('Erro ao obter receitas do banco de dados.');
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Rota para retornar receitas filtradas por uma característica específica
+app.get('/receitas/filtrar', (req, res) => {
+  const { caracteristica, valor } = req.query;
+  const query = `SELECT * FROM receitas WHERE ${caracteristica} = ?`;
+  db.all(query, [valor], (err, rows) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erro ao obter receitas filtradas do banco de dados.');
     } else {
       res.json(rows);
     }
@@ -197,6 +222,7 @@ app.post('/receitas', (req, res) => {
     }
   );
 });
+
 app.listen(porta, () => {
-  console.log(`Servidor está executando na porta ${porta}`);
+  console.log(`Servidor rodando na porta ${porta}`);
 });

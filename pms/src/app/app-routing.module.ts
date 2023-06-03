@@ -6,6 +6,7 @@ import { PmsMedicoComponent } from './components/pms-medico/pms-medico.component
 import { PmsPacienteComponent } from './components/pms-paciente/pms-paciente.component';
 import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-paciente.component';
 import { PmsNewReceitaComponent } from './components/pms-new-receita/pms-new-receita.component';
+import { AuthGuard } from './services/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -24,18 +25,26 @@ const routes: Routes = [
   {
     path: 'medico',
     component: PmsMedicoComponent,
+    canActivate: [AuthGuard],
+    data: { userType: 'medico' } // Defina o tipo de usuário necessário para acessar a rota
   },
   {
     path: 'paciente',
     component: PmsPacienteComponent,
+    canActivate: [AuthGuard],
+    data: { userType: 'paciente' } // Defina o tipo de usuário necessário para acessar a rota
   },
   {
     path: 'newPaciente',
     component: PmsNewPacienteComponent,
+    canActivate: [AuthGuard],
+    data: { userType: 'medico' } // Defina o tipo de usuário necessário para acessar a rota
   },
   {
     path: 'receita',
     component: PmsNewReceitaComponent,
+    canActivate: [AuthGuard],
+    data: { userType: 'medico' } // Defina o tipo de usuário necessário para acessar a rota
   },
 ];
 

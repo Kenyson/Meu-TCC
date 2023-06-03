@@ -16,10 +16,17 @@ interface Paciente {
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly STORAGE_KEY = 'authData';
+
   public usuarioLogado: Medico | Paciente | null = null;
   mensagemErro: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    const storedData = localStorage.getItem(this.STORAGE_KEY);
+    if (storedData) {
+      this.usuarioLogado = JSON.parse(storedData);
+    }
+  }
 
   loginMedico(crm: string, estado: string, password: string) {
     axios
@@ -31,8 +38,8 @@ export class AuthService {
       })
       .then((response: AxiosResponse<any>) => {
         if (response.data.success) {
-          console.log(response.data.nome);
-          this.usuarioLogado = { crm, nome: response.data.nome};
+          this.usuarioLogado = { crm, nome: response.data.nome };
+          this.saveDataToStorage();
           this.router.navigate(['/medico']);
         } else {
           this.mensagemErro = response.data.message;
@@ -53,8 +60,8 @@ export class AuthService {
       })
       .then((response: AxiosResponse<any>) => {
         if (response.data.success) {
-          console.log(response.data.nome);
-          this.usuarioLogado = { nome:response.data.nome , cpf,};
+          this.usuarioLogado = { nome: response.data.nome, cpf };
+          this.saveDataToStorage();
           this.router.navigate(['/paciente']);
         } else {
           this.mensagemErro = response.data.message;
@@ -68,10 +75,27 @@ export class AuthService {
 
   logout(): void {
     this.usuarioLogado = null;
+    this.clearDataFromStorage();
     this.router.navigate(['/login']);
   }
 
   isUsuarioAutenticado(): boolean {
     return this.usuarioLogado !== null;
+  }
+
+  isMedicoLoggedIn(): boolean {
+    return this.usuarioLogado !== null && 'crm' in this.usuarioLogado;
+  }
+
+  isPacienteLoggedIn(): boolean {
+    return this.usuarioLogado !== null && 'cpf' in this.usuarioLogado;
+  }
+
+  private saveDataToStorage(): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.usuarioLogado));
+  }
+
+  private clearDataFromStorage(): void {
+    localStorage.removeItem(this.STORAGE_KEY);
   }
 }

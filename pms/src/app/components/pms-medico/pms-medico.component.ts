@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface Paciente {
   id: number;
@@ -26,10 +27,11 @@ export class PmsMedicoComponent implements OnInit {
 
   items: Paciente[] = [];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private authService:AuthService, private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.obterPacientes();
+    console.log('CPF do medico logado:', this.authService.usuarioLogado);
   }
 
   obterPacientes() {

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-pms-header',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./pms-header.component.css']
 })
 export class PmsHeaderComponent {
+  constructor(private authService: AuthService) {}
 
+  logout(): void {
+    this.authService.logout();
+  }
 }

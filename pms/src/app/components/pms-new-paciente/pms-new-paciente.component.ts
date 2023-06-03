@@ -18,15 +18,14 @@ export class PmsNewPacienteComponent {
   constructor(private http: HttpClient) {}
 
   checkExistingCPF() {
-    this.http.get<any[]>('http://localhost:3000/pacientes?cpf=' + this.cpf)
+    this.http.get<any[]>('http://localhost:3000/pacientes/filtrar?caracteristica=cpf&valor=' + this.cpf)
       .subscribe(
         (response: any[]) => {
           if (response.length > 0) {
             this.cpfExists = true;
-            console.log(response)
             this.paciente = response[0];
           } else {
-            this.cpfExists = false;
+            this.cpfExists = true;
           }
         },
         (error) => {
@@ -35,15 +34,17 @@ export class PmsNewPacienteComponent {
       );
   }
 
+
   submitForm() {
     this.http.post('http://localhost:3000/pacientes', this.paciente)
       .subscribe(
-        (novaReceita: any) => {
-          console.log('Receita salva:', novaReceita);
+        (novoPaciente: any) => {
+          console.log('Paciente adicionado:', novoPaciente);
         },
         (error) => {
-          console.error('Erro ao salvar a receita:', error);
+          console.error('Erro ao adicionar o paciente:', error);
         }
       );
   }
+
 }
