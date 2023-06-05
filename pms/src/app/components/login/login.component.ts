@@ -48,4 +48,8 @@ export class LoginComponent {
       this.authService.loginPaciente(this.cpf, this.password);
     }
   }
+
+  criarCadastro() {
+    this.router.navigate(['/cadastro']); // Redirecionar para a página de cadastro
+  }
 }
