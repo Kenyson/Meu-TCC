@@ -12,6 +12,11 @@ interface Paciente {
   data_nascimento: string;
 }
 
+interface Medico {
+  crm: string;
+  nome: string;
+}
+
 @Component({
   selector: 'app-pms-medico',
   templateUrl: './pms-medico.component.html',
@@ -35,26 +40,28 @@ export class PmsMedicoComponent implements OnInit {
   }
 
   obterPacientes() {
-    let cpfMedicoLogado: string | undefined = undefined; // Inicializa a variável com valor indefinido
+    console.log('chamou')
+    let crmMedicoLogado: string | undefined = undefined;
 
-    if (this.authService.usuarioLogado != null && 'id' in this.authService.usuarioLogado) {
-      cpfMedicoLogado = this.authService.usuarioLogado.id.toString(); // Obtém o ID do médico logado
-    }
+    crmMedicoLogado = (this.authService.usuarioLogado as Medico).crm;
+
 
     console.log(this.authService.usuarioLogado);
 
-    if (cpfMedicoLogado) { // Verifica se o cpfMedicoLogado possui um valor válido
+    if (crmMedicoLogado) {
+      console.log('este é o crm medico logado',crmMedicoLogado)
       this.http
-        .get<Paciente[]>(`http://localhost:3000/pacientes?cpfMedico=${cpfMedicoLogado}`)
+        .get<Paciente[]>(`http://localhost:3000/pacientes?cpfMedico=${crmMedicoLogado}`)
         .subscribe((pacientes) => {
           this.items = pacientes.map((paciente) => ({
             ...paciente,
             idade: this.calcularIdade(paciente.data_nascimento),
           }));
+
+          localStorage.setItem('pacientes', JSON.stringify(this.items)); // Armazena os pacientes em cache
         });
     }
   }
-
 
   calcularIdade(dataNascimento: string): number {
     const hoje = new Date();
