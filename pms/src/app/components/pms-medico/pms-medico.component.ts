@@ -40,16 +40,15 @@ export class PmsMedicoComponent implements OnInit {
   }
 
   obterPacientes() {
-    console.log('chamou')
+    console.log('chamou');
     let crmMedicoLogado: string | undefined = undefined;
 
     crmMedicoLogado = (this.authService.usuarioLogado as Medico).crm;
 
-
     console.log(this.authService.usuarioLogado);
 
     if (crmMedicoLogado) {
-      console.log('este é o crm medico logado',crmMedicoLogado)
+      console.log('este é o crm medico logado', crmMedicoLogado);
       this.http
         .get<Paciente[]>(`http://localhost:3000/pacientes?cpfMedico=${crmMedicoLogado}`)
         .subscribe((pacientes) => {
