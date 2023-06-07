@@ -42,11 +42,11 @@ db.serialize(() => {
       nome_comercial TEXT,
       principio_ativo TEXT,
       indicacao TEXT,
-      medico_id INTEGER,
+      medico_id TEXT,
       paciente_id INTEGER,
       data_prescricao TEXT,
       posologia TEXT,
-      observacoes TEXT,
+      nomeMedico TEXT,
       FOREIGN KEY (medico_id) REFERENCES medico (crm),
       FOREIGN KEY (paciente_id) REFERENCES pacientes (id)
     )
@@ -190,7 +190,7 @@ app.post('/login', (req, res) => {
             res.status(200).json({
               success: true,
               message: 'Login paciente bem-sucedido.',
-              id: row.id,
+              id: row.id, // Adiciona o ID do paciente na resposta
               cpf: row.cpf,
               nome: row.nome,
               sobrenome: row.sobrenome
@@ -207,37 +207,37 @@ app.post('/login', (req, res) => {
 });
 
 app.get('/receitas', (req, res) => {
-  db.all('SELECT * FROM receitas', (err, rows) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Erro ao obter receitas do banco de dados.');
-    } else {
-      res.json(rows);
-    }
-  });
+  const paciente_id = req.query.paciente_id;
+
+  if (paciente_id) {
+    const query = `
+      SELECT *
+      FROM receitas
+      WHERE paciente_id = ?`;
+    db.all(query, [paciente_id], (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Erro ao obter receitas do banco de dados.');
+      } else {
+        res.json(rows);
+      }
+    });
+  } else {
+    res.status(400).send('ID do paciente não encontrado.');
+  }
 });
 
 app.post('/receitas', (req, res) => {
   const novaReceita = req.body;
   db.run(
-    'INSERT INTO receitas (nome_comercial, principio_ativo, indicacao, medico_id, paciente_id, data_prescricao, posologia, observacoes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [
-      novaReceita.nome_comercial,
-      novaReceita.principio_ativo,
-      novaReceita.indicacao,
-      novaReceita.medico_id,
-      novaReceita.paciente_id,
-      novaReceita.data_prescricao,
-      novaReceita.posologia,
-      novaReceita.observacoes
-    ],
+    'INSERT INTO receitas (nome_comercial, principio_ativo, indicacao, medico_id, paciente_id, data_prescricao, posologia, nomeMedico) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+    [novaReceita.nome_comercial, novaReceita.principio_ativo, novaReceita.indicacao, novaReceita.medico_id, novaReceita.paciente_id, novaReceita.data_prescricao, novaReceita.posologia, novaReceita.nomeMedico],
     function (err) {
       if (err) {
-        console.error(err);
+        console.error(err.message);
         res.status(500).send('Erro ao adicionar receita ao banco de dados.');
       } else {
-        novaReceita.id = this.lastID;
-        res.status(201).json(novaReceita);
+        res.send('Receita adicionada com sucesso!');
       }
     }
   );
@@ -263,7 +263,7 @@ app.get('/medico/:crm/pacientes', (req, res) => {
 app.get('/paciente/:id/receitas', (req, res) => {
   const { id } = req.params;
   const query = `
-    SELECT r.id, r.nome_comercial, r.principio_ativo, r.indicacao, r.data_prescricao, r.posologia, r.observacoes, m.nome AS nome_medico, m.sobrenome AS sobrenome_medico
+    SELECT r.id, r.nome_comercial, r.principio_ativo, r.indicacao, r.data_prescricao, r.posologia, m.nome AS nome_medico, m.sobrenome AS sobrenome_medico
     FROM receitas r
     INNER JOIN medico m ON r.medico_id = m.crm
     WHERE r.paciente_id = ?`;
@@ -293,7 +293,6 @@ app.post('/conexao', (req, res) => {
     }
   );
 });
-
 
 app.listen(porta, () => {
   console.log(`Servidor rodando na porta ${porta}`);

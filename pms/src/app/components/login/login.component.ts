@@ -28,11 +28,10 @@ export class LoginComponent {
     this.cpf = '';
     this.password = '';
 
-    // Verificar se o usuário já está logado
     if (this.authService.isMedicoLoggedIn()) {
-      this.router.navigate(['/medico']); // Redirecionar para a tela de médico
+      this.router.navigate(['/medico']);
     } else if (this.authService.isPacienteLoggedIn()) {
-      this.router.navigate(['/paciente']); // Redirecionar para a tela de paciente
+      this.router.navigate(['/paciente']);
     }
   }
 
@@ -50,6 +49,6 @@ export class LoginComponent {
   }
 
   criarCadastro() {
-    this.router.navigate(['/cadastro']); // Redirecionar para a página de cadastro
+    this.router.navigate(['/cadastro']);
   }
 }

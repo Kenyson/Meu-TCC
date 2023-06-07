@@ -8,6 +8,7 @@ interface Medico {
 }
 
 interface Paciente {
+  id: string;
   cpf: string;
   nome: string;
 }
@@ -68,7 +69,8 @@ export class AuthService {
       })
       .then((response: AxiosResponse<any>) => {
         if (response.data.success) {
-          this.usuarioLogado = { id: response.data.cpf, nome: response.data.nome, cpf };
+          console.log(response.data.id)
+          this.usuarioLogado = { id: response.data.id, nome: response.data.nome, cpf };
           this.saveDataToStorage();
           this.router.navigate(['/paciente']);
         } else {
@@ -102,7 +104,7 @@ export class AuthService {
   private saveDataToStorage(): void {
     if (this.usuarioLogado !== null) {
       const { id, ...data } = this.usuarioLogado;
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.usuarioLogado));
     }
   }
 

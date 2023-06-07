@@ -1,8 +1,10 @@
 <app-pms-header></app-pms-header>
+
 <app-pms-grid
   [colunas]="colunas"
   [items]="items"
   [novoItemNome]="'Adicionar Paciente'"
-  [routerLink]="'/newPaciente'"
+  [novoItemFuncao]="redirecionarParaNewPaciente"
 ></app-pms-grid>
+
 <app-pms-footer></app-pms-footer>

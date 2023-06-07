@@ -36,31 +36,44 @@ export class PmsMedicoComponent implements OnInit {
 
   ngOnInit() {
     this.obterPacientes();
-    console.log('Crm do médico logado:', this.authService.usuarioLogado);
   }
 
- obterPacientes() {
-  console.log('chamou');
-  let crmMedicoLogado: string | undefined = undefined;
+  redirecionarParaNewPaciente() {
 
-  crmMedicoLogado = (this.authService.usuarioLogado as Medico).crm; // crm do médico logado
-
-  console.log(this.authService.usuarioLogado);
-
-  if (crmMedicoLogado) {
-    console.log('este é o crm medico logado', crmMedicoLogado);
-    this.http
-      .get<Paciente[]>(`http://localhost:3000/medico/${crmMedicoLogado}/pacientes`)
-      .subscribe((pacientes) => {
-        this.items = pacientes.map((paciente) => ({
-          ...paciente,
-          idade: this.calcularIdade(paciente.data_nascimento),
-        }));
-
-        localStorage.setItem('pacientes', JSON.stringify(this.items)); // Armazena os pacientes em cache
-      });
+    this.router.navigate(['/newPaciente']);
   }
-}
+
+
+  obterPacientes() {
+
+    let crmMedicoLogado: string | undefined = undefined;
+
+    crmMedicoLogado = (this.authService.usuarioLogado as Medico).crm;
+
+    if (crmMedicoLogado) {
+
+      this.http
+        .get<Paciente[]>(`http://localhost:3000/medico/${crmMedicoLogado}/pacientes`)
+        .subscribe((pacientes) => {
+          this.items = pacientes.map((paciente) => ({
+            ...paciente,
+            idade: this.calcularIdade(paciente.data_nascimento),
+          }));
+
+          localStorage.setItem('pacientes', JSON.stringify(this.items)); // Armazena os pacientes em cache
+        });
+    }
+  }
+
+  onItemClicadoDuplo(event: { item: Paciente, id: any }) {
+    const pacienteId = event.item.id;
+    this.redirecionarPaciente(event.item);
+  }
+
+  redirecionarPaciente(paciente: Paciente) {
+    const pacienteId = paciente.id;
+    this.router.navigate(['/paciente', pacienteId]);
+  }
 
 
   calcularIdade(dataNascimento: string): number {

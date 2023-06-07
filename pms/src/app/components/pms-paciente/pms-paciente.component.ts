@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
+import { ItemsService } from 'src/app/services/items.service';
 
 interface Receita {
   id: number;
@@ -10,8 +11,16 @@ interface Receita {
   posologia: string;
   indicacao: string;
   dataPrescricao: Date;
-  medico: string;
+  nomeMedico: string;
 }
+
+interface Paciente {
+  id: string;
+  cpf: string;
+  nome: string;
+}
+
+let paciente_id: string;
 
 @Component({
   selector: 'app-pms-paciente',
@@ -20,27 +29,40 @@ interface Receita {
 })
 export class PmsPacienteComponent implements OnInit {
   colunas = [
-    { nome: 'Nome Comercial', propriedade: 'nomeComercial' },
-    { nome: 'Princípio Ativo', propriedade: 'principioAtivo' },
+    { nome: 'Nome Comercial', propriedade: 'nome_comercial' },
+    { nome: 'Princípio Ativo', propriedade: 'principio_ativo' },
     { nome: 'Posologia', propriedade: 'posologia' },
     { nome: 'Indicação', propriedade: 'indicacao' },
-    { nome: 'Data da Prescrição', propriedade: 'dataPrescricao' },
-    { nome: 'Médico', propriedade: 'medico' },
+    { nome: 'Data da Prescrição', propriedade: 'data_prescricao' },
+    { nome: 'Médico', propriedade: 'nomeMedico' },
   ];
 
   items: Receita[] = [];
 
-  constructor(private authService:AuthService, private http: HttpClient) {}
+  constructor(private authService: AuthService, private http: HttpClient, private itemsService: ItemsService) {}
 
   ngOnInit() {
+    if (this.authService.isPacienteLoggedIn()) {
+
+      paciente_id = (this.authService.usuarioLogado as Paciente).id;
+
+    }else if(this.authService.isMedicoLoggedIn()){
+
+      paciente_id = this.itemsService.getItemSelecionado().id;
+    }
     this.obterReceitas();
-       console.log('CPF do paciente logado:', this.authService.usuarioLogado);
   }
 
   obterReceitas() {
-    this.http.get<Receita[]>('http://localhost:3000/receitas')
-      .subscribe(receitas => {
+    const url = `http://localhost:3000/receitas?paciente_id=${paciente_id}`;
+
+    this.http.get<Receita[]>(url).subscribe(
+      (receitas: Receita[]) => {
         this.items = receitas;
-      });
+      },
+      (error: any) => {
+        console.error('Ocorreu um erro ao obter as receitas:', error);
+      }
+    );
   }
 }

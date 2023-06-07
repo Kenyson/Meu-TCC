@@ -1,5 +1,13 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from './../../services/auth.service';
+import { ItemsService } from 'src/app/services/items.service';
+import { format } from 'date-fns';
+
+interface Medico {
+  crm: string;
+  nome: string;
+}
 
 @Component({
   selector: 'app-pms-new-receita',
@@ -7,17 +15,27 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./pms-new-receita.component.css']
 })
 export class PmsNewReceitaComponent {
-  paciente = {
-    nomePaciente: '',
-    medicamento: '',
+  receita = {
+    nome_comercial: '',
+    principio_ativo: '',
     indicacao: '',
-    posologia: ''
+    medico_id: '',
+    paciente_id: '',
+    data_prescricao: '',
+    posologia: '',
+    nomeMedico: ''
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private authService: AuthService, private itemService: ItemsService) {}
 
   submitForm() {
-    this.http.post('http://localhost:3000/receitas', this.paciente)
+    this.receita.data_prescricao = format(new Date(), 'dd-MM-yyyy');
+    this.receita.medico_id = (this.authService.usuarioLogado as Medico).crm;
+    this.receita.paciente_id = (this.itemService.getItemSelecionado().id);
+    this.receita.nomeMedico = (this.authService.usuarioLogado as Medico).nome;
+
+
+    this.http.post('http://localhost:3000/receitas', this.receita)
       .subscribe(
         (novaReceita: any) => {
           console.log('Receita salva:', novaReceita);

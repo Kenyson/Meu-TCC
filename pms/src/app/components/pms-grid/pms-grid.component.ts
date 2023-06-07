@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
+import { ItemsService } from 'src/app/services/items.service';
 
 export interface Item {
+  id: any;
   [prop: string]: any;
 }
 
@@ -19,8 +22,15 @@ export class PmsGridComponent {
   @Input() colunas: Coluna[] = [];
   @Input() novoItemNome: string = '';
   @Input() mostrarBotao: boolean = true;
-  @Input() routerLink: string | any[] = '';
-  @Output() onItemClicadoDuplo: EventEmitter<Item> = new EventEmitter<Item>();
+  @Output() onItemClicadoDuplo: EventEmitter<{ item: Item, id: any }> = new EventEmitter<{ item: Item, id: any }>();
+  @Input() novoItemFuncao: () => void = () => {};
+
+  constructor(private router: Router, private itemsService: ItemsService) {}
+
+  redirecionarPaciente(item: Item) {
+    const pacienteId = item.id;
+    this.router.navigate(['/paciente', pacienteId]);
+  }
 
   paginaAtual: number = 1;
   itensPorPagina: number = 10;
@@ -53,5 +63,11 @@ export class PmsGridComponent {
 
   selecionarPagina(pagina: number) {
     this.paginaAtual = pagina;
+  }
+
+  itemClicadoDuplo(item: Item) {
+    this.itemsService.setItemSelecionado(item);
+    this.router.navigate(['/paciente']);
+
   }
 }

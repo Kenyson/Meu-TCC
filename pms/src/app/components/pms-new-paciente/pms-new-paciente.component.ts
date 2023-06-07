@@ -47,7 +47,6 @@ export class PmsNewPacienteComponent {
   submitForm() {
 
 
-    console.log(this.paciente)
     if (this.preexiste) {
       const conexao = {
         medico_id: (this.authService.usuarioLogado as Medico).crm,
