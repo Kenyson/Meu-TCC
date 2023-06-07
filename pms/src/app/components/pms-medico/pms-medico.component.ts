@@ -60,7 +60,7 @@ export class PmsMedicoComponent implements OnInit {
             idade: this.calcularIdade(paciente.data_nascimento),
           }));
 
-          localStorage.setItem('pacientes', JSON.stringify(this.items)); // Armazena os pacientes em cache
+          localStorage.setItem('pacientes', JSON.stringify(this.items));
         });
     }
   }

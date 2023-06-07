@@ -1,28 +1,39 @@
 <div class="bg">
   <div class="container">
-    <table class="table table-bordered table-rounded">
-      <thead class="bg-gray text-black">
-        <tr>
-          <th *ngFor="let coluna of colunas">{{ coluna.nome }}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of itensExibidos" class="bg-light" (dblclick)="itemClicadoDuplo(item)">
-          <td *ngFor="let coluna of colunas">{{ item[coluna.propriedade] }}</td>
-        </tr>
-      </tbody>
-      <tfoot class="bg-gray">
-        <tr>
-          <td [attr.colspan]="colunas.length" class="col-12">
-            <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
-            <div class="pagination" style="float: right;">
-              <button class="pagination-btn" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">&lt;</button>
-              <button *ngFor="let pagina of paginas" class="pagination-btn" (click)="selecionarPagina(pagina)" [ngClass]="{ 'active': pagina === paginaAtual }">{{ pagina }}</button>
-              <button class="pagination-btn" (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">&gt;</button>
-            </div>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+    <div class="search-bar">
+      <input type="text" placeholder="Pesquisar" [(ngModel)]="pesquisa" />
+    </div>
+    <div class="table-responsive">
+      <table class="table table-bordered table-rounded">
+        <thead class="bg-gray text-black">
+          <tr>
+            <th *ngFor="let coluna of colunas">{{ coluna.nome }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of itensExibidos" class="bg-light" (dblclick)="itemClicadoDuplo(item)">
+            <td *ngFor="let coluna of colunas">{{ item[coluna.propriedade] }}</td>
+          </tr>
+        </tbody>
+        <tfoot class="bg-gray">
+          <tr>
+            <td [attr.colspan]="colunas.length">
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                  <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
+                </div>
+                <div class="pagination-wrapper">
+                  <div class="pagination">
+                    <button class="pagination-btn" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">&lt;</button>
+                    <button *ngFor="let pagina of paginas" class="pagination-btn" (click)="selecionarPagina(pagina)" [ngClass]="{ 'active': pagina === paginaAtual }">{{ pagina }}</button>
+                    <button class="pagination-btn" (click)="proximaPagina()" [disabled]="paginaAtual === totalPaginas">&gt;</button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </div>

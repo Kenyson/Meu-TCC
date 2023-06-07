@@ -34,15 +34,27 @@ export class PmsGridComponent {
 
   paginaAtual: number = 1;
   itensPorPagina: number = 10;
+  pesquisa: string = '';
+
+  get itensFiltrados(): Item[] {
+    if (this.pesquisa.trim() === '') {
+      return this.items;
+    }
+    const pesquisaLower = this.pesquisa.toLowerCase();
+    return this.items.filter(item =>
+      Object.values(item).some(value => value && value.toString().toLowerCase().includes(pesquisaLower))
+    );
+  }
+
 
   get itensExibidos(): Item[] {
     const startIndex = (this.paginaAtual - 1) * this.itensPorPagina;
     const endIndex = startIndex + this.itensPorPagina;
-    return this.items.slice(startIndex, endIndex);
+    return this.itensFiltrados.slice(startIndex, endIndex);
   }
 
   get totalPaginas(): number {
-    return Math.ceil(this.items.length / this.itensPorPagina);
+    return Math.ceil(this.itensFiltrados.length / this.itensPorPagina);
   }
 
   get paginas(): number[] {
@@ -68,6 +80,5 @@ export class PmsGridComponent {
   itemClicadoDuplo(item: Item) {
     this.itemsService.setItemSelecionado(item);
     this.router.navigate(['/paciente']);
-
   }
 }

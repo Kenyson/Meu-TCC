@@ -26,25 +26,25 @@ const routes: Routes = [
     path: 'medico',
     component: PmsMedicoComponent,
     canActivate: [AuthGuard],
-    data: { userType: 'medico' } // Defina o tipo de usuário necessário para acessar a rota
+    data: { userType: 'medico' }
   },
   {
     path: 'paciente',
     component: PmsPacienteComponent,
     canActivate: [AuthGuard],
-    data: { userType: 'paciente' } // Defina o tipo de usuário necessário para acessar a rota
+    data: { userType: 'paciente' }
   },
   {
     path: 'newPaciente',
     component: PmsNewPacienteComponent,
     canActivate: [AuthGuard],
-    data: { userType: 'medico' } // Defina o tipo de usuário necessário para acessar a rota
+    data: { userType: 'medico' }
   },
   {
     path: 'receita',
     component: PmsNewReceitaComponent,
     canActivate: [AuthGuard],
-    data: { userType: 'medico' } // Defina o tipo de usuário necessário para acessar a rota
+    data: { userType: 'medico' }
   },
 ];
 
