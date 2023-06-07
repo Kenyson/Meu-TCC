@@ -38,19 +38,24 @@ export class PmsPacienteComponent implements OnInit {
   ];
 
   items: Receita[] = [];
+  mostrarBotao: boolean = false;
 
-  constructor(private authService: AuthService, private http: HttpClient, private itemsService: ItemsService) {}
+  constructor(private authService: AuthService, private http: HttpClient, private itemsService: ItemsService, private router: Router) {}
 
   ngOnInit() {
     if (this.authService.isPacienteLoggedIn()) {
-
       paciente_id = (this.authService.usuarioLogado as Paciente).id;
-
-    }else if(this.authService.isMedicoLoggedIn()){
-
+      this.mostrarBotao = false;
+    } else if (this.authService.isMedicoLoggedIn()) {
       paciente_id = this.itemsService.getItemSelecionado().id;
+      this.mostrarBotao = true;
     }
     this.obterReceitas();
+  }
+
+  redirecionarParaReceita() {
+
+    this.router.navigate(['/receita']);
   }
 
   obterReceitas() {

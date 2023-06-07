@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./pms-header.component.css']
 })
 export class PmsHeaderComponent {
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   logout(): void {
     this.authService.logout();

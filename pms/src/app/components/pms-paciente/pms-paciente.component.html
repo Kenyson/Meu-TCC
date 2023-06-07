@@ -2,9 +2,8 @@
 <app-pms-grid
   [colunas]="colunas"
   [items]="items"
-  [mostrarBotao]="true"
+  [mostrarBotao]="mostrarBotao"
   [novoItemNome]="'Novo Receita'"
-  [routerLink]="'/receita'"
-  [routerLink]="'/receita'"
+  [novoItemFuncao]="redirecionarParaReceita"
 ></app-pms-grid>
 <app-pms-footer></app-pms-footer>

@@ -126,27 +126,41 @@ app.get('/pacientes/filtrar', (req, res) => {
 
 app.post('/pacientes', (req, res) => {
   const novoPaciente = req.body;
-  db.run(
-    'INSERT INTO pacientes (nome, sobrenome, cpf, data_nascimento, telefone, senha) VALUES (?, ?, ?, ?, ?, ?)',
-    [
-      novoPaciente.nome,
-      novoPaciente.sobrenome,
-      novoPaciente.cpf,
-      novoPaciente.dataNascimento,
-      novoPaciente.telefone,
-      novoPaciente.senha
-    ],
-    function (err) {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Erro ao adicionar paciente ao banco de dados.');
+
+  db.get('SELECT id FROM pacientes WHERE cpf = ?', [novoPaciente.cpf], (err, row) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erro ao verificar o CPF no banco de dados.');
+    } else {
+      if (row) {
+        res.status(400).send('CPF já cadastrado.');
       } else {
-        novoPaciente.id = this.lastID;
-        res.status(201).json(novoPaciente);
+
+        db.run(
+          'INSERT INTO pacientes (nome, sobrenome, cpf, data_nascimento, telefone, senha) VALUES (?, ?, ?, ?, ?, ?)',
+          [
+            novoPaciente.nome,
+            novoPaciente.sobrenome,
+            novoPaciente.cpf,
+            novoPaciente.dataNascimento,
+            novoPaciente.telefone,
+            novoPaciente.senha
+          ],
+          function (err) {
+            if (err) {
+              console.error(err);
+              res.status(500).send('Erro ao adicionar paciente ao banco de dados.');
+            } else {
+              novoPaciente.id = this.lastID;
+              res.status(201).json(novoPaciente);
+            }
+          }
+        );
       }
     }
-  );
+  });
 });
+
 
 app.post('/login', (req, res) => {
   const { userType, password } = req.body;
