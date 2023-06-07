@@ -1,6 +1,7 @@
 import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface Medico {
   crm: string;
@@ -24,7 +25,7 @@ export class PmsNewPacienteComponent {
   };
 
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private http: HttpClient, private router: Router , private authService: AuthService) {}
 
   checkExistingCPF() {
     this.http.get<any[]>('http://localhost:3000/pacientes/filtrar?caracteristica=cpf&valor=' + this.cpf)
@@ -44,8 +45,11 @@ export class PmsNewPacienteComponent {
       );
   }
 
-  submitForm() {
+  goToMedicoScreen() {
+    this.router.navigate(['/medico']);
+  }
 
+  submitForm() {
 
     if (this.preexiste) {
       const conexao = {
@@ -56,6 +60,7 @@ export class PmsNewPacienteComponent {
         .subscribe(
           (response) => {
             console.log('Conexão realizada com sucesso!');
+            this.goToMedicoScreen();
           },
           (error) => {
             console.error('Erro ao criar a conexão:', error);
@@ -80,6 +85,7 @@ export class PmsNewPacienteComponent {
               .subscribe(
                 (response) => {
                   console.log('Paciente e conexão criados com sucesso!');
+                  this.goToMedicoScreen();
                 },
                 (error) => {
                   console.error('Erro ao criar a conexão:', error);

@@ -65,28 +65,43 @@ db.serialize(() => {
 
 app.post('/medicos', (req, res) => {
   const novoMedico = req.body;
-  db.run(
-    'INSERT INTO medico (crm, estado, nome, sobrenome, telefone, especialidade, senha) VALUES (?, ?, ?, ?, ?, ?, ?)',
-    [
-      novoMedico.crm,
-      novoMedico.estado,
-      novoMedico.nome,
-      novoMedico.sobrenome,
-      novoMedico.telefone,
-      novoMedico.especialidade,
-      novoMedico.senha
-    ],
-    function (err) {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Erro ao adicionar médico ao banco de dados.');
+
+
+  db.get('SELECT crm, estado FROM medico WHERE crm = ? AND estado = ?', [novoMedico.crm, novoMedico.estado], (err, row) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Erro ao verificar o CRM e estado no banco de dados.');
+    } else {
+      if (row) {
+        res.status(400).send('Já existe um médico com o mesmo CRM e estado.');
       } else {
-        novoMedico.crm = this.lastID;
-        res.status(201).json(novoMedico);
+
+        db.run(
+          'INSERT INTO medico (crm, estado, nome, sobrenome, telefone, especialidade, senha) VALUES (?, ?, ?, ?, ?, ?, ?)',
+          [
+            novoMedico.crm,
+            novoMedico.estado,
+            novoMedico.nome,
+            novoMedico.sobrenome,
+            novoMedico.telefone,
+            novoMedico.especialidade,
+            novoMedico.senha
+          ],
+          function (err) {
+            if (err) {
+              console.error(err);
+              res.status(500).send('Erro ao adicionar médico ao banco de dados.');
+            } else {
+              novoMedico.crm = this.lastID;
+              res.status(201).json(novoMedico);
+            }
+          }
+        );
       }
     }
-  );
+  });
 });
+
 
 app.get('/medicos', (req, res) => {
   db.all('SELECT crm, estado, nome, sobrenome, telefone, especialidade FROM medico', (err, rows) => {
@@ -110,7 +125,6 @@ app.get('/pacientes', (req, res) => {
   });
 });
 
-// Rota para retornar pacientes filtrados por uma característica específica
 app.get('/pacientes/filtrar', (req, res) => {
   const { caracteristica, valor } = req.query;
   const query = `SELECT id, nome, sobrenome, cpf, data_nascimento, telefone FROM pacientes WHERE ${caracteristica} = ?`;
@@ -204,7 +218,7 @@ app.post('/login', (req, res) => {
             res.status(200).json({
               success: true,
               message: 'Login paciente bem-sucedido.',
-              id: row.id, // Adiciona o ID do paciente na resposta
+              id: row.id,
               cpf: row.cpf,
               nome: row.nome,
               sobrenome: row.sobrenome
@@ -251,11 +265,12 @@ app.post('/receitas', (req, res) => {
         console.error(err.message);
         res.status(500).send('Erro ao adicionar receita ao banco de dados.');
       } else {
-        res.send('Receita adicionada com sucesso!');
+        res.status(201).json({ message: 'Receita adicionada com sucesso!' });
       }
     }
   );
 });
+
 
 app.get('/medico/:crm/pacientes', (req, res) => {
   const { crm } = req.params;
@@ -293,20 +308,37 @@ app.get('/paciente/:id/receitas', (req, res) => {
 
 app.post('/conexao', (req, res) => {
   const novaConexao = req.body;
-  db.run(
-    'INSERT INTO medico_paciente (medico_id, paciente_id) VALUES (?, ?)',
+
+  db.get(
+    'SELECT id FROM medico_paciente WHERE medico_id = ? AND paciente_id = ?',
     [novaConexao.medico_id, novaConexao.paciente_id],
-    function (err) {
+    (err, row) => {
       if (err) {
         console.error(err);
-        res.status(500).send('Erro ao adicionar conexão ao banco de dados.');
+        res.status(500).send('Erro ao verificar a conexão no banco de dados.');
       } else {
-        novaConexao.id = this.lastID;
-        res.status(201).json(novaConexao);
+        if (row) {
+          res.status(400).send('Já existe uma conexão entre o médico e o paciente informados.');
+        } else {
+          db.run(
+            'INSERT INTO medico_paciente (medico_id, paciente_id) VALUES (?, ?)',
+            [novaConexao.medico_id, novaConexao.paciente_id],
+            function (err) {
+              if (err) {
+                console.error(err);
+                res.status(500).send('Erro ao adicionar conexão ao banco de dados.');
+              } else {
+                novaConexao.id = this.lastID;
+                res.status(201).json(novaConexao);
+              }
+            }
+          );
+        }
       }
     }
   );
 });
+
 
 app.listen(porta, () => {
   console.log(`Servidor rodando na porta ${porta}`);

@@ -22,9 +22,9 @@
           <input type="text" id="posologia" class="form-control" [(ngModel)]="receita.posologia" name="posologia" required>
         </div>
 
-
         <div class="text-center" style="margin-top: 10px;">
           <button type="submit" class="btn btn-primary" [disabled]="receitaForm.invalid">Cadastrar</button>
+          <button class="btn btn-secondary" (click)="goToPatientScreen()">Voltar</button>
         </div>
       </form>
     </div>

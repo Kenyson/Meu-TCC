@@ -11,7 +11,6 @@ export class LoginComponent {
   selectedOption: string;
   estados: string[];
   selectedEstado: string;
-  mensagemErro: string;
   crm: string;
   cpf: string;
   password: string;
@@ -23,7 +22,6 @@ export class LoginComponent {
     this.selectedOption = 'medico';
     this.estados = ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'];
     this.selectedEstado = '';
-    this.mensagemErro = '';
     this.crm = '';
     this.cpf = '';
     this.password = '';
@@ -37,7 +35,6 @@ export class LoginComponent {
 
   changeOption(option: string) {
     this.selectedOption = option;
-    this.mensagemErro = '';
   }
 
   submitForm() {
