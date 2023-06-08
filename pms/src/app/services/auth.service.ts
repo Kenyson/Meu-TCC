@@ -37,50 +37,58 @@ export class AuthService {
     }
   }
 
-  loginMedico(crm: string, estado: string, password: string) {
-    axios
-      .post('http://localhost:3000/login', {
-        userType: 'medico',
-        crm,
-        estado,
-        password
-      })
-      .then((response: AxiosResponse<any>) => {
-        if (response.data.success) {
-          this.usuarioLogado = { id: response.data.crm, crm, nome: response.data.nome };
-          this.saveDataToStorage();
-          this.router.navigate(['/medico']);
-        } else {
-          this.mensagemErro = response.data.message;
-        }
-      })
-      .catch((error: any) => {
-        console.error(error);
-        this.mensagemErro = 'Erro ao realizar o login do médico.';
-      });
+  loginMedico(crm: string, estado: string, password: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      axios
+        .post('http://localhost:3000/login', {
+          userType: 'medico',
+          crm,
+          estado,
+          password
+        })
+        .then((response: AxiosResponse<any>) => {
+          if (response.data.success) {
+            this.usuarioLogado = { id: response.data.crm, crm, nome: response.data.nome };
+            this.saveDataToStorage();
+            this.router.navigate(['/medico']);
+            resolve();
+          } else {
+            this.mensagemErro = response.data.message;
+            reject(response.data.message);
+          }
+        })
+        .catch((error: any) => {
+          this.mensagemErro = error.response.data.message;
+          reject(this.mensagemErro);
+        });
+    });
   }
 
-  loginPaciente(cpf: string, password: string) {
-    axios
-      .post('http://localhost:3000/login', {
-        userType: 'paciente',
-        cpf,
-        password
-      })
-      .then((response: AxiosResponse<any>) => {
-        if (response.data.success) {
-          console.log(response.data.id)
-          this.usuarioLogado = { id: response.data.id, nome: response.data.nome, cpf };
-          this.saveDataToStorage();
-          this.router.navigate(['/paciente']);
-        } else {
-          this.mensagemErro = response.data.message;
-        }
-      })
-      .catch((error: any) => {
-        console.error(error);
-        this.mensagemErro = 'Erro ao realizar o login do paciente.';
-      });
+  loginPaciente(cpf: string, password: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      axios
+        .post('http://localhost:3000/login', {
+          userType: 'paciente',
+          cpf,
+          password
+        })
+        .then((response: AxiosResponse<any>) => {
+          if (response.data.success) {
+            this.usuarioLogado = { id: response.data.id, nome: response.data.nome, cpf };
+            this.saveDataToStorage();
+            this.router.navigate(['/paciente']);
+            resolve();
+          } else {
+            this.mensagemErro = response.data.message;
+            reject(response.data.message);
+          }
+        })
+        .catch((error: any) => {
+          console.error(error.response.data.message);
+          this.mensagemErro = error.response.data.message;
+          reject(this.mensagemErro);
+        });
+    });
   }
 
   logout(): void {

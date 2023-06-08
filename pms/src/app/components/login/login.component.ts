@@ -14,6 +14,7 @@ export class LoginComponent {
   crm: string;
   cpf: string;
   password: string;
+  errorMessage: string;
 
   constructor(
     private router: Router,
@@ -25,6 +26,7 @@ export class LoginComponent {
     this.crm = '';
     this.cpf = '';
     this.password = '';
+    this.errorMessage = '';
 
     if (this.authService.isMedicoLoggedIn()) {
       this.router.navigate(['/medico']);
@@ -38,10 +40,28 @@ export class LoginComponent {
   }
 
   submitForm() {
+    this.errorMessage = '';
+
     if (this.selectedOption === 'medico') {
-      this.authService.loginMedico(this.crm, this.selectedEstado, this.password);
+      this.authService.loginMedico(this.crm, this.selectedEstado, this.password)
+        .then(() => {
+          // Login bem-sucedido
+          this.router.navigate(['/medico']);
+        })
+        .catch((error) => {
+          // Erro durante o login
+          this.errorMessage = error;
+        });
     } else if (this.selectedOption === 'paciente') {
-      this.authService.loginPaciente(this.cpf, this.password);
+      this.authService.loginPaciente(this.cpf, this.password)
+        .then(() => {
+          // Login bem-sucedido
+          this.router.navigate(['/paciente']);
+        })
+        .catch((error) => {
+          // Erro durante o login
+          this.errorMessage = error;
+        });
     }
   }
 

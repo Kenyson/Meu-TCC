@@ -44,6 +44,9 @@
                 <button class="btn btn-link" (click)="criarCadastro()">Criar novo cadastro</button>
               </div>
             </form>
+            <div class="text-center text-danger mt-3" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
           </div>
         </div>
       </div>
