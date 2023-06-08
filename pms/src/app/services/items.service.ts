@@ -24,4 +24,8 @@ export class ItemsService {
   getItemSelecionado(): Item {
     return this.itemSelecionado;
   }
+
+  getItemSelecionadoNome(): string {
+    return this.itemSelecionado['nome'] || '';
+  }
 }

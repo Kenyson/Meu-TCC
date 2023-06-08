@@ -39,6 +39,7 @@ export class PmsPacienteComponent implements OnInit {
 
   items: Receita[] = [];
   mostrarBotao: boolean = false;
+  nomeDoPaciente: String = '';
 
   constructor(private authService: AuthService, private http: HttpClient, private itemsService: ItemsService, private router: Router) {}
 
@@ -46,7 +47,9 @@ export class PmsPacienteComponent implements OnInit {
     if (this.authService.isPacienteLoggedIn()) {
       paciente_id = (this.authService.usuarioLogado as Paciente).id;
       this.mostrarBotao = false;
+      this.nomeDoPaciente = (this.authService.usuarioLogado as Paciente).nome;
     } else if (this.authService.isMedicoLoggedIn()) {
+      this.nomeDoPaciente = this.nomeDoPaciente = this.itemsService.getItemSelecionadoNome();
       paciente_id = this.itemsService.getItemSelecionado().id;
       this.mostrarBotao = true;
     }

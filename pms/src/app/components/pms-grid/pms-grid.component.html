@@ -5,6 +5,15 @@
     </div>
     <div class="table-responsive">
       <table class="table table-bordered table-rounded">
+        <thead class="bg-gray">
+          <tr>
+            <td [attr.colspan]="colunas.length">
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <h2>{{ tituloTabela }}</h2>
+              </div>
+            </td>
+          </tr>
+        </thead>
         <thead class="bg-gray text-black">
           <tr>
             <th *ngFor="let coluna of colunas">{{ coluna.nome }}</th>

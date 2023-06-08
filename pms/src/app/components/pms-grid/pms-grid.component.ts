@@ -22,6 +22,7 @@ export class PmsGridComponent {
   @Input() colunas: Coluna[] = [];
   @Input() novoItemNome: string = '';
   @Input() mostrarBotao: boolean = true;
+  @Input() tituloTabela: string = '';
   @Output() onItemClicadoDuplo: EventEmitter<{ item: Item, id: any }> = new EventEmitter<{ item: Item, id: any }>();
   @Input() novoItemFuncao: () => void = () => {};
 
@@ -45,7 +46,6 @@ export class PmsGridComponent {
       Object.values(item).some(value => value && value.toString().toLowerCase().includes(pesquisaLower))
     );
   }
-
 
   get itensExibidos(): Item[] {
     const startIndex = (this.paginaAtual - 1) * this.itensPorPagina;

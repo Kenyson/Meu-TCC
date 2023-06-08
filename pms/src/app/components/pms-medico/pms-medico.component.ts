@@ -31,27 +31,25 @@ export class PmsMedicoComponent implements OnInit {
   ];
 
   items: Paciente[] = [];
+  nomeMedicoLogado: string = '';
 
   constructor(private authService: AuthService, private http: HttpClient, private router: Router) {}
 
   ngOnInit() {
     this.obterPacientes();
+    this.obterNomeMedicoLogado();
   }
 
   redirecionarParaNewPaciente() {
-
     this.router.navigate(['/newPaciente']);
   }
 
-
   obterPacientes() {
-
     let crmMedicoLogado: string | undefined = undefined;
 
     crmMedicoLogado = (this.authService.usuarioLogado as Medico).crm;
 
     if (crmMedicoLogado) {
-
       this.http
         .get<Paciente[]>(`http://localhost:3000/medico/${crmMedicoLogado}/pacientes`)
         .subscribe((pacientes) => {
@@ -75,7 +73,6 @@ export class PmsMedicoComponent implements OnInit {
     this.router.navigate(['/paciente', pacienteId]);
   }
 
-
   calcularIdade(dataNascimento: string): number {
     const hoje = new Date();
     const dataNasc = new Date(dataNascimento);
@@ -85,5 +82,9 @@ export class PmsMedicoComponent implements OnInit {
       idade--;
     }
     return idade;
+  }
+
+  private obterNomeMedicoLogado() {
+    this.nomeMedicoLogado = (this.authService.usuarioLogado as Medico).nome;
   }
 }
