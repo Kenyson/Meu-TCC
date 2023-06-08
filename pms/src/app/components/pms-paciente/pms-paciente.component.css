@@ -1,0 +1,5 @@
+.paciente-container {
+  background-image: url('../../../assets/doctor-office.jpg');
+  background-size: cover;
+  background-position: center;
+}

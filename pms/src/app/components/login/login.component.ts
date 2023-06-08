@@ -19,7 +19,7 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService
   ) {
-    this.selectedOption = 'medico';
+    this.selectedOption = 'paciente';
     this.estados = ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'];
     this.selectedEstado = '';
     this.crm = '';

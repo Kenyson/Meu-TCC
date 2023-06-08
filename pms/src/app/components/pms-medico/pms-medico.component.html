@@ -1,10 +1,12 @@
 <app-pms-header></app-pms-header>
 
-<app-pms-grid
-  [colunas]="colunas"
-  [items]="items"
-  [novoItemNome]="'Adicionar Paciente'"
-  [novoItemFuncao]="redirecionarParaNewPaciente"
-></app-pms-grid>
+<div class="medico-container">
+  <app-pms-grid
+    [colunas]="colunas"
+    [items]="items"
+    [novoItemNome]="'Adicionar Paciente'"
+    [novoItemFuncao]="redirecionarParaNewPaciente"
+  ></app-pms-grid>
+</div>
 
 <app-pms-footer></app-pms-footer>

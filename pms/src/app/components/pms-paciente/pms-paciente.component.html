@@ -1,9 +1,11 @@
 <app-pms-header></app-pms-header>
-<app-pms-grid
-  [colunas]="colunas"
-  [items]="items"
-  [mostrarBotao]="mostrarBotao"
-  [novoItemNome]="'Novo Receita'"
-  [novoItemFuncao]="redirecionarParaReceita"
-></app-pms-grid>
+<div class="paciente-container">
+  <app-pms-grid
+    [colunas]="colunas"
+    [items]="items"
+    [mostrarBotao]="mostrarBotao"
+    [novoItemNome]="'Novo Receita'"
+    [novoItemFuncao]="redirecionarParaReceita"
+  ></app-pms-grid>
+</div>
 <app-pms-footer></app-pms-footer>
