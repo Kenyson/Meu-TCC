@@ -141,15 +141,37 @@ app.get('/pacientes/filtrar', (req, res) => {
 app.post('/pacientes', (req, res) => {
   const novoPaciente = req.body;
 
-  db.get('SELECT id FROM pacientes WHERE cpf = ?', [novoPaciente.cpf], (err, row) => {
+  db.get('SELECT id, senha FROM pacientes WHERE cpf = ?', [novoPaciente.cpf], (err, row) => {
     if (err) {
       console.error(err);
       res.status(500).send('Erro ao verificar o CPF no banco de dados.');
     } else {
       if (row) {
-        res.status(400).send('CPF já cadastrado.');
+        if (!row.senha) {
+          db.run(
+            'UPDATE pacientes SET nome = ?, sobrenome = ?, data_nascimento = ?, telefone = ?, senha = ? WHERE cpf = ?',
+            [
+              novoPaciente.nome,
+              novoPaciente.sobrenome,
+              novoPaciente.dataNascimento,
+              novoPaciente.telefone,
+              novoPaciente.senha,
+              novoPaciente.cpf
+            ],
+            function (err) {
+              if (err) {
+                console.error(err);
+                res.status(500).send('Erro ao atualizar paciente no banco de dados.');
+              } else {
+                novoPaciente.id = row.id;
+                res.status(200).json(novoPaciente);
+              }
+            }
+          );
+        } else {
+          res.status(400).send('CPF já cadastrado.');
+        }
       } else {
-
         db.run(
           'INSERT INTO pacientes (nome, sobrenome, cpf, data_nascimento, telefone, senha) VALUES (?, ?, ?, ?, ?, ?)',
           [
@@ -174,6 +196,7 @@ app.post('/pacientes', (req, res) => {
     }
   });
 });
+
 
 
 app.post('/login', (req, res) => {
