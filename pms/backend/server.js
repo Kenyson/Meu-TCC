@@ -5,7 +5,7 @@ const sqlite3 = require('sqlite3').verbose();
 
 const porta = 3000;
 
-const dbPath = 'C:/Users/Kenyson/Desktop/TCC/Meu-TCC/pms/backend/database.db';
+const dbPath = __dirname + '/database.db';
 const db = new sqlite3.Database(dbPath);
 
 app.use(express.json());

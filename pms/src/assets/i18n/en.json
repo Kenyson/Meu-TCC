@@ -1,0 +1,120 @@
+{
+  "login": {
+    "title": "Login",
+    "loginType": "Login Type:",
+    "doctor": "Doctor",
+    "patient": "Patient",
+    "crm": "CRM:",
+    "state": "State:",
+    "selectState": "Select",
+    "cpf": "CPF:",
+    "patientCpf": "Patient CPF:",
+    "password": "Password:",
+    "enter": "Enter",
+    "createAccount": "Create new account",
+    "welcome": "Welcome,",
+    "logout": "Logout"
+  },
+  "register": {
+    "title": "Register",
+    "userType": "User Type:",
+    "doctor": "Doctor",
+    "patient": "Patient",
+    "crm": "CRM:",
+    "state": "State:",
+    "selectState": "Select state",
+    "firstName": "First Name:",
+    "lastName": "Last Name:",
+    "specialty": "Specialty:",
+    "phone": "Phone:",
+    "email": "Email:",
+    "password": "Password:",
+    "confirmPassword": "Confirm Password:",
+    "cpf": "CPF:",
+    "patientCpf": "Patient CPF:",
+    "birthDate": "Birth Date:",
+    "address": "Address:",
+    "register": "Register",
+    "addPatient": "Add Patient",
+    "passwordMismatch": "Password and confirmation do not match.",
+    "requiredFields": "Please fill in all required fields."
+  },
+  "header": {
+    "home": "Home",
+    "welcome": "Welcome,",
+    "logout": "Logout"
+  },
+  "medico": {
+    "title": "Table of Patients of Dr.",
+    "backToPatients": "Back to Patient List",
+    "addPatient": "Add Patient",
+    "columns": {
+      "name": "Name",
+      "age": "Age",
+      "cpf": "CPF",
+      "birthDate": "Birth Date",
+      "phone": "Phone"
+    },
+    "registerPrescription": "Register Prescription",
+    "selectPatient": "Select patient:",
+    "commercialName": "Commercial Name:",
+    "activeIngredient": "Active Ingredient:",
+    "indication": "Indication:",
+    "prescriptionDate": "Prescription Date:",
+    "posology": "Posology:",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "paciente": {
+    "title": "Prescriptions of",
+    "newPrescription": "New Prescription",
+    "viewPrescription": "View Prescription",
+    "columns": {
+      "commercialName": "Commercial Name",
+      "activeIngredient": "Active Ingredient",
+      "indication": "Indication",
+      "prescriptionDate": "Prescription Date",
+      "posology": "Posology",
+      "doctor": "Doctor"
+    }
+  },
+  "footer": {
+    "text": "PMS - Patient Management System"
+  },
+  "search": {
+    "placeholder": "Search"
+  },
+  "grid": {
+    "actions": "Actions",
+    "view": "View"
+  },
+  "states": {
+    "Acre": "Acre",
+    "Alagoas": "Alagoas",
+    "Amapá": "Amapá",
+    "Amazonas": "Amazonas",
+    "Bahia": "Bahia",
+    "Ceará": "Ceará",
+    "Distrito Federal": "Distrito Federal",
+    "Espírito Santo": "Espírito Santo",
+    "Goiás": "Goiás",
+    "Maranhão": "Maranhão",
+    "Mato Grosso": "Mato Grosso",
+    "Mato Grosso do Sul": "Mato Grosso do Sul",
+    "Minas Gerais": "Minas Gerais",
+    "Pará": "Pará",
+    "Paraíba": "Paraíba",
+    "Paraná": "Paraná",
+    "Pernambuco": "Pernambuco",
+    "Piauí": "Piauí",
+    "Rio de Janeiro": "Rio de Janeiro",
+    "Rio Grande do Norte": "Rio Grande do Norte",
+    "Rio Grande do Sul": "Rio Grande do Sul",
+    "Rondônia": "Rondônia",
+    "Roraima": "Roraima",
+    "Santa Catarina": "Santa Catarina",
+    "São Paulo": "São Paulo",
+    "Sergipe": "Sergipe",
+    "Tocantins": "Tocantins"
+  }
+}

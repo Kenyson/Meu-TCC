@@ -4,9 +4,11 @@
     [colunas]="colunas"
     [items]="items"
     [mostrarBotao]="mostrarBotao"
-    [novoItemNome]="'Novo Receita'"
+    [mostrarBotaoVoltarMedico]="mostrarBotao"
+    [novoItemNome]="novoItemNomeValue"
     [novoItemFuncao]="redirecionarParaReceita"
-    [tituloTabela]="'Receitas de ' + nomeDoPaciente"
+    [tituloTabela]="tituloTabela"
+    (onViewButtonClick)="verReceita($event)"
   ></app-pms-grid>
 </div>
 <app-pms-footer></app-pms-footer>

@@ -6,24 +6,24 @@
       <div class="col-sm-12 col-md-6 col-lg-4">
         <div class="card">
           <div class="card-body">
-            <h2 class="text-center mb-4">Cadastro</h2>
+            <h2 class="text-center mb-4">{{ t('register.title') }}</h2>
             <div class="form-group">
-              <label for="userType">Tipo de Usuário:</label>
+              <label for="userType">{{ t('register.userType') }}</label>
               <select id="userType" class="form-control" [(ngModel)]="selectedOption" name="userType">
-                <option value="medico">Médico</option>
-                <option value="paciente">Paciente</option>
+                <option value="medico">{{ t('register.doctor') }}</option>
+                <option value="paciente">{{ t('register.patient') }}</option>
               </select>
             </div>
             <form (ngSubmit)="submitForm()" #cadastroForm="ngForm">
               <div *ngIf="selectedOption === 'medico'">
                 <div class="form-group">
-                  <label for="crm">CRM:</label>
+                  <label for="crm">{{ t('register.crm') }}</label>
                   <input type="text" id="crm" class="form-control" name="crm" [(ngModel)]="medicoData.crm" required>
                 </div>
                 <div class="form-group">
-                  <label for="estado">Estado:</label>
+                  <label for="estado">{{ t('register.state') }}</label>
                   <select id="estado" class="form-control" name="estado" [(ngModel)]="medicoData.estado" required>
-                    <option value="">Selecione o estado</option>
+                    <option value="">{{ t('register.selectState') }}</option>
                     <option value="Acre">Acre</option>
                     <option value="Alagoas">Alagoas</option>
                     <option value="Amapá">Amapá</option>
@@ -54,74 +54,74 @@
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="nome">Nome:</label>
+                  <label for="nome">{{ t('register.firstName') }}</label>
                   <input type="text" id="nome" class="form-control" name="nome" [(ngModel)]="medicoData.nome" required>
                 </div>
                 <div class="form-group">
-                  <label for="sobrenome">Sobrenome:</label>
+                  <label for="sobrenome">{{ t('register.lastName') }}</label>
                   <input type="text" id="sobrenome" class="form-control" name="sobrenome" [(ngModel)]="medicoData.sobrenome" required>
                 </div>
                 <div class="form-group">
-                  <label for="especialidade">Especialidade:</label>
+                  <label for="especialidade">{{ t('register.specialty') }}</label>
                   <input type="text" id="especialidade" class="form-control" name="especialidade" [(ngModel)]="medicoData.especialidade" required>
                 </div>
                 <div class="form-group">
-                  <label for="telefone">Telefone:</label>
+                  <label for="telefone">{{ t('register.phone') }}</label>
                   <input type="text" id="telefone" class="form-control" name="telefone" [(ngModel)]="medicoData.telefone">
                 </div>
                 <div class="form-group">
-                  <label for="email">Email:</label>
+                  <label for="email">{{ t('register.email') }}</label>
                   <input type="email" id="email" class="form-control" name="email" [(ngModel)]="medicoData.email" required>
                 </div>
                 <div class="form-group">
-                  <label for="password">Senha:</label>
+                  <label for="password">{{ t('register.password') }}</label>
                   <input type="password" id="password" class="form-control" name="password" [(ngModel)]="medicoData.senha" required>
                 </div>
                 <div class="form-group">
-                  <label for="confirmPassword">Confirmação da Senha:</label>
+                  <label for="confirmPassword">{{ t('register.confirmPassword') }}</label>
                   <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="medicoData.Confirmsenha" required>
                 </div>
               </div>
               <div *ngIf="selectedOption === 'paciente'">
                 <div class="form-group">
-                  <label for="cpf">CPF:</label>
+                  <label for="cpf">{{ t('register.cpf') }}</label>
                   <input type="text" id="cpf" class="form-control" name="cpf" [(ngModel)]="pacienteData.cpf" required>
                 </div>
                 <div class="form-group">
-                  <label for="nome">Nome:</label>
+                  <label for="nome">{{ t('register.firstName') }}</label>
                   <input type="text" id="nome" class="form-control" name="nome" [(ngModel)]="pacienteData.nome" required>
                 </div>
                 <div class="form-group">
-                  <label for="sobrenome">Sobrenome:</label>
+                  <label for="sobrenome">{{ t('register.lastName') }}</label>
                   <input type="text" id="sobrenome" class="form-control" name="sobrenome" [(ngModel)]="pacienteData.sobrenome" required>
                 </div>
                 <div class="form-group">
-                  <label for="email">Email:</label>
+                  <label for="email">{{ t('register.email') }}</label>
                   <input type="email" id="email" class="form-control" name="email" [(ngModel)]="pacienteData.email">
                 </div>
                 <div class="form-group">
-                  <label for="telefone">Telefone:</label>
+                  <label for="telefone">{{ t('register.phone') }}</label>
                   <input type="text" id="telefone" class="form-control" name="telefone" [(ngModel)]="pacienteData.telefone">
                 </div>
                 <div class="form-group">
-                  <label for="dataNascimento">Data de Nascimento:</label>
+                  <label for="dataNascimento">{{ t('register.birthDate') }}</label>
                   <input type="date" id="dataNascimento" class="form-control" name="dataNascimento" [(ngModel)]="pacienteData.dataNascimento" required>
                 </div>
                 <div class="form-group">
-                  <label for="endereco">Endereço:</label>
+                  <label for="endereco">{{ t('register.address') }}</label>
                   <input type="text" id="endereco" class="form-control" name="endereco" [(ngModel)]="pacienteData.endereco" required>
                 </div>
                 <div class="form-group">
-                  <label for="password">Senha:</label>
+                  <label for="password">{{ t('register.password') }}</label>
                   <input type="password" id="password" class="form-control" name="password" [(ngModel)]="pacienteData.senha" required>
                 </div>
                 <div class="form-group">
-                  <label for="confirmPassword">Confirmação da Senha:</label>
+                  <label for="confirmPassword">{{ t('register.confirmPassword') }}</label>
                   <input type="password" id="confirmPassword" class="form-control" name="confirmPassword" [(ngModel)]="pacienteData.Confirmsenha" required>
                 </div>
               </div>
           <div class="text-center" style="margin-top: 10px;">
-            <button type="submit" class="btn btn-primary btn-block">Cadastrar</button>
+            <button type="submit" class="btn btn-primary btn-block">{{ t('register.register') }}</button>
           </div>
         </form>
         <div class="text-center text-danger mt-3" *ngIf="showError">

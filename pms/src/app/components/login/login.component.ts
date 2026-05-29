@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private translate: TranslateService
   ) {
     this.selectedOption = 'paciente';
     this.estados = ['Acre', 'Alagoas', 'Amapá', 'Amazonas', 'Bahia', 'Ceará', 'Distrito Federal', 'Espírito Santo', 'Goiás', 'Maranhão', 'Mato Grosso', 'Mato Grosso do Sul', 'Minas Gerais', 'Pará', 'Paraíba', 'Paraná', 'Pernambuco', 'Piauí', 'Rio de Janeiro', 'Rio Grande do Norte', 'Rio Grande do Sul', 'Rondônia', 'Roraima', 'Santa Catarina', 'São Paulo', 'Sergipe', 'Tocantins'];
@@ -45,21 +47,17 @@ export class LoginComponent {
     if (this.selectedOption === 'medico') {
       this.authService.loginMedico(this.crm, this.selectedEstado, this.password)
         .then(() => {
-          // Login bem-sucedido
           this.router.navigate(['/medico']);
         })
         .catch((error) => {
-          // Erro durante o login
           this.errorMessage = error;
         });
     } else if (this.selectedOption === 'paciente') {
       this.authService.loginPaciente(this.cpf, this.password)
         .then(() => {
-          // Login bem-sucedido
           this.router.navigate(['/paciente']);
         })
         .catch((error) => {
-          // Erro durante o login
           this.errorMessage = error;
         });
     }
@@ -67,5 +65,9 @@ export class LoginComponent {
 
   criarCadastro() {
     this.router.navigate(['/cadastro']);
+  }
+
+  t(key: string): string {
+    return this.translate.get(key);
   }
 }

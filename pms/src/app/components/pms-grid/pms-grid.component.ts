@@ -1,6 +1,7 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ItemsService } from 'src/app/services/items.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 export interface Item {
   id: any;
@@ -17,20 +18,38 @@ interface Coluna {
   templateUrl: './pms-grid.component.html',
   styleUrls: ['./pms-grid.component.css']
 })
-export class PmsGridComponent {
+export class PmsGridComponent implements OnInit {
   @Input() items: Item[] = [];
   @Input() colunas: Coluna[] = [];
   @Input() novoItemNome: string = '';
   @Input() mostrarBotao: boolean = true;
+  @Input() mostrarBotaoVoltarMedico: boolean = false;
   @Input() tituloTabela: string = '';
   @Output() onItemClicadoDuplo: EventEmitter<{ item: Item, id: any }> = new EventEmitter<{ item: Item, id: any }>();
+  @Output() onViewButtonClick: EventEmitter<Item> = new EventEmitter<Item>();
   @Input() novoItemFuncao: () => void = () => {};
 
-  constructor(private router: Router, private itemsService: ItemsService) {}
+  constructor(private router: Router, private itemsService: ItemsService, private translate: TranslateService) {}
+
+  ngOnInit() {
+    this.translate.use(this.translate.getCurrentLang());
+  }
+
+  onViewButton(item: Item) {
+    this.onViewButtonClick.emit(item);
+  }
+
+  voltarParaListaPacientes() {
+    this.router.navigate(['/medico']);
+  }
+
+  itemClicadoDuplo(item: Item) {
+    this.onItemClicadoDuplo.emit({ item, id: item.id });
+  }
 
   redirecionarPaciente(item: Item) {
     const pacienteId = item.id;
-    this.router.navigate(['/paciente', pacienteId]);
+    this.router.navigate(['/paciente']);
   }
 
   paginaAtual: number = 1;
@@ -77,8 +96,28 @@ export class PmsGridComponent {
     this.paginaAtual = pagina;
   }
 
-  itemClicadoDuplo(item: Item) {
-    this.itemsService.setItemSelecionado(item);
-    this.router.navigate(['/paciente']);
+  getTranslatedColumn(key: string): string {
+    const translated = this.translate.get(key);
+    return translated !== key ? translated : key;
+  }
+
+  getSearchPlaceholder(): string {
+    const translated = this.translate.get('search.placeholder');
+    return translated !== 'search.placeholder' ? translated : 'Search';
+  }
+
+  getActionsColumnHeader(): string {
+    const translated = this.translate.get('grid.actions');
+    return translated !== 'grid.actions' ? translated : 'Ações';
+  }
+
+  getActionButtonText(): string {
+    const translated = this.translate.get('grid.view');
+    return translated !== 'grid.view' ? translated : 'Ver';
+  }
+
+  getBackToPatientsText(): string {
+    const translated = this.translate.get('medico.backToPatients');
+    return translated !== 'medico.backToPatients' ? translated : 'Back to Patient List';
   }
 }

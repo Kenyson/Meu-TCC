@@ -4,9 +4,11 @@
   <app-pms-grid
     [colunas]="colunas"
     [items]="items"
-    [novoItemNome]="'Adicionar Paciente'"
+    [novoItemNome]="novoItemNomeValue"
     [novoItemFuncao]="redirecionarParaNewPaciente"
-    [tituloTabela]="'Tabela de Pacientes do Dr. ' + nomeMedicoLogado"
+    [tituloTabela]="tituloTabela"
+    (onViewButtonClick)="onViewButton($event)"
+    (onItemClicadoDuplo)="onItemClicadoDuplo($event)"
   ></app-pms-grid>
 </div>
 

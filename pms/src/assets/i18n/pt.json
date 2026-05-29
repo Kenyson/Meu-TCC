@@ -1,0 +1,120 @@
+{
+  "login": {
+    "title": "Login",
+    "loginType": "Tipo de Login:",
+    "doctor": "Médico",
+    "patient": "Paciente",
+    "crm": "CRM:",
+    "state": "Estado:",
+    "selectState": "Selecione",
+    "cpf": "CPF:",
+    "patientCpf": "CPF do Paciente:",
+    "password": "Senha:",
+    "enter": "Entrar",
+    "createAccount": "Criar novo cadastro",
+    "welcome": "Bem-vindo,",
+    "logout": "Logout"
+  },
+  "register": {
+    "title": "Cadastro",
+    "userType": "Tipo de Usuário:",
+    "doctor": "Médico",
+    "patient": "Paciente",
+    "crm": "CRM:",
+    "state": "Estado:",
+    "selectState": "Selecione o estado",
+    "firstName": "Nome:",
+    "lastName": "Sobrenome:",
+    "specialty": "Especialidade:",
+    "phone": "Telefone:",
+    "email": "Email:",
+    "password": "Senha:",
+    "confirmPassword": "Confirmação da Senha:",
+    "cpf": "CPF:",
+    "patientCpf": "CPF do Paciente:",
+    "birthDate": "Data de Nascimento:",
+    "address": "Endereço:",
+    "register": "Cadastrar",
+    "addPatient": "Adicionar Paciente",
+    "passwordMismatch": "A senha e a confirmação da senha não coincidem.",
+    "requiredFields": "Por favor, preencha todos os campos obrigatórios."
+  },
+  "header": {
+    "home": "Home",
+    "welcome": "Bem-vindo,",
+    "logout": "Logout"
+  },
+  "medico": {
+    "title": "Tabela de Pacientes do Dr.",
+    "backToPatients": "Voltar para Lista de Pacientes",
+    "addPatient": "Adicionar Paciente",
+    "columns": {
+      "name": "Nome",
+      "age": "Idade",
+      "cpf": "CPF",
+      "birthDate": "Data de Nascimento",
+      "phone": "Telefone"
+    },
+    "registerPrescription": "Cadastrar Receita",
+    "selectPatient": "Selecionar paciente:",
+    "commercialName": "Nome Comercial:",
+    "activeIngredient": "Princípio Ativo:",
+    "indication": "Indicação:",
+    "prescriptionDate": "Data da Prescrição:",
+    "posology": "Posologia:",
+    "save": "Salvar",
+    "cancel": "Cancelar"
+  },
+  "paciente": {
+    "title": "Receitas de",
+    "viewPrescription": "Visualizar Receita",
+    "newPrescription": "Nova Receita",
+    "columns": {
+      "commercialName": "Nome Comercial",
+      "activeIngredient": "Princípio Ativo",
+      "indication": "Indicação",
+      "prescriptionDate": "Data da Prescrição",
+      "posology": "Posologia",
+      "doctor": "Médico"
+    }
+  },
+  "footer": {
+    "text": "PMS - Sistema de Gestão de Pacientes"
+  },
+  "search": {
+    "placeholder": "Pesquisar"
+  },
+  "grid": {
+    "actions": "Ações",
+    "view": "Ver"
+  },
+  "states": {
+    "Acre": "Acre",
+    "Alagoas": "Alagoas",
+    "Amapá": "Amapá",
+    "Amazonas": "Amazonas",
+    "Bahia": "Bahia",
+    "Ceará": "Ceará",
+    "Distrito Federal": "Distrito Federal",
+    "Espírito Santo": "Espírito Santo",
+    "Goiás": "Goiás",
+    "Maranhão": "Maranhão",
+    "Mato Grosso": "Mato Grosso",
+    "Mato Grosso do Sul": "Mato Grosso do Sul",
+    "Minas Gerais": "Minas Gerais",
+    "Pará": "Pará",
+    "Paraíba": "Paraíba",
+    "Paraná": "Paraná",
+    "Pernambuco": "Pernambuco",
+    "Piauí": "Piauí",
+    "Rio de Janeiro": "Rio de Janeiro",
+    "Rio Grande do Norte": "Rio Grande do Norte",
+    "Rio Grande do Sul": "Rio Grande do Sul",
+    "Rondônia": "Rondônia",
+    "Roraima": "Roraima",
+    "Santa Catarina": "Santa Catarina",
+    "São Paulo": "São Paulo",
+    "Sergipe": "Sergipe",
+    "Tocantins": "Tocantins"
+  }
+}

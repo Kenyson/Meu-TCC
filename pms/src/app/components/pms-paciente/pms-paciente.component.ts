@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { ItemsService } from 'src/app/services/items.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 interface Receita {
   id: number;
@@ -29,36 +30,71 @@ let paciente_id: string;
 })
 export class PmsPacienteComponent implements OnInit {
   colunas = [
-    { nome: 'Nome Comercial', propriedade: 'nome_comercial' },
-    { nome: 'Princípio Ativo', propriedade: 'principio_ativo' },
-    { nome: 'Posologia', propriedade: 'posologia' },
-    { nome: 'Indicação', propriedade: 'indicacao' },
-    { nome: 'Data da Prescrição', propriedade: 'data_prescricao' },
-    { nome: 'Médico', propriedade: 'nomeMedico' },
+    { nome: 'paciente.columns.commercialName', propriedade: 'nome_comercial' },
+    { nome: 'paciente.columns.activeIngredient', propriedade: 'principio_ativo' },
+    { nome: 'paciente.columns.posology', propriedade: 'posologia' },
+    { nome: 'paciente.columns.indication', propriedade: 'indicacao' },
+    { nome: 'paciente.columns.prescriptionDate', propriedade: 'data_prescricao' },
+    { nome: 'paciente.columns.doctor', propriedade: 'nomeMedico' },
   ];
 
   items: Receita[] = [];
   mostrarBotao: boolean = false;
-  nomeDoPaciente: String = '';
+  nomeDoPaciente: string = '';
 
-  constructor(private authService: AuthService, private http: HttpClient, private itemsService: ItemsService, private router: Router) {}
+  get tituloTabela(): string {
+    return `${this.t('paciente.title')} ${this.nomeDoPaciente}`;
+  }
+
+  get novoItemNomeValue(): string {
+    return this.t('paciente.newPrescription');
+  }
+
+  constructor(private authService: AuthService, private http: HttpClient, private itemsService: ItemsService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit() {
+    const storedPacienteId = localStorage.getItem('paciente_id');
+    const storedPacienteNome = localStorage.getItem('paciente_nome');
+    const pacienteSelecionadoLS = JSON.parse(localStorage.getItem('pacienteSelecionado') || 'null');
+    
     if (this.authService.isPacienteLoggedIn()) {
       paciente_id = (this.authService.usuarioLogado as Paciente).id;
       this.mostrarBotao = false;
       this.nomeDoPaciente = (this.authService.usuarioLogado as Paciente).nome;
+      this.itemsService.setItemPaciente(this.authService.usuarioLogado as Paciente);
+      localStorage.setItem('paciente_id', paciente_id);
+      localStorage.setItem('paciente_nome', this.nomeDoPaciente);
     } else if (this.authService.isMedicoLoggedIn()) {
-      this.nomeDoPaciente = this.nomeDoPaciente = this.itemsService.getItemSelecionadoNome();
-      paciente_id = this.itemsService.getItemSelecionado().id;
+      let pacienteContexto: any = null;
+      if (pacienteSelecionadoLS && pacienteSelecionadoLS['nome']) {
+        pacienteContexto = pacienteSelecionadoLS;
+      } else if (storedPacienteId && storedPacienteNome) {
+        pacienteContexto = { id: storedPacienteId, nome: storedPacienteNome };
+      }
+      
+      if (pacienteContexto) {
+        this.nomeDoPaciente = pacienteContexto['nome'];
+        paciente_id = pacienteContexto['id'] || storedPacienteId || '';
+        this.itemsService.setItemPaciente(pacienteContexto);
+      } else {
+        paciente_id = '';
+      }
       this.mostrarBotao = true;
     }
     this.obterReceitas();
   }
 
   redirecionarParaReceita() {
-
     this.router.navigate(['/receita']);
+  }
+
+  verReceita(item: any) {
+    this.itemsService.setItemReceita(item);
+    const pacienteContexto = this.itemsService.getItemPaciente();
+    if (pacienteContexto) {
+      localStorage.setItem('pacienteSelecionado', JSON.stringify(pacienteContexto));
+    }
+    this.router.navigate(['/ver-receita']);
   }
 
   obterReceitas() {
@@ -72,5 +108,9 @@ export class PmsPacienteComponent implements OnInit {
         console.error('Ocorreu um erro ao obter as receitas:', error);
       }
     );
+  }
+
+  t(key: string): string {
+    return this.translate.get(key);
   }
 }

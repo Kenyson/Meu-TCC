@@ -6,6 +6,7 @@ import { PmsMedicoComponent } from './components/pms-medico/pms-medico.component
 import { PmsPacienteComponent } from './components/pms-paciente/pms-paciente.component';
 import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-paciente.component';
 import { PmsNewReceitaComponent } from './components/pms-new-receita/pms-new-receita.component';
+import { PmsViewReceitaComponent } from './components/pms-view-receita/pms-view-receita.component';
 import { AuthGuard } from './services/auth-guard.service';
 
 const routes: Routes = [
@@ -31,8 +32,7 @@ const routes: Routes = [
   {
     path: 'paciente',
     component: PmsPacienteComponent,
-    canActivate: [AuthGuard],
-    data: { userType: 'paciente' }
+    canActivate: [AuthGuard]
   },
   {
     path: 'newPaciente',
@@ -46,6 +46,15 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { userType: 'medico' }
   },
+  {
+    path: 'ver-receita',
+    component: PmsViewReceitaComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
 @NgModule({

@@ -4,28 +4,28 @@
   <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: calc(100vh - 120px);">
     <div class="card" style="width: 80%;">
       <div class="card-body">
-        <h2 class="text-center mb-4">Cadastro de Receita</h2>
+        <h2 class="text-center mb-4">{{ t('medico.registerPrescription') }}</h2>
         <form (ngSubmit)="submitForm()" #receitaForm="ngForm">
           <div class="form-group">
-            <label for="nome">Nome:</label>
+            <label for="nome">{{ t('medico.commercialName') }}</label>
             <input type="text" id="nome" class="form-control" [(ngModel)]="receita.nome_comercial" name="nome" required>
           </div>
           <div class="form-group">
-            <label for="medicamento">Medicamento:</label>
+            <label for="medicamento">{{ t('medico.activeIngredient') }}</label>
             <input type="text" id="medicamento" class="form-control" [(ngModel)]="receita.principio_ativo" name="medicamento" required>
           </div>
           <div class="form-group">
-            <label for="indicacao">Indicação:</label>
+            <label for="indicacao">{{ t('medico.indication') }}</label>
             <input type="text" id="indicacao" class="form-control" [(ngModel)]="receita.indicacao" name="indicacao" required>
           </div>
           <div class="form-group">
-            <label for="posologia">Posologia:</label>
+            <label for="posologia">{{ t('medico.posology') }}</label>
             <input type="text" id="posologia" class="form-control" [(ngModel)]="receita.posologia" name="posologia" required>
           </div>
 
           <div class="text-center" style="margin-top: 10px;">
-            <button type="submit" class="btn btn-primary" [disabled]="receitaForm.invalid">Cadastrar</button>
-            <button class="btn btn-secondary" style="margin-left: 10px;" (click)="goToPatientScreen()">Voltar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="receitaForm.invalid">{{ t('medico.save') }}</button>
+            <button class="btn btn-secondary" style="margin-left: 10px;" (click)="goToPatientScreen()">{{ t('medico.cancel') }}</button>
           </div>
 
         </form>

@@ -16,7 +16,9 @@ import { PmsNewPacienteComponent } from './components/pms-new-paciente/pms-new-p
 import { LoginComponent } from './components/login/login.component';
 import { CadastroComponent } from './components/cadastro/cadastro.component';
 import { PmsNewReceitaComponent } from './components/pms-new-receita/pms-new-receita.component';
+import { PmsViewReceitaComponent } from './components/pms-view-receita/pms-view-receita.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { TranslateService } from 'src/app/services/translate.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { AuthService } from 'src/app/services/auth.service';
     LoginComponent,
     CadastroComponent,
     PmsNewReceitaComponent,
+    PmsViewReceitaComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +42,7 @@ import { AuthService } from 'src/app/services/auth.service';
     AppRoutingModule,
     RouterModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, TranslateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,19 +9,26 @@ export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (this.authService.isUsuarioAutenticado()) {
-      const isMedico = this.authService.isMedicoLoggedIn();
-      const isPaciente = this.authService.isPacienteLoggedIn();
-
-      if (isMedico || (isPaciente && state.url === '/paciente')) {
-        return true;
-      } else {
-        this.router.navigate(['/login']);
-        return false;
-      }
-    } else {
+    if (!this.authService.isUsuarioAutenticado()) {
       this.router.navigate(['/login']);
       return false;
     }
+
+    const userType = route.data['userType'];
+    const isMedico = this.authService.isMedicoLoggedIn();
+    const isPaciente = this.authService.isPacienteLoggedIn();
+
+    if (userType) {
+      if (userType === 'medico' && !isMedico) {
+        this.router.navigate(['/login']);
+        return false;
+      }
+      if (userType === 'paciente' && !isPaciente) {
+        this.router.navigate(['/login']);
+        return false;
+      }
+    }
+
+    return true;
   }
 }

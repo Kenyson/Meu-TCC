@@ -2,6 +2,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { TranslateService } from 'src/app/services/translate.service';
 
 interface Medico {
   crm: string;
@@ -25,7 +26,7 @@ export class PmsNewPacienteComponent {
   };
 
 
-  constructor(private http: HttpClient, private router: Router , private authService: AuthService) {}
+  constructor(private http: HttpClient, private router: Router , private authService: AuthService, private translate: TranslateService) {}
 
   checkExistingCPF() {
     this.http.get<any[]>('http://localhost:3000/pacientes/filtrar?caracteristica=cpf&valor=' + this.cpf)
@@ -59,7 +60,6 @@ export class PmsNewPacienteComponent {
       this.http.post('http://localhost:3000/conexao', conexao)
         .subscribe(
           (response) => {
-            console.log('Conexão realizada com sucesso!');
             this.goToMedicoScreen();
           },
           (error) => {
@@ -84,7 +84,6 @@ export class PmsNewPacienteComponent {
             this.http.post('http://localhost:3000/conexao', conexao)
               .subscribe(
                 (response) => {
-                  console.log('Paciente e conexão criados com sucesso!');
                   this.goToMedicoScreen();
                 },
                 (error) => {
@@ -97,5 +96,9 @@ export class PmsNewPacienteComponent {
           }
         );
     }
+  }
+
+  t(key: string): string {
+    return this.translate.get(key);
   }
 }

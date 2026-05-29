@@ -1,13 +1,13 @@
 <div class="bg">
   <div class="container">
     <div class="search-bar">
-      <input type="text" placeholder="Pesquisar" [(ngModel)]="pesquisa" />
+      <input type="text" placeholder="{{ getSearchPlaceholder() }}" [(ngModel)]="pesquisa" />
     </div>
     <div class="table-responsive">
       <table class="table table-bordered table-rounded">
         <thead class="bg-gray">
           <tr>
-            <td [attr.colspan]="colunas.length">
+            <td [attr.colspan]="colunas.length + 1">
               <div class="d-flex justify-content-between align-items-center flex-wrap">
                 <h2>{{ tituloTabela }}</h2>
               </div>
@@ -16,22 +16,27 @@
         </thead>
         <thead class="bg-gray text-black">
           <tr>
-            <th *ngFor="let coluna of colunas">{{ coluna.nome }}</th>
+            <th *ngFor="let coluna of colunas">{{ getTranslatedColumn(coluna.nome) }}</th>
+            <th>{{ getActionsColumnHeader() }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of itensExibidos" class="bg-light" (dblclick)="itemClicadoDuplo(item)">
             <td *ngFor="let coluna of colunas">{{ item[coluna.propriedade] }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary" (click)="onViewButton(item)">{{ getActionButtonText() }}</button>
+            </td>
           </tr>
         </tbody>
         <tfoot class="bg-gray">
           <tr>
-            <td [attr.colspan]="colunas.length">
-              <div class="d-flex justify-content-between align-items-center flex-wrap">
-                <div>
-                  <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
-                </div>
-                <div class="pagination-wrapper">
+<td [attr.colspan]="colunas.length + 1">
+               <div class="d-flex justify-content-between align-items-center flex-wrap">
+                 <div>
+                   <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
+                   <button *ngIf="mostrarBotaoVoltarMedico" class="table-btn ms-2" (click)="voltarParaListaPacientes()">{{ getBackToPatientsText() }}</button>
+                 </div>
+                 <div class="pagination-wrapper">
                   <div class="pagination">
                     <button class="pagination-btn" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">&lt;</button>
                     <button *ngFor="let pagina of paginas" class="pagination-btn" (click)="selecionarPagina(pagina)" [ngClass]="{ 'active': pagina === paginaAtual }">{{ pagina }}</button>

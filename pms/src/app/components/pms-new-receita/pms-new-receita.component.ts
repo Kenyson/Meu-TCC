@@ -4,6 +4,7 @@ import { AuthService } from './../../services/auth.service';
 import { ItemsService } from 'src/app/services/items.service';
 import { format } from 'date-fns';
 import { Router } from '@angular/router';
+import { TranslateService } from 'src/app/services/translate.service';
 
 interface Medico {
   crm: string;
@@ -31,19 +32,20 @@ export class PmsNewReceitaComponent {
     private http: HttpClient,
     private authService: AuthService,
     private itemService: ItemsService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService
   ) {}
 
   submitForm() {
     this.receita.data_prescricao = format(new Date(), 'dd-MM-yyyy');
     this.receita.medico_id = (this.authService.usuarioLogado as Medico).crm;
-    this.receita.paciente_id = (this.itemService.getItemSelecionado().id);
+    const pacienteSelecionado = this.itemService.getItemSelecionado();
+    this.receita.paciente_id = pacienteSelecionado?.id || '';
     this.receita.nomeMedico = (this.authService.usuarioLogado as Medico).nome;
 
     this.http.post('http://localhost:3000/receitas', this.receita)
       .subscribe(
         () => {
-          console.log('Receita salva com sucesso!');
           this.goToPatientScreen();
         },
         (error) => {
@@ -52,9 +54,11 @@ export class PmsNewReceitaComponent {
       );
   }
 
-
-
   goToPatientScreen() {
     this.router.navigate(['/paciente']);
+  }
+
+  t(key: string): string {
+    return this.translate.get(key);
   }
 }

@@ -1,0 +1,49 @@
+<app-pms-header></app-pms-header>
+
+<div class="view-receita-container">
+  <div class="d-flex flex-column justify-content-center align-items-center" style="min-height: calc(100vh - 120px);">
+    <div class="card" style="width: 80%;">
+      <div class="card-body">
+        <h2 class="text-center mb-4">{{ t('paciente.viewPrescription') }}</h2>
+        <div *ngIf="receita">
+          <div class="form-group">
+            <label>{{ t('medico.commercialName') }}</label>
+            <p class="form-control-plaintext">{{ receita.nomeComercial }}</p>
+          </div>
+          <div class="form-group">
+            <label>{{ t('medico.activeIngredient') }}</label>
+            <p class="form-control-plaintext">{{ receita.principioAtivo }}</p>
+          </div>
+          <div class="form-group">
+            <label>{{ t('medico.indication') }}</label>
+            <p class="form-control-plaintext">{{ receita.indicacao }}</p>
+          </div>
+          <div class="form-group">
+            <label>{{ t('medico.posology') }}</label>
+            <p class="form-control-plaintext">{{ receita.posologia }}</p>
+          </div>
+          <div class="form-group">
+            <label>{{ t('paciente.columns.prescriptionDate') }}</label>
+            <p class="form-control-plaintext">{{ formatDate(receita.dataPrescricao) }}</p>
+          </div>
+          <div class="form-group">
+            <label>{{ t('paciente.columns.doctor') }}</label>
+            <p class="form-control-plaintext">{{ receita.nomeMedico }}</p>
+          </div>
+
+<div class="text-center" style="margin-top: 10px;">
+             <button *ngIf="isMedicoView" class="btn btn-outline-secondary me-2" (click)="voltarParaListaPacientes()">{{ t('medico.backToPatients') }}</button>
+             <button class="btn btn-secondary" (click)="voltar()">{{ t('medico.cancel') }}</button>
+           </div>
+         </div>
+         <div *ngIf="!receita" class="text-center">
+           <p class="text-muted">Nenhuma receita selecionada.</p>
+           <button *ngIf="isMedicoView" class="btn btn-outline-secondary me-2" (click)="voltarParaListaPacientes()">{{ t('medico.backToPatients') }}</button>
+           <button class="btn btn-primary" (click)="voltar()">Voltar</button>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-pms-footer></app-pms-footer>
