@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { ItemsService } from 'src/app/services/items.service';
+import { environment } from 'src/environments/environment';
 import { TranslateService } from 'src/app/services/translate.service';
 
 interface Paciente {
@@ -77,7 +78,7 @@ export class PmsMedicoComponent implements OnInit {
   onRemoveButton(item: any) {
     if (confirm(this.t('medico.confirmRemove'))) {
       const crm = (this.authService.usuarioLogado as Medico).crm;
-      this.http.delete(`http://localhost:3000/medico/${crm}/pacientes/${item.id}`).subscribe({
+      this.http.delete(`${environment.apiUrl}/medico/${crm}/pacientes/${item.id}`).subscribe({
         next: () => {
           this.items = this.items.filter((i) => i.id !== item.id);
         },
@@ -95,7 +96,7 @@ export class PmsMedicoComponent implements OnInit {
 
     if (crmMedicoLogado) {
       this.http
-        .get<Paciente[]>(`http://localhost:3000/medico/${crmMedicoLogado}/pacientes`)
+        .get<Paciente[]>(`${environment.apiUrl}/medico/${crmMedicoLogado}/pacientes`)
         .subscribe((pacientes) => {
           this.items = pacientes.map((paciente) => ({
             ...paciente,

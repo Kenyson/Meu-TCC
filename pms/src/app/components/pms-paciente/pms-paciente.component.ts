@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
+import { environment } from 'src/environments/environment';
 import { ItemsService } from 'src/app/services/items.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
@@ -110,7 +111,7 @@ interface Receita {
        return;
      }
      if (confirm(this.t('paciente.confirmRemove'))) {
-       this.http.delete(`http://localhost:3000/receitas/${item.id}`).subscribe({
+       this.http.delete(`${environment.apiUrl}/receitas/${item.id}`).subscribe({
          next: () => {
            this.items = this.items.filter((i) => i.id !== item.id);
          },
@@ -122,7 +123,7 @@ interface Receita {
    }
 
    obterReceitas() {
-     const url = `http://localhost:3000/receitas?paciente_id=${paciente_id}`;
+     const url = `${environment.apiUrl}/receitas?paciente_id=${paciente_id}`;
 
      this.http.get<Receita[]>(url).subscribe(
        (receitas: Receita[]) => {

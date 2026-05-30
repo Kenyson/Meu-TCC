@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import axios, { AxiosResponse } from 'axios';
+import { environment } from 'src/environments/environment';
 
 interface Medico {
   crm: string;
@@ -39,8 +40,8 @@ export class AuthService {
 
   loginMedico(crm: string, estado: string, password: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      axios
-        .post('http://localhost:3000/login', {
+        axios
+        .post(`${environment.apiUrl}/login`, {
           userType: 'medico',
           crm,
           estado,
@@ -66,8 +67,8 @@ export class AuthService {
 
   loginPaciente(cpf: string, password: string): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      axios
-        .post('http://localhost:3000/login', {
+        axios
+        .post(`${environment.apiUrl}/login`, {
           userType: 'paciente',
           cpf,
           password

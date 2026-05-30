@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './../../services/auth.service';
+import { environment } from 'src/environments/environment';
 import { ItemsService } from 'src/app/services/items.service';
 import { format } from 'date-fns';
 import { Router } from '@angular/router';
@@ -49,7 +50,7 @@ export class PmsNewReceitaComponent {
       this.receita.data_validade = `${d}-${m}-${y}`;
     }
 
-    this.http.post('http://localhost:3000/receitas', this.receita)
+    this.http.post(`${environment.apiUrl}/receitas`, this.receita)
       .subscribe(
         () => {
           this.goToPatientScreen();

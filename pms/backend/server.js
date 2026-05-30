@@ -3,13 +3,17 @@ const app = express();
 const cors = require('cors');
 const sqlite3 = require('sqlite3').verbose();
 
-const porta = 3000;
+const porta = process.env.PORT || 3000;
 
-const dbPath = __dirname + '/database.db';
-const db = new sqlite3.Database(dbPath);
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false
+};
+app.use(cors(corsOptions));
 
-app.use(express.json());
-app.use(cors());
+app.options('*', cors(corsOptions));
 
 db.serialize(() => {
   db.run(`

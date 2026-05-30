@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
 
@@ -42,7 +43,7 @@ export class CadastroComponent {
         return;
       }
 
-      this.http.post('http://localhost:3000/medicos', this.medicoData).subscribe(
+      this.http.post('${environment.apiUrl}/medicos', this.medicoData).subscribe(
         response => {
           this.router.navigate(['/login']);
         },
@@ -79,7 +80,7 @@ export class CadastroComponent {
         return;
       }
 
-      this.http.post('http://localhost:3000/pacientes', this.pacienteData).subscribe(
+      this.http.post('${environment.apiUrl}/pacientes', this.pacienteData).subscribe(
         response => {
           this.router.navigate(['/login']);
         },

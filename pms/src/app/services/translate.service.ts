@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class TranslateService {
     this.translations = this.getDefaultTranslations();
     const savedLang = localStorage.getItem('language') || 'pt';
     this.currentLang = savedLang;
-    this.http.get(`/assets/i18n/${savedLang}.json`).subscribe({
+    this.http.get(`${environment.i18nPath}${savedLang}.json`).subscribe({
       next: (data) => {
         this.translations = data;
       }
@@ -134,7 +135,7 @@ export class TranslateService {
 
   loadTranslations(lang: string): Promise<void> {
     return new Promise((resolve) => {
-      this.http.get(`/assets/i18n/${lang}.json`).subscribe({
+      this.http.get(`${environment.i18nPath}${lang}.json`).subscribe({
         next: (data) => {
           this.translations = data;
           this.currentLang = lang;

@@ -2,6 +2,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { TranslateService } from 'src/app/services/translate.service';
 
 interface Medico {
@@ -29,7 +30,7 @@ export class PmsNewPacienteComponent {
   constructor(private http: HttpClient, private router: Router , private authService: AuthService, private translate: TranslateService) {}
 
   checkExistingCPF() {
-    this.http.get<any[]>('http://localhost:3000/pacientes/filtrar?caracteristica=cpf&valor=' + this.cpf)
+    this.http.get<any[]>('${environment.apiUrl}/pacientes/filtrar?caracteristica=cpf&valor=' + this.cpf)
       .subscribe(
         (response: any[]) => {
           if (response.length > 0) {
@@ -57,7 +58,7 @@ export class PmsNewPacienteComponent {
         medico_id: (this.authService.usuarioLogado as Medico).crm,
         paciente_id: this.paciente.id
       };
-      this.http.post('http://localhost:3000/conexao', conexao)
+      this.http.post('${environment.apiUrl}/conexao', conexao)
         .subscribe(
           (response) => {
             this.goToMedicoScreen();
@@ -73,7 +74,7 @@ export class PmsNewPacienteComponent {
         telefone: this.paciente.telefone
       };
 
-      this.http.post('http://localhost:3000/pacientes', novoPaciente)
+      this.http.post('${environment.apiUrl}/pacientes', novoPaciente)
         .subscribe(
           (response: any) => {
             const conexao = {
@@ -81,7 +82,7 @@ export class PmsNewPacienteComponent {
               paciente_id: response.id
             };
 
-            this.http.post('http://localhost:3000/conexao', conexao)
+            this.http.post('${environment.apiUrl}/conexao', conexao)
               .subscribe(
                 (response) => {
                   this.goToMedicoScreen();
