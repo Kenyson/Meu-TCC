@@ -70,6 +70,20 @@ export class PmsMedicoComponent implements OnInit {
     this.router.navigate(['/paciente']);
   }
 
+  onRemoveButton(item: any) {
+    if (confirm(this.t('medico.confirmRemove'))) {
+      const crm = (this.authService.usuarioLogado as Medico).crm;
+      this.http.delete(`http://localhost:3000/medico/${crm}/pacientes/${item.id}`).subscribe({
+        next: () => {
+          this.items = this.items.filter((i) => i.id !== item.id);
+        },
+        error: (err) => {
+          console.error('Erro ao remover paciente:', err);
+        }
+      });
+    }
+  }
+
   obterPacientes() {
     let crmMedicoLogado: string | undefined = undefined;
 

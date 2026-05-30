@@ -13,7 +13,23 @@
     "enter": "Enter",
     "createAccount": "Create new account",
     "welcome": "Welcome,",
-    "logout": "Logout"
+    "logout": "Logout",
+    "info": {
+      "title": "PMS - Prescription Management System",
+      "developed": "Developed in 2023",
+      "university": "as a TCC (Undergraduate Thesis) at Unicesumar university in Maringá, Brazil.",
+      "system": "This system is based on the Brazilian medical system where every doctor has a unique number (CRM) that is valid only in a specific state.",
+      "crm": "CRM:",
+      "crmDesc": "Medical license number - unique within each Brazilian state (e.g., CRM 12345 in São Paulo).",
+      "cpf": "CPF:",
+      "cpfDesc": "Cadastro de Pessoas Físicas - the Brazilian individual taxpayer registry number, similar to a social security number, used as the patient identifier.",
+      "purpose": "The system allows doctors to manage their patients, prescribe medications, and view medical records. Patients can view their prescriptions and medical history.",
+      "demoTitle": "Demo Logins:",
+      "doctorDemo": "Doctor Demo",
+      "patientDemo1": "Patient Demo 1",
+      "patientDemo2": "Patient Demo 2",
+      "patientDemo3": "Patient Demo 3"
+    }
   },
   "register": {
     "title": "Register",
@@ -48,6 +64,7 @@
     "title": "Table of Patients of Dr.",
     "backToPatients": "Back to Patient List",
     "addPatient": "Add Patient",
+    "confirmRemove": "Are you sure you want to remove this patient?",
     "columns": {
       "name": "Name",
       "age": "Age",
@@ -65,10 +82,11 @@
     "save": "Save",
     "cancel": "Cancel"
   },
-  "paciente": {
+"paciente": {
     "title": "Prescriptions of",
-    "newPrescription": "New Prescription",
     "viewPrescription": "View Prescription",
+    "newPrescription": "New Prescription",
+    "confirmRemove": "Are you sure you want to remove this prescription?",
     "columns": {
       "commercialName": "Commercial Name",
       "activeIngredient": "Active Ingredient",
@@ -79,14 +97,15 @@
     }
   },
   "footer": {
-    "text": "PMS - Patient Management System"
+    "text": "PMS - Prescription Management System"
   },
   "search": {
     "placeholder": "Search"
   },
   "grid": {
     "actions": "Actions",
-    "view": "View"
+    "view": "View",
+    "remove": "Remove"
   },
   "states": {
     "Acre": "Acre",

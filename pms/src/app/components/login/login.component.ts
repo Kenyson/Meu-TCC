@@ -41,6 +41,27 @@ export class LoginComponent {
     this.selectedOption = option;
   }
 
+  fillDemoLogin(type: string) {
+    if (type === 'medico') {
+      this.selectedOption = 'medico';
+      this.crm = '99999';
+      this.selectedEstado = 'São Paulo';
+      this.password = 'doctor123';
+    } else if (type === 'paciente1') {
+      this.selectedOption = 'paciente';
+      this.cpf = '12345678901';
+      this.password = 'patient123';
+    } else if (type === 'paciente2') {
+      this.selectedOption = 'paciente';
+      this.cpf = '98765432100';
+      this.password = 'patient123';
+    } else if (type === 'paciente3') {
+      this.selectedOption = 'paciente';
+      this.cpf = '11122233344';
+      this.password = 'patient123';
+    }
+  }
+
   submitForm() {
     this.errorMessage = '';
 

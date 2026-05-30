@@ -97,6 +97,19 @@ export class PmsPacienteComponent implements OnInit {
     this.router.navigate(['/ver-receita']);
   }
 
+  onRemoveButton(item: any) {
+    if (confirm(this.t('paciente.confirmRemove'))) {
+      this.http.delete(`http://localhost:3000/receitas/${item.id}`).subscribe({
+        next: () => {
+          this.items = this.items.filter((i) => i.id !== item.id);
+        },
+        error: (err) => {
+          console.error('Erro ao remover receita:', err);
+        }
+      });
+    }
+  }
+
   obterReceitas() {
     const url = `http://localhost:3000/receitas?paciente_id=${paciente_id}`;
 

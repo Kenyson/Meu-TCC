@@ -13,7 +13,23 @@
     "enter": "Accedi",
     "createAccount": "Crea nuovo account",
     "welcome": "Benvenuto,",
-    "logout": "Esci"
+    "logout": "Esci",
+    "info": {
+      "title": "PMS - Sistema di Gestione Prescrizioni",
+      "developed": "Sviluppato nel 2023",
+      "university": "come TCC (Tesi di Laurea) all'università Unicesumar a Maringá, Brasile.",
+      "system": "Questo sistema si basa sul sistema medico brasiliano dove ogni medico ha un numero unico (CRM) valido solo in uno stato specifico.",
+      "crm": "CRM:",
+      "crmDesc": "numero di licenza medica - unico all'interno di ogni stato brasiliano (es: CRM 12345 in São Paulo).",
+      "cpf": "CPF:",
+      "cpfDesc": "Cadastro de Pessoas Físicas - numero di registrazione fiscale individuale brasiliano, simile al numero del codice fiscale, usato come identificatore del paziente.",
+      "purpose": "Il sistema permette ai medici di gestire i loro pazienti, prescrivere farmaci e visualizzare le cartelle cliniche. I pazienti possono visualizzare le loro prescrizioni e lo storico medico.",
+      "demoTitle": "Account Demo:",
+      "doctorDemo": "Medico Demo",
+      "patientDemo1": "Paziente Demo 1",
+      "patientDemo2": "Paziente Demo 2",
+      "patientDemo3": "Paziente Demo 3"
+    }
   },
 "register": {
     "title": "Registrazione",
@@ -48,6 +64,7 @@
     "title": "Tabella Pazienti del Dr.",
     "backToPatients": "Ritorna all'Elenco Pazienti",
     "addPatient": "Aggiungi Paziente",
+    "confirmRemove": "Sei sicuro di voler rimuovere questo paziente?",
     "columns": {
       "name": "Nome",
       "age": "Età",
@@ -69,6 +86,7 @@
     "title": "Prescrizioni di",
     "viewPrescription": "Visualizza Prescrizione",
     "newPrescription": "Nuova Prescrizione",
+    "confirmRemove": "Sei sicuro di voler rimuovere questa prescrizione?",
     "columns": {
       "commercialName": "Nome Commerciale",
       "activeIngredient": "Principio Attivo",
@@ -79,14 +97,15 @@
     }
   },
   "footer": {
-    "text": "PMS - Sistema di Gestione Pazienti"
+    "text": "PMS - Sistema di Gestione Prescrizioni"
   },
   "search": {
     "placeholder": "Cerca"
   },
   "grid": {
     "actions": "Azioni",
-    "view": "Visualizza"
+    "view": "Visualizza",
+    "remove": "Rimuovi"
   },
   "states": {
     "Acre": "Acre",

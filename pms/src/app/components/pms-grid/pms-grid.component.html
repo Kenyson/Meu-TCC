@@ -23,20 +23,21 @@
         <tbody>
           <tr *ngFor="let item of itensExibidos" class="bg-light" (dblclick)="itemClicadoDuplo(item)">
             <td *ngFor="let coluna of colunas">{{ item[coluna.propriedade] }}</td>
-            <td>
+            <td class="actions-cell">
               <button class="btn btn-sm btn-outline-primary" (click)="onViewButton(item)">{{ getActionButtonText() }}</button>
+              <button *ngIf="mostrarRemover" class="btn btn-sm btn-outline-danger ms-1" (click)="onRemoveButton(item)">{{ getRemoveButtonText() }}</button>
             </td>
           </tr>
         </tbody>
         <tfoot class="bg-gray">
           <tr>
-<td [attr.colspan]="colunas.length + 1">
-               <div class="d-flex justify-content-between align-items-center flex-wrap">
-                 <div>
-                   <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
-                   <button *ngIf="mostrarBotaoVoltarMedico" class="table-btn ms-2" (click)="voltarParaListaPacientes()">{{ getBackToPatientsText() }}</button>
-                 </div>
-                 <div class="pagination-wrapper">
+            <td [attr.colspan]="colunas.length + 1">
+              <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                  <button *ngIf="mostrarBotao" class="table-btn" (click)="novoItemFuncao()">{{ novoItemNome }}</button>
+                  <button *ngIf="mostrarBotaoVoltarMedico" class="table-btn ms-2" (click)="voltarParaListaPacientes()">{{ getBackToPatientsText() }}</button>
+                </div>
+                <div class="pagination-wrapper">
                   <div class="pagination">
                     <button class="pagination-btn" (click)="paginaAnterior()" [disabled]="paginaAtual === 1">&lt;</button>
                     <button *ngFor="let pagina of paginas" class="pagination-btn" (click)="selecionarPagina(pagina)" [ngClass]="{ 'active': pagina === paginaAtual }">{{ pagina }}</button>

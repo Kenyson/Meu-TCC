@@ -4,10 +4,12 @@
   <app-pms-grid
     [colunas]="colunas"
     [items]="items"
+    [mostrarRemover]="true"
     [novoItemNome]="novoItemNomeValue"
     [novoItemFuncao]="redirecionarParaNewPaciente"
     [tituloTabela]="tituloTabela"
     (onViewButtonClick)="onViewButton($event)"
+    (onRemoveButtonClick)="onRemoveButton($event)"
     (onItemClicadoDuplo)="onItemClicadoDuplo($event)"
   ></app-pms-grid>
 </div>

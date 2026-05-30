@@ -78,3 +78,16 @@
   background-color: #6e45e2;
   color: #fff;
 }
+
+.actions-cell {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.actions-cell .btn {
+  margin-right: 4px;
+}
+
+.actions-cell .btn:last-child {
+  margin-right: 0;
+}

@@ -5,10 +5,12 @@
     [items]="items"
     [mostrarBotao]="mostrarBotao"
     [mostrarBotaoVoltarMedico]="mostrarBotao"
+    [mostrarRemover]="mostrarBotao"
     [novoItemNome]="novoItemNomeValue"
     [novoItemFuncao]="redirecionarParaReceita"
     [tituloTabela]="tituloTabela"
     (onViewButtonClick)="verReceita($event)"
+    (onRemoveButtonClick)="onRemoveButton($event)"
   ></app-pms-grid>
 </div>
 <app-pms-footer></app-pms-footer>

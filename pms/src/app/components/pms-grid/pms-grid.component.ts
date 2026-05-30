@@ -28,6 +28,8 @@ export class PmsGridComponent implements OnInit {
   @Output() onItemClicadoDuplo: EventEmitter<{ item: Item, id: any }> = new EventEmitter<{ item: Item, id: any }>();
   @Output() onViewButtonClick: EventEmitter<Item> = new EventEmitter<Item>();
   @Input() novoItemFuncao: () => void = () => {};
+  @Input() mostrarRemover: boolean = true;
+  @Output() onRemoveButtonClick: EventEmitter<Item> = new EventEmitter<Item>();
 
   constructor(private router: Router, private itemsService: ItemsService, private translate: TranslateService) {}
 
@@ -37,6 +39,10 @@ export class PmsGridComponent implements OnInit {
 
   onViewButton(item: Item) {
     this.onViewButtonClick.emit(item);
+  }
+
+  onRemoveButton(item: Item) {
+    this.onRemoveButtonClick.emit(item);
   }
 
   voltarParaListaPacientes() {
@@ -114,6 +120,11 @@ export class PmsGridComponent implements OnInit {
   getActionButtonText(): string {
     const translated = this.translate.get('grid.view');
     return translated !== 'grid.view' ? translated : 'Ver';
+  }
+
+  getRemoveButtonText(): string {
+    const translated = this.translate.get('grid.remove');
+    return translated !== 'grid.remove' ? translated : 'Remover';
   }
 
   getBackToPatientsText(): string {

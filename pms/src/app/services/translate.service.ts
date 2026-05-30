@@ -28,14 +28,30 @@ export class TranslateService {
         "patient": "Paciente",
         "crm": "CRM:",
         "state": "Estado:",
-        "selectState": "Selecione:",
+        "selectState": "Selecione",
         "cpf": "CPF:",
         "patientCpf": "CPF do Paciente:",
         "password": "Senha:",
         "enter": "Entrar",
         "createAccount": "Criar novo cadastro",
         "welcome": "Bem-vindo,",
-        "logout": "Logout"
+        "logout": "Logout",
+        "info": {
+          "title": "PMS - Sistema de Gestão de Prescrições",
+          "developed": "Desenvolvido em 2023",
+          "university": "como TCC (Trabalho de Conclusão de Curso) na universidade Unicesumar em Maringá, Brasil.",
+          "system": "Este sistema é baseado no <strong>sistema médico brasileiro</strong> onde cada médico possui um número único (CRM) válido apenas em um estado específico.",
+          "crm": "CRM:",
+          "crmDesc": "número de licença médica - único dentro de cada estado brasileiro (ex: CRM 12345 em São Paulo).",
+          "cpf": "CPF:",
+          "cpfDesc": "Cadastro de Pessoas Físicas - número de registro fiscal individual brasileiro, similar ao número de seguro social, usado como identificador do paciente.",
+          "purpose": "O sistema permite que médicos gerenciem seus pacientes, prescrevam medicamentos e visualizem prontuários. Pacientes podem visualizar suas receitas e histórico médico.",
+          "demoTitle": "Logins Demo:",
+          "doctorDemo": "Médico Demo",
+          "patientDemo1": "Paciente Demo 1",
+          "patientDemo2": "Paciente Demo 2",
+          "patientDemo3": "Paciente Demo 3"
+        }
       },
       "register": {
         "title": "Cadastro",
@@ -68,7 +84,9 @@ export class TranslateService {
       },
       "medico": {
         "title": "Tabela de Pacientes do Dr.",
+        "backToPatients": "Voltar para Lista de Pacientes",
         "addPatient": "Adicionar Paciente",
+        "confirmRemove": "Tem certeza que deseja remover este paciente?",
         "columns": {
           "name": "Nome",
           "age": "Idade",
@@ -86,11 +104,12 @@ export class TranslateService {
         "save": "Salvar",
         "cancel": "Cancelar"
       },
-"paciente": {
-         "title": "Receitas de",
-         "newPrescription": "Nova Receita",
-         "viewPrescription": "Visualizar Receita",
-         "columns": {
+      "paciente": {
+        "title": "Receitas de",
+        "viewPrescription": "Visualizar Receita",
+        "newPrescription": "Nova Receita",
+        "confirmRemove": "Tem certeza que deseja remover esta receita?",
+        "columns": {
           "commercialName": "Nome Comercial",
           "activeIngredient": "Princípio Ativo",
           "indication": "Indicação",
@@ -100,15 +119,16 @@ export class TranslateService {
         }
       },
       "footer": {
-        "text": "PMS - Sistema de Gestão de Pacientes"
+        "text": "PMS - Sistema de Gestão de Prescrições"
       },
       "search": {
         "placeholder": "Pesquisar"
       },
-      "grid": {
-        "actions": "Ações",
-        "view": "Ver"
-      }
+"grid": {
+         "actions": "Ações",
+         "view": "Ver",
+         "remove": "Remover"
+       }
     };
   }
 

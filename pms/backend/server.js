@@ -294,6 +294,43 @@ app.post('/receitas', (req, res) => {
   );
 });
 
+app.delete('/receitas/:id', (req, res) => {
+  const { id } = req.params;
+  db.run('DELETE FROM receitas WHERE id = ?', [id], function (err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Erro ao remover receita do banco de dados.');
+    } else {
+      res.status(200).json({ message: 'Receita removida com sucesso!' });
+    }
+  });
+});
+
+app.delete('/medico/:crm/pacientes/:pacienteId', (req, res) => {
+  const { crm, pacienteId } = req.params;
+  db.run('DELETE FROM medico_paciente WHERE medico_id = ? AND paciente_id = ?', [crm, pacienteId], function (err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Erro ao remover paciente do médico.');
+    } else {
+      res.status(200).json({ message: 'Paciente removido com sucesso!' });
+    }
+  });
+});
+
+app.delete('/pacientes/:id', (req, res) => {
+  const { id } = req.params;
+  db.run('DELETE FROM pacientes WHERE id = ?', [id], function (err) {
+    if (err) {
+      console.error(err.message);
+      res.status(500).send('Erro ao remover paciente do banco de dados.');
+    } else {
+      db.run('DELETE FROM receitas WHERE paciente_id = ?', [id]);
+      db.run('DELETE FROM medico_paciente WHERE paciente_id = ?', [id]);
+      res.status(200).json({ message: 'Paciente removido com sucesso!' });
+    }
+  });
+});
 
 app.get('/medico/:crm/pacientes', (req, res) => {
   const { crm } = req.params;

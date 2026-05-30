@@ -3,6 +3,24 @@
   <div class="container ">
     <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
       <div class="col-md-6">
+<div class="info-panel">
+           <h3>{{ t('login.info.title') }}</h3>
+           <p><strong>{{ t('login.info.developed') }}</strong> {{ t('login.info.university') }}</p>
+           <p>{{ t('login.info.system') }}</p>
+           <p><strong>{{ t('login.info.crm') }}</strong> {{ t('login.info.crmDesc') }}</p>
+           <p><strong>{{ t('login.info.cpf') }}</strong> {{ t('login.info.cpfDesc') }}</p>
+           <p>{{ t('login.info.purpose') }}</p>
+           <hr>
+           <p class="mb-2"><strong>{{ t('login.info.demoTitle') }}</strong></p>
+           <div class="demo-buttons">
+             <button class="btn btn-outline-primary btn-sm me-2 mb-2" (click)="fillDemoLogin('medico')">{{ t('login.info.doctorDemo') }}</button>
+             <button class="btn btn-outline-primary btn-sm me-2 mb-2" (click)="fillDemoLogin('paciente1')">{{ t('login.info.patientDemo1') }}</button>
+             <button class="btn btn-outline-primary btn-sm me-2 mb-2" (click)="fillDemoLogin('paciente2')">{{ t('login.info.patientDemo2') }}</button>
+             <button class="btn btn-outline-primary btn-sm me-2 mb-2" (click)="fillDemoLogin('paciente3')">{{ t('login.info.patientDemo3') }}</button>
+           </div>
+         </div>
+      </div>
+      <div class="col-md-5 offset-md-1">
         <div class="card">
           <div class="card-body">
             <h2 class="text-center mb-4">{{ t('login.title') }}</h2>
