@@ -105,7 +105,7 @@
     "medicine": "Medicinale",
     "prescriptionDate": "Data della Prescrizione",
     "doctor": "Medico",
-    "signature": "Firma e Francobollo"
+    "signature": "Firma e Timbro"
   },
   "footer": {
     "text": "PMS - Sistema di Gestione Prescrizioni"

@@ -59,16 +59,18 @@ export class PmsMedicoComponent implements OnInit {
   onViewButton(item: any) {
     this.itemsService.setItemSelecionado(item);
     this.itemsService.setItemPaciente(item);
-    localStorage.setItem('paciente_id', item.id);
+    localStorage.setItem('paciente_id', item.id.toString());
     localStorage.setItem('paciente_nome', item.nome);
+    localStorage.setItem('paciente_sobrenome', item.sobrenome || '');
     this.router.navigate(['/paciente']);
   }
 
   onItemClicadoDuplo(event: { item: any, id: any }) {
     this.itemsService.setItemSelecionado(event.item);
     this.itemsService.setItemPaciente(event.item);
-    localStorage.setItem('paciente_id', event.item.id);
+    localStorage.setItem('paciente_id', event.item.id.toString());
     localStorage.setItem('paciente_nome', event.item.nome);
+    localStorage.setItem('paciente_sobrenome', event.item.sobrenome || '');
     this.router.navigate(['/paciente']);
   }
 

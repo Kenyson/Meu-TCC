@@ -38,13 +38,12 @@ export class PmsViewReceitaComponent implements OnInit {
     this.isMedicoView = this.authService.isMedicoLoggedIn();
     
     const receitaLS = JSON.parse(localStorage.getItem('receitaSelecionada') || 'null');
+    const pacienteNomeLS = localStorage.getItem('paciente_nome') || '';
+    const pacienteSobrenomeLS = localStorage.getItem('paciente_sobrenome') || '';
     const pacienteLS = JSON.parse(localStorage.getItem('pacienteSelecionado') || 'null');
     
-    if (pacienteLS) {
-      this.itemsService.setItemPaciente(pacienteLS);
-      this.pacienteNome = pacienteLS.nome || '';
-      this.pacienteSobrenome = pacienteLS.sobrenome || '';
-    }
+    this.pacienteNome = pacienteLS?.nome || pacienteNomeLS || '';
+    this.pacienteSobrenome = pacienteLS?.sobrenome || pacienteSobrenomeLS || '';
     
     const item = receitaLS || this.itemsService.getItemReceita();
     if (item) {
@@ -97,7 +96,6 @@ export class PmsViewReceitaComponent implements OnInit {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
-    const lang = this.translate.getCurrentLang();
     
     const trans = {
       patient: this.t('pdf.patient'),

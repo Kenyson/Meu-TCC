@@ -20,6 +20,7 @@ interface Receita {
    id: string;
    cpf: string;
    nome: string;
+   sobrenome: string;
  }
 
  let paciente_id: string;
@@ -57,12 +58,13 @@ interface Receita {
    ngOnInit() {
      const storedPacienteId = localStorage.getItem('paciente_id');
      const storedPacienteNome = localStorage.getItem('paciente_nome');
+     const storedPacienteSobrenome = localStorage.getItem('paciente_sobrenome') || '';
      const pacienteSelecionadoLS = JSON.parse(localStorage.getItem('pacienteSelecionado') || 'null');
      
      if (this.authService.isPacienteLoggedIn()) {
        paciente_id = (this.authService.usuarioLogado as Paciente).id;
        this.mostrarBotao = false;
-       this.nomeDoPaciente = (this.authService.usuarioLogado as Paciente).nome;
+       this.nomeDoPaciente = (this.authService.usuarioLogado as Paciente).nome + ' ' + ((this.authService.usuarioLogado as Paciente).sobrenome || '');
        this.itemsService.setItemPaciente(this.authService.usuarioLogado as Paciente);
        localStorage.setItem('paciente_id', paciente_id);
        localStorage.setItem('paciente_nome', this.nomeDoPaciente);
@@ -71,11 +73,11 @@ interface Receita {
        if (pacienteSelecionadoLS && pacienteSelecionadoLS['nome']) {
          pacienteContexto = pacienteSelecionadoLS;
        } else if (storedPacienteId && storedPacienteNome) {
-         pacienteContexto = { id: storedPacienteId, nome: storedPacienteNome };
+         pacienteContexto = { id: storedPacienteId, nome: storedPacienteNome, sobrenome: storedPacienteSobrenome };
        }
        
        if (pacienteContexto) {
-         this.nomeDoPaciente = pacienteContexto['nome'];
+         this.nomeDoPaciente = pacienteContexto['nome'] + ' ' + (pacienteContexto['sobrenome'] || '');
          paciente_id = pacienteContexto['id'] || storedPacienteId || '';
          this.itemsService.setItemPaciente(pacienteContexto);
        } else {
@@ -94,7 +96,11 @@ interface Receita {
      this.itemsService.setItemReceita(item);
      const pacienteContexto = this.itemsService.getItemPaciente();
      if (pacienteContexto) {
-       localStorage.setItem('pacienteSelecionado', JSON.stringify(pacienteContexto));
+       const sobrenome = localStorage.getItem('paciente_sobrenome') || pacienteContexto['sobrenome'] || '';
+       localStorage.setItem('pacienteSelecionado', JSON.stringify({
+         ...pacienteContexto,
+         sobrenome: sobrenome
+       }));
      }
      this.router.navigate(['/ver-receita']);
    }
