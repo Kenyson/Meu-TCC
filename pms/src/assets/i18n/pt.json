@@ -67,6 +67,7 @@
     "confirmRemove": "Tem certeza que deseja remover este paciente?",
     "columns": {
       "name": "Nome",
+      "lastName": "Sobrenome",
       "age": "Idade",
       "cpf": "CPF",
       "birthDate": "Data de Nascimento",

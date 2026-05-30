@@ -8,6 +8,7 @@ import { TranslateService } from 'src/app/services/translate.service';
 interface Paciente {
   id: number;
   nome: string;
+  sobrenome: string;
   idade: number;
   cpf: string;
   telefone: string;
@@ -27,6 +28,7 @@ interface Medico {
 export class PmsMedicoComponent implements OnInit {
   colunas = [
     { nome: 'medico.columns.name', propriedade: 'nome' },
+    { nome: 'medico.columns.lastName', propriedade: 'sobrenome' },
     { nome: 'medico.columns.age', propriedade: 'idade' },
     { nome: 'medico.columns.cpf', propriedade: 'cpf' },
     { nome: 'medico.columns.phone', propriedade: 'telefone' },

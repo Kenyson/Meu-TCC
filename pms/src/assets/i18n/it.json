@@ -31,7 +31,7 @@
       "patientDemo3": "Paziente Demo 3"
     }
   },
-"register": {
+  "register": {
     "title": "Registrazione",
     "userType": "Tipo di Utente:",
     "doctor": "Medico",
@@ -60,13 +60,14 @@
     "welcome": "Benvenuto,",
     "logout": "Esci"
   },
-"medico": {
+  "medico": {
     "title": "Tabella Pazienti del Dr.",
     "backToPatients": "Ritorna all'Elenco Pazienti",
     "addPatient": "Aggiungi Paziente",
     "confirmRemove": "Sei sicuro di voler rimuovere questo paziente?",
     "columns": {
       "name": "Nome",
+      "lastName": "Cognome",
       "age": "Età",
       "cpf": "CPF",
       "birthDate": "Data di Nascita",
