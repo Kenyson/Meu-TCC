@@ -35,16 +35,17 @@
             <p class="form-control-plaintext">{{ receita.dataValidade }}</p>
           </div>
 
-<div class="text-center" style="margin-top: 10px;">
-             <button *ngIf="isMedicoView" class="btn btn-outline-secondary me-2" (click)="voltarParaListaPacientes()">{{ t('medico.backToPatients') }}</button>
-             <button class="btn btn-secondary" (click)="voltar()">{{ t('medico.cancel') }}</button>
-           </div>
-         </div>
-         <div *ngIf="!receita" class="text-center">
-           <p class="text-muted">Nenhuma receita selecionada.</p>
-           <button *ngIf="isMedicoView" class="btn btn-outline-secondary me-2" (click)="voltarParaListaPacientes()">{{ t('medico.backToPatients') }}</button>
-           <button class="btn btn-primary" (click)="voltar()">Voltar</button>
-         </div>
+          <div class="text-center" style="margin-top: 10px;">
+            <button class="btn btn-primary me-2" (click)="downloadPDF()">{{ t('grid.download') || 'Download PDF' }}</button>
+            <button *ngIf="isMedicoView" class="btn btn-outline-secondary me-2" (click)="voltarParaListaPacientes()">{{ t('medico.backToPatients') }}</button>
+            <button class="btn btn-secondary" (click)="voltar()">{{ t('medico.cancel') }}</button>
+          </div>
+        </div>
+        <div *ngIf="!receita" class="text-center">
+          <p class="text-muted">Nenhuma receita selecionada.</p>
+          <button *ngIf="isMedicoView" class="btn btn-outline-secondary me-2" (click)="voltarParaListaPacientes()">{{ t('medico.backToPatients') }}</button>
+          <button class="btn btn-primary" (click)="voltar()">Voltar</button>
+        </div>
       </div>
     </div>
   </div>

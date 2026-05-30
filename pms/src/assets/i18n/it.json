@@ -99,6 +99,14 @@
       "doctor": "Medico"
     }
   },
+  "pdf": {
+    "prescription": "PRESCRIZIONE MEDICA",
+    "patient": "Paziente",
+    "medicine": "Medicinale",
+    "prescriptionDate": "Data della Prescrizione",
+    "doctor": "Medico",
+    "signature": "Firma e Francobollo"
+  },
   "footer": {
     "text": "PMS - Sistema di Gestione Prescrizioni"
   },
@@ -108,7 +116,8 @@
   "grid": {
     "actions": "Azioni",
     "view": "Visualizza",
-    "remove": "Rimuovi"
+    "remove": "Rimuovi",
+    "download": "Scarica PDF"
   },
   "states": {
     "Acre": "Acre",

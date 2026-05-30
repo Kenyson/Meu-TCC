@@ -99,6 +99,14 @@
       "doctor": "Médico"
     }
   },
+  "pdf": {
+    "prescription": "RECEITA MÉDICA",
+    "patient": "Paciente",
+    "medicine": "Medicamento",
+    "prescriptionDate": "Data da Prescrição",
+    "doctor": "Médico",
+    "signature": "Assinatura e Carimbo"
+  },
   "footer": {
     "text": "PMS - Sistema de Gestão de Prescrições"
   },
@@ -108,7 +116,8 @@
   "grid": {
     "actions": "Ações",
     "view": "Ver",
-    "remove": "Remover"
+    "remove": "Remover",
+    "download": "Baixar PDF"
   },
   "states": {
     "Acre": "Acre",

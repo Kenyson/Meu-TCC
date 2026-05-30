@@ -99,6 +99,14 @@
       "doctor": "Doctor"
     }
   },
+  "pdf": {
+    "prescription": "MEDICAL PRESCRIPTION",
+    "patient": "Patient",
+    "medicine": "Medication",
+    "prescriptionDate": "Prescription Date",
+    "doctor": "Doctor",
+    "signature": "Signature and Stamp"
+  },
   "footer": {
     "text": "PMS - Prescription Management System"
   },
@@ -108,7 +116,8 @@
   "grid": {
     "actions": "Actions",
     "view": "View",
-    "remove": "Remove"
+    "remove": "Remove",
+    "download": "Download PDF"
   },
   "states": {
     "Acre": "Acre",
