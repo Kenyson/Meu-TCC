@@ -6,15 +6,15 @@ import { ItemsService } from 'src/app/services/items.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
 interface Receita {
-  id: number;
-  nomeComercial: string;
-  principioAtivo: string;
-  posologia: string;
-  indicacao: string;
-  dataPrescricao: Date;
-  dataValidade: string;
-  nomeMedico: string;
-}
+   id: number;
+   nome_comercial: string;
+   principio_ativo: string;
+   posologia: string;
+   indicacao: string;
+   data_prescricao: Date;
+   data_validade: string;
+   nomeMedico: string;
+ }
 
 interface Paciente {
   id: string;
@@ -58,7 +58,7 @@ export class PmsPacienteComponent implements OnInit {
     const storedPacienteId = localStorage.getItem('paciente_id');
     const storedPacienteNome = localStorage.getItem('paciente_nome');
     const pacienteSelecionadoLS = JSON.parse(localStorage.getItem('pacienteSelecionado') || 'null');
-    
+
     if (this.authService.isPacienteLoggedIn()) {
       paciente_id = (this.authService.usuarioLogado as Paciente).id;
       this.mostrarBotao = false;
@@ -73,7 +73,7 @@ export class PmsPacienteComponent implements OnInit {
       } else if (storedPacienteId && storedPacienteNome) {
         pacienteContexto = { id: storedPacienteId, nome: storedPacienteNome };
       }
-      
+
       if (pacienteContexto) {
         this.nomeDoPaciente = pacienteContexto['nome'];
         paciente_id = pacienteContexto['id'] || storedPacienteId || '';
@@ -100,6 +100,9 @@ export class PmsPacienteComponent implements OnInit {
   }
 
   onRemoveButton(item: any) {
+    if (item.expirada) {
+      return;
+    }
     if (confirm(this.t('paciente.confirmRemove'))) {
       this.http.delete(`http://localhost:3000/receitas/${item.id}`).subscribe({
         next: () => {
@@ -117,12 +120,27 @@ export class PmsPacienteComponent implements OnInit {
 
     this.http.get<Receita[]>(url).subscribe(
       (receitas: Receita[]) => {
-        this.items = receitas;
+        this.items = receitas.map(receita => ({
+          ...receita,
+          expirada: this.isReceitaExpirada(receita.data_validade)
+        }));
       },
       (error: any) => {
         console.error('Ocorreu um erro ao obter as receitas:', error);
       }
     );
+  }
+
+  isReceitaExpirada(dataValidade: string): boolean {
+    if (!dataValidade) return false;
+    const partes = dataValidade.split('-');
+    if (partes.length !== 3) return false;
+    const [dia, mes, ano] = partes.map(Number);
+    const validade = new Date(ano, mes - 1, dia);
+    const hoje = new Date();
+    hoje.setHours(0, 0, 0, 0);
+    validade.setHours(0, 0, 0, 0);
+    return validade < hoje;
   }
 
   t(key: string): string {

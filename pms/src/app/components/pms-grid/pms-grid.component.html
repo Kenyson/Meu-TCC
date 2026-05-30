@@ -20,15 +20,15 @@
             <th>{{ getActionsColumnHeader() }}</th>
           </tr>
         </thead>
-        <tbody>
-          <tr *ngFor="let item of itensExibidos" class="bg-light" (dblclick)="itemClicadoDuplo(item)">
-            <td *ngFor="let coluna of colunas">{{ item[coluna.propriedade] }}</td>
-            <td class="actions-cell">
-              <button class="btn btn-sm btn-outline-primary" (click)="onViewButton(item)">{{ getActionButtonText() }}</button>
-              <button *ngIf="mostrarRemover" class="btn btn-sm btn-outline-danger ms-1" (click)="onRemoveButton(item)">{{ getRemoveButtonText() }}</button>
-            </td>
-          </tr>
-        </tbody>
+<tbody>
+           <tr *ngFor="let item of itensExibidos" class="bg-light" [class.expired-row]="item.expirada" (dblclick)="itemClicadoDuplo(item)">
+             <td *ngFor="let coluna of colunas" [class.expired-cell]="item.expirada && coluna.propriedade === 'data_validade'">{{ item[coluna.propriedade] }}</td>
+             <td class="actions-cell">
+               <button class="btn btn-sm btn-outline-primary" (click)="onViewButton(item)">{{ getActionButtonText() }}</button>
+               <button *ngIf="mostrarRemover" class="btn btn-sm btn-outline-danger ms-1" (click)="onRemoveButton(item)" [disabled]="item.expirada">{{ getRemoveButtonText() }}</button>
+             </td>
+           </tr>
+         </tbody>
         <tfoot class="bg-gray">
           <tr>
             <td [attr.colspan]="colunas.length + 1">

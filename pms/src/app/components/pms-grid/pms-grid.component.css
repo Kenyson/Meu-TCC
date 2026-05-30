@@ -44,6 +44,14 @@
   background-color: #f8f8f8;
 }
 
+.expired-row {
+  background-color: #e0e0e0;
+}
+
+.expired-cell {
+  background-color: #ffcccc;
+}
+
 .table-btn {
   padding: 8px 12px;
   background-color: lightgray;

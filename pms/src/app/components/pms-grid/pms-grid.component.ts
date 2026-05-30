@@ -5,6 +5,7 @@ import { TranslateService } from 'src/app/services/translate.service';
 
 export interface Item {
   id: any;
+  expirada?: boolean;
   [prop: string]: any;
 }
 
