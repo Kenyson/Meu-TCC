@@ -78,6 +78,7 @@
     "activeIngredient": "Princípio Ativo:",
     "indication": "Indicação:",
     "prescriptionDate": "Data da Prescrição:",
+    "expirationDate": "Data de Validade:",
     "posology": "Posologia:",
     "save": "Salvar",
     "cancel": "Cancelar"
@@ -92,6 +93,7 @@
       "activeIngredient": "Princípio Ativo",
       "indication": "Indicação",
       "prescriptionDate": "Data da Prescrição",
+      "expirationDate": "Data de Validade",
       "posology": "Posologia",
       "doctor": "Médico"
     }

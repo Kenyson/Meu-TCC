@@ -78,6 +78,7 @@
     "activeIngredient": "Active Ingredient:",
     "indication": "Indication:",
     "prescriptionDate": "Prescription Date:",
+    "expirationDate": "Expiration Date:",
     "posology": "Posology:",
     "save": "Save",
     "cancel": "Cancel"
@@ -87,11 +88,12 @@
     "viewPrescription": "View Prescription",
     "newPrescription": "New Prescription",
     "confirmRemove": "Are you sure you want to remove this prescription?",
-    "columns": {
+"columns": {
       "commercialName": "Commercial Name",
       "activeIngredient": "Active Ingredient",
       "indication": "Indication",
       "prescriptionDate": "Prescription Date",
+      "expirationDate": "Expiration Date",
       "posology": "Posology",
       "doctor": "Doctor"
     }

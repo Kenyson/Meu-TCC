@@ -24,6 +24,7 @@ export class PmsNewReceitaComponent {
     medico_id: '',
     paciente_id: '',
     data_prescricao: '',
+    data_validade: '',
     posologia: '',
     nomeMedico: ''
   };
@@ -42,6 +43,11 @@ export class PmsNewReceitaComponent {
     const pacienteSelecionado = this.itemService.getItemSelecionado();
     this.receita.paciente_id = pacienteSelecionado?.id || '';
     this.receita.nomeMedico = (this.authService.usuarioLogado as Medico).nome;
+
+    if (this.receita.data_validade && this.receita.data_validade.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      const [y, m, d] = this.receita.data_validade.split('-');
+      this.receita.data_validade = `${d}-${m}-${y}`;
+    }
 
     this.http.post('http://localhost:3000/receitas', this.receita)
       .subscribe(

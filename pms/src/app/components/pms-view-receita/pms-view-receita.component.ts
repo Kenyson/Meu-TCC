@@ -11,6 +11,7 @@ interface Receita {
   posologia: string;
   indicacao: string;
   dataPrescricao: Date;
+  dataValidade: string;
   nomeMedico: string;
 }
 
@@ -42,13 +43,23 @@ export class PmsViewReceitaComponent implements OnInit {
     
     const item = receitaLS || this.itemsService.getItemReceita();
     if (item) {
+      let dataPrescricaoValue = item['data_prescricao'] || item['dataPrescricao'] || '';
+      
+      if (typeof dataPrescricaoValue === 'string' && /^\d{2}-\d{2}-\d{2}$/.test(dataPrescricaoValue)) {
+        const [d, m, y] = dataPrescricaoValue.split('-');
+        dataPrescricaoValue = new Date(`${y}-${m}-${d}`);
+      } else {
+        dataPrescricaoValue = dataPrescricaoValue ? new Date(dataPrescricaoValue) : new Date();
+      }
+      
       this.receita = {
         id: item.id,
         nomeComercial: item['nome_comercial'] || item['nomeComercial'] || '',
         principioAtivo: item['principio_ativo'] || item['principioAtivo'] || '',
         posologia: item['posologia'] || '',
         indicacao: item['indicacao'] || '',
-        dataPrescricao: item['data_prescricao'] ? new Date(item['data_prescricao']) : (item['dataPrescricao'] ? new Date(item['dataPrescricao']) : new Date()),
+        dataPrescricao: dataPrescricaoValue instanceof Date && !isNaN(dataPrescricaoValue.getTime()) ? dataPrescricaoValue : new Date(),
+        dataValidade: item['data_validade'] || '',
         nomeMedico: item['nomeMedico'] || ''
       };
     }
@@ -64,8 +75,15 @@ export class PmsViewReceitaComponent implements OnInit {
 
   formatDate(date: Date | string): string {
     if (!date) return '';
-    const d = typeof date === 'string' ? new Date(date) : date;
-    return d.toLocaleDateString('pt-BR');
+    if (typeof date === 'string' && date.match(/^\d{2}-\d{2}-\d{2}$/)) {
+      return date;
+    }
+    const d = date instanceof Date ? date : new Date(date);
+    if (isNaN(d.getTime())) return '';
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}-${month}-${year}`;
   }
 
   t(key: string): string {

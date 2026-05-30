@@ -36,6 +36,24 @@ db.serialize(() => {
     )
   `);
 
+  db.get("SELECT COUNT(*) as count FROM pacientes", (err, row) => {
+    if (!err && row.count > 0) {
+      db.all("SELECT id, data_nascimento FROM pacientes", (selectErr, pacientes) => {
+        if (!selectErr) {
+          pacientes.forEach((paciente) => {
+            let nascimento = paciente.data_nascimento;
+            if (/^\d{4}-\d{2}-\d{2}$/.test(nascimento)) {
+              const [y, m, d] = nascimento.split('-');
+              nascimento = `${d}-${m}-${y}`;
+              db.run("UPDATE pacientes SET data_nascimento = ? WHERE id = ?", [nascimento, paciente.id]);
+            }
+          });
+          console.log('Datas de nascimento convertidas para dd-mm-yyyy');
+        }
+      });
+    }
+  });
+
   db.run(`
     CREATE TABLE IF NOT EXISTS receitas (
       id INTEGER PRIMARY KEY,
@@ -45,12 +63,72 @@ db.serialize(() => {
       medico_id TEXT,
       paciente_id INTEGER,
       data_prescricao TEXT,
+      data_validade TEXT,
       posologia TEXT,
       nomeMedico TEXT,
       FOREIGN KEY (medico_id) REFERENCES medico (crm),
       FOREIGN KEY (paciente_id) REFERENCES pacientes (id)
     )
   `);
+
+  db.all("PRAGMA table_info(receitas)", (pragmaErr, columns) => {
+    if (!pragmaErr) {
+      const hasDataValidade = columns.some(col => col.name === 'data_validade');
+      const runMigration = () => {
+        db.get("SELECT COUNT(*) as count FROM receitas", (err, row) => {
+          if (!err && row.count > 0) {
+            db.all("SELECT id, data_prescricao, data_validade FROM receitas", (selectErr, receitas) => {
+              if (!selectErr) {
+                receitas.forEach((receita) => {
+                  let prescricao = receita.data_prescricao;
+                  let validade = receita.data_validade;
+                  
+                  let originalPrescricao = prescricao;
+                  
+                  if (/^\d{4}-\d{2}-\d{2}$/.test(prescricao)) {
+                    const [y, m, d] = prescricao.split('-');
+                    prescricao = `${d}-${m}-${y}`;
+                  }
+                  
+                  if (!validade || validade === '') {
+                    const [y, m, d] = originalPrescricao.split('-');
+                    const dataObj = new Date(y, m - 1, d);
+                    const validadeObj = new Date(dataObj);
+                    validadeObj.setDate(validadeObj.getDate() + 30);
+                    const vd = String(validadeObj.getDate()).padStart(2, '0');
+                    const vm = String(validadeObj.getMonth() + 1).padStart(2, '0');
+                    const vy = validadeObj.getFullYear();
+                    validade = `${vd}-${vm}-${vy}`;
+                  } else if (/^\d{4}-\d{2}-\d{2}$/.test(validade)) {
+                    const [y, m, d] = validade.split('-');
+                    validade = `${d}-${m}-${y}`;
+                  }
+                  
+                  db.run("UPDATE receitas SET data_prescricao = ?, data_validade = ? WHERE id = ?", [prescricao, validade, receita.id]);
+                });
+                console.log('Datas atualizadas com sucesso');
+              } else {
+                console.error('Erro ao buscar receitas:', selectErr);
+              }
+            });
+          }
+        });
+      };
+      
+      if (!hasDataValidade) {
+        db.run("ALTER TABLE receitas ADD COLUMN data_validade TEXT", (alterErr) => {
+          if (alterErr) {
+            console.error('Erro ao adicionar coluna data_validade:', alterErr);
+          } else {
+            console.log('Coluna data_validade adicionada com sucesso');
+            runMigration();
+          }
+        });
+      } else {
+        runMigration();
+      }
+    }
+  });
 
   db.run(`
     CREATE TABLE IF NOT EXISTS medico_paciente (
@@ -262,7 +340,7 @@ app.get('/receitas', (req, res) => {
 
   if (paciente_id) {
     const query = `
-      SELECT *
+      SELECT id, nome_comercial, principio_ativo, indicacao, data_prescricao, data_validade, posologia, nomeMedico
       FROM receitas
       WHERE paciente_id = ?`;
     db.all(query, [paciente_id], (err, rows) => {
@@ -281,8 +359,8 @@ app.get('/receitas', (req, res) => {
 app.post('/receitas', (req, res) => {
   const novaReceita = req.body;
   db.run(
-    'INSERT INTO receitas (nome_comercial, principio_ativo, indicacao, medico_id, paciente_id, data_prescricao, posologia, nomeMedico) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [novaReceita.nome_comercial, novaReceita.principio_ativo, novaReceita.indicacao, novaReceita.medico_id, novaReceita.paciente_id, novaReceita.data_prescricao, novaReceita.posologia, novaReceita.nomeMedico],
+    'INSERT INTO receitas (nome_comercial, principio_ativo, indicacao, medico_id, paciente_id, data_prescricao, data_validade, posologia, nomeMedico) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    [novaReceita.nome_comercial, novaReceita.principio_ativo, novaReceita.indicacao, novaReceita.medico_id, novaReceita.paciente_id, novaReceita.data_prescricao, novaReceita.data_validade, novaReceita.posologia, novaReceita.nomeMedico],
     function (err) {
       if (err) {
         console.error(err.message);
@@ -352,7 +430,7 @@ app.get('/medico/:crm/pacientes', (req, res) => {
 app.get('/paciente/:id/receitas', (req, res) => {
   const { id } = req.params;
   const query = `
-    SELECT r.id, r.nome_comercial, r.principio_ativo, r.indicacao, r.data_prescricao, r.posologia, m.nome AS nome_medico, m.sobrenome AS sobrenome_medico
+    SELECT r.id, r.nome_comercial, r.principio_ativo, r.indicacao, r.data_prescricao, r.data_validade, r.posologia, m.nome AS nome_medico, m.sobrenome AS sobrenome_medico
     FROM receitas r
     INNER JOIN medico m ON r.medico_id = m.crm
     WHERE r.paciente_id = ?`;

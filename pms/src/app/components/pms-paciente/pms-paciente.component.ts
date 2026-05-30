@@ -12,6 +12,7 @@ interface Receita {
   posologia: string;
   indicacao: string;
   dataPrescricao: Date;
+  dataValidade: string;
   nomeMedico: string;
 }
 
@@ -35,6 +36,7 @@ export class PmsPacienteComponent implements OnInit {
     { nome: 'paciente.columns.posology', propriedade: 'posologia' },
     { nome: 'paciente.columns.indication', propriedade: 'indicacao' },
     { nome: 'paciente.columns.prescriptionDate', propriedade: 'data_prescricao' },
+    { nome: 'paciente.columns.expirationDate', propriedade: 'data_validade' },
     { nome: 'paciente.columns.doctor', propriedade: 'nomeMedico' },
   ];
 
