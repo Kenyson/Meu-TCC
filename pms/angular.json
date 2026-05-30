@@ -16,6 +16,7 @@
             "outputPath": "dist/pms",
             "index": "src/index.html",
             "main": "src/main.ts",
+            "baseHref": "/Meu-TCC/",
             "polyfills": [
               "zone.js"
             ],
