@@ -104,11 +104,15 @@ export class PmsMedicoComponent implements OnInit {
   }
 
   calcularIdade(dataNascimento: string): number {
+    if (!dataNascimento) return 0;
+    const partes = dataNascimento.split('-');
+    if (partes.length !== 3) return 0;
+    const [dia, mes, ano] = partes.map(Number);
     const hoje = new Date();
-    const dataNasc = new Date(dataNascimento);
+    const dataNasc = new Date(ano, mes - 1, dia);
     let idade = hoje.getFullYear() - dataNasc.getFullYear();
-    const mes = hoje.getMonth() - dataNasc.getMonth();
-    if (mes < 0 || (mes === 0 && hoje.getDate() < dataNasc.getDate())) {
+    const mesDiff = hoje.getMonth() - dataNasc.getMonth();
+    if (mesDiff < 0 || (mesDiff === 0 && hoje.getDate() < dataNasc.getDate())) {
       idade--;
     }
     return idade;
