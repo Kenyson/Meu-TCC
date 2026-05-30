@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { TranslateService } from 'src/app/services/translate.service';
 
@@ -10,10 +11,14 @@ import { TranslateService } from 'src/app/services/translate.service';
 export class PmsHeaderComponent implements OnInit {
   currentLang: string = 'pt';
 
-  constructor(public authService: AuthService, private translate: TranslateService) {}
+  constructor(public authService: AuthService, private translate: TranslateService, private router: Router) {}
 
   ngOnInit(): void {
     this.currentLang = this.translate.getCurrentLang();
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/']);
   }
 
   logout(): void {
