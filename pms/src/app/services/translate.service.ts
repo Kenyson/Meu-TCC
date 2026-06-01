@@ -106,6 +106,7 @@ export class TranslateService {
         "activeIngredient": "Princípio Ativo:",
         "indication": "Indicação:",
         "prescriptionDate": "Data da Prescrição:",
+        "expirationDate": "Data de Validade:",
         "posology": "Posologia:",
         "save": "Salvar",
         "cancel": "Cancelar"
@@ -127,10 +128,16 @@ export class TranslateService {
       "footer": {
         "text": "PMS - Sistema de Gestão de Prescrições"
       },
-      "search": {
+"search": {
         "placeholder": "Pesquisar"
       },
-"grid": {
+      "loading": {
+        "loading": "Carregando",
+        "success": "Sucesso",
+        "error": "Erro",
+        "dismiss": "Fechar"
+      },
+      "grid": {
          "actions": "Ações",
          "view": "Ver",
          "remove": "Remover"

@@ -37,7 +37,7 @@ export class LoadingComponent implements OnInit {
     this.errorMessage = '';
     setTimeout(() => {
       this.hide();
-    }, 400);
+    }, 1000);
   }
 
   showError(message: string): void {
