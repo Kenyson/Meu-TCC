@@ -54,6 +54,10 @@
     "addPatient": "Add Patient",
     "passwordMismatch": "Password and confirmation do not match.",
     "requiredFields": "Please fill in all required fields.",
+    "invalidFields": "There are fields with invalid values. Check the highlighted fields.",
+    "invalidCpf": "Invalid CPF. Enter only numbers (11 digits).",
+    "invalidEmail": "Invalid email.",
+    "invalidPhone": "Invalid phone. Enter only numbers (9-11 digits).",
     "doctorError": "Error registering doctor.",
     "patientError": "Error registering patient."
   },
@@ -114,6 +118,12 @@
   },
   "search": {
     "placeholder": "Search"
+  },
+  "loading": {
+    "loading": "Loading",
+    "success": "Success",
+    "error": "Error",
+    "dismiss": "Dismiss"
   },
   "grid": {
     "actions": "Actions",

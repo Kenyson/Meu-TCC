@@ -6,6 +6,8 @@ import { ItemsService } from 'src/app/services/items.service';
 import { format } from 'date-fns';
 import { Router } from '@angular/router';
 import { TranslateService } from 'src/app/services/translate.service';
+import { ValidatorService } from 'src/app/services/validator.service';
+import { LoadingService } from 'src/app/services/loading.service';
 
 interface Medico {
   crm: string;
@@ -29,16 +31,52 @@ export class PmsNewReceitaComponent {
     posologia: '',
     nomeMedico: ''
   };
+  invalidFields: { [key: string]: boolean } = {};
+  showError: boolean = false;
+  errorMessage: string = '';
 
   constructor(
     private http: HttpClient,
     private authService: AuthService,
     private itemService: ItemsService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private validator: ValidatorService,
+    private loading: LoadingService
   ) {}
 
+  validateFields() {
+    this.invalidFields = {};
+    if (!this.receita.nome_comercial) {
+      this.invalidFields['nome_comercial'] = true;
+    }
+    if (!this.receita.principio_ativo) {
+      this.invalidFields['principio_ativo'] = true;
+    }
+    if (!this.receita.indicacao) {
+      this.invalidFields['indicacao'] = true;
+    }
+    if (!this.receita.posologia) {
+      this.invalidFields['posologia'] = true;
+    }
+    if (!this.receita.data_validade) {
+      this.invalidFields['data_validade'] = true;
+    }
+  }
+
   submitForm() {
+    this.showError = false;
+    this.errorMessage = '';
+    this.validateFields();
+
+    if (Object.keys(this.invalidFields).length > 0) {
+      this.errorMessage = this.t('register.invalidFields');
+      this.showError = true;
+      return;
+    }
+
+    this.loading.show();
+
     this.receita.data_prescricao = format(new Date(), 'dd-MM-yyyy');
     this.receita.medico_id = (this.authService.usuarioLogado as Medico).crm;
     const pacienteSelecionado = this.itemService.getItemSelecionado();
@@ -53,9 +91,11 @@ export class PmsNewReceitaComponent {
     this.http.post(`${environment.apiUrl}/receitas`, this.receita)
       .subscribe(
         () => {
+          this.loading.showSuccess();
           this.goToPatientScreen();
         },
         (error) => {
+          this.loading.showError('Erro ao salvar a receita');
           console.error('Erro ao salvar a receita:', error);
         }
       );

@@ -1,5 +1,7 @@
 .new-receita-container {
-  background-image: url('../../../assets/stethoscope-pen-blank-prescription-pad-medicine-pharmacy-concept-empty-medical-form-ready-be-used-modern-medical-information-technology.jpg');
+  background-image: url('../../../assets/team-young-specialist-doctors-standing-corridor-hospital.jpg');
   background-size: cover;
   background-position: center;
+  background-color: #4a4a4a;
+  background-repeat: no-repeat;
 }

@@ -1,0 +1,26 @@
+<div class="loading-overlay" *ngIf="isLoading">
+  <div class="loading-card" [ngClass]="{'success-card': isSuccess, 'error-card': isError}">
+    <div class="loading-content">
+      <div *ngIf="isLoading && !isSuccess && !isError" class="spinner-border text-primary loading-spinner" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div *ngIf="isSuccess" class="success-icon">
+        <i class="bi bi-check-circle-fill"></i>
+      </div>
+      <div *ngIf="isError" class="error-icon">
+        <i class="bi bi-x-circle-fill"></i>
+      </div>
+      <div class="loading-text">
+        <span *ngIf="isLoading && !isSuccess && !isError">{{ t('loading.loading') }}</span>
+        <span *ngIf="isSuccess">{{ t('loading.success') }}</span>
+        <span *ngIf="isError">{{ t('loading.error') }}</span>
+      </div>
+      <div *ngIf="isError && errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <button *ngIf="isError" class="btn btn-secondary dismiss-btn" (click)="dismiss()">
+        {{ t('loading.dismiss') }}
+      </button>
+    </div>
+  </div>
+</div>

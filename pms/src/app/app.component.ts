@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { LoadingComponent } from './components/loading/loading.component';
+import { LoadingService } from './services/loading.service';
 import { TranslateService } from './services/translate.service';
 
 @Component({
@@ -9,8 +11,17 @@ import { TranslateService } from './services/translate.service';
 export class AppComponent {
   title = 'pms';
 
-  constructor(private translateService: TranslateService) {
+  @ViewChild(LoadingComponent) loadingComponent!: LoadingComponent;
+
+  constructor(
+    private translateService: TranslateService,
+    private loadingService: LoadingService
+  ) {
     const savedLang = localStorage.getItem('language') || 'pt';
     this.translateService.use(savedLang);
+  }
+
+  ngAfterViewInit(): void {
+    this.loadingService.setComponent(this.loadingComponent);
   }
 }

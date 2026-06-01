@@ -53,7 +53,12 @@
     "register": "Registrati",
     "addPatient": "Aggiungi Paziente",
     "passwordMismatch": "La password e la conferma non coincidono.",
-    "requiredFields": "Per favore, compila tutti i campi obbligatori."
+    "requiredFields": "Per favore, compila tutti i campi obbligatori.",
+    "invalidFields": "Ci sono campi con valori non validi. Controlla i campi evidenziati.",
+    "invalidCpf": "CPF non valido. Inserisci solo numeri (11 cifre).",
+    "invalidEmail": "Email non valido.",
+    "invalidPhone": "Telefono non valido. Inserisci solo numeri (9-11 cifre).",
+    "expirationDate": "Data di Scadenza:"
   },
   "header": {
     "home": "Home",

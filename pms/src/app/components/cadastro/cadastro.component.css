@@ -1,7 +1,9 @@
 .cadastro-container {
-  background-image: url('../../../assets/team-young-specialist-doctors-standing-corridor-hospital.jpg');
+  background-image: url('../../../assets/young-female-doctor-with-thumbs-up-gesture-standing-corridor-hospital.jpg');
   background-size: cover;
   background-position: center;
+  background-color: #4a4a4a;
+  background-repeat: no-repeat;
 }
 .card {
   width: 100%;

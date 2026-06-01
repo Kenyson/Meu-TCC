@@ -76,7 +76,12 @@ export class TranslateService {
         "register": "Cadastrar",
         "addPatient": "Adicionar Paciente",
         "passwordMismatch": "A senha e a confirmação da senha não coincidem.",
-        "requiredFields": "Por favor, preencha todos os campos obrigatórios."
+        "requiredFields": "Por favor, preencha todos os campos obrigatórios.",
+        "invalidFields": "Existem campos com valores inválidos. Verifique os campos destacados.",
+        "invalidCpf": "CPF inválido. Digite apenas números (11 dígitos).",
+        "invalidEmail": "Email inválido.",
+        "invalidPhone": "Telefone inválido. Digite apenas números (10 ou 11 dígitos).",
+        "expirationDate": "Data de Validade:"
       },
       "header": {
         "home": "Home",

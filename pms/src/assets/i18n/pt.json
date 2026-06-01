@@ -115,6 +115,12 @@
   "search": {
     "placeholder": "Pesquisar"
   },
+  "loading": {
+    "loading": "Carregando",
+    "success": "Sucesso",
+    "error": "Erro",
+    "dismiss": "Fechar"
+  },
   "grid": {
     "actions": "Ações",
     "view": "Ver",
