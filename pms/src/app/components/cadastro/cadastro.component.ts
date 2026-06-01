@@ -43,7 +43,7 @@ export class CadastroComponent {
         return;
       }
 
-      this.http.post('${environment.apiUrl}/medicos', this.medicoData).subscribe(
+      this.http.post(`${environment.apiUrl}/medicos`, this.medicoData).subscribe(
         response => {
           this.router.navigate(['/login']);
         },
@@ -52,7 +52,7 @@ export class CadastroComponent {
             this.errorMessage = error.error;
             this.showError = true;
           } else {
-            this.errorMessage = 'Erro ao cadastrar médico.';
+            this.errorMessage = this.t('register.doctorError');
             this.showError = true;
           }
         }
@@ -80,7 +80,7 @@ export class CadastroComponent {
         return;
       }
 
-      this.http.post('${environment.apiUrl}/pacientes', this.pacienteData).subscribe(
+      this.http.post(`${environment.apiUrl}/pacientes`, this.pacienteData).subscribe(
         response => {
           this.router.navigate(['/login']);
         },
@@ -88,7 +88,7 @@ export class CadastroComponent {
           if (error.error && error.error.message) {
             this.errorMessage = error.error.message;
           } else {
-            this.errorMessage = 'Erro ao cadastrar paciente.';
+            this.errorMessage = this.t('register.patientError');
           }
           this.showError = true;
         }

@@ -53,7 +53,9 @@
     "register": "Register",
     "addPatient": "Add Patient",
     "passwordMismatch": "Password and confirmation do not match.",
-    "requiredFields": "Please fill in all required fields."
+    "requiredFields": "Please fill in all required fields.",
+    "doctorError": "Error registering doctor.",
+    "patientError": "Error registering patient."
   },
   "header": {
     "home": "Home",

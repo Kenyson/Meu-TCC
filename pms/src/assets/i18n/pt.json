@@ -53,7 +53,9 @@
     "register": "Cadastrar",
     "addPatient": "Adicionar Paciente",
     "passwordMismatch": "A senha e a confirmação da senha não coincidem.",
-    "requiredFields": "Por favor, preencha todos os campos obrigatórios."
+    "requiredFields": "Por favor, preencha todos os campos obrigatórios.",
+    "doctorError": "Erro ao cadastrar médico.",
+    "patientError": "Erro ao cadastrar paciente."
   },
   "header": {
     "home": "Home",
