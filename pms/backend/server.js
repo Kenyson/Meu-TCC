@@ -303,50 +303,64 @@ app.post('/login', (req, res) => {
   if (userType === 'medico') {
     const { crm, estado } = req.body;
     db.get(
-      'SELECT crm, estado, nome, sobrenome FROM medico WHERE crm = ? AND estado = ? AND senha = ?',
-      [crm, estado, password],
+      'SELECT crm, estado, nome, sobrenome, senha FROM medico WHERE crm = ? AND estado = ?',
+      [crm, estado],
       (err, row) => {
         if (err) {
           console.error(err);
           res.status(500).send('Erro ao autenticar médico.');
+        } else if (row) {
+          bcrypt.compare(password, row.senha, (compareErr, match) => {
+            if (compareErr) {
+              console.error(compareErr);
+              res.status(500).send('Erro ao verificar senha.');
+            } else if (match) {
+              res.status(200).json({
+                success: true,
+                message: 'Login médico bem-sucedido.',
+                crm: row.crm,
+                estado: row.estado,
+                nome: row.nome,
+                sobrenome: row.sobrenome
+              });
+            } else {
+              res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+            }
+          });
         } else {
-          if (row) {
-            res.status(200).json({
-              success: true,
-              message: 'Login médico bem-sucedido.',
-              crm: row.crm,
-              estado: row.estado,
-              nome: row.nome,
-              sobrenome: row.sobrenome
-            });
-          } else {
-            res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
-          }
+          res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
         }
       }
     );
   } else if (userType === 'paciente') {
     const { cpf } = req.body;
     db.get(
-      'SELECT id, cpf, nome, sobrenome FROM pacientes WHERE cpf = ? AND senha = ?',
-      [cpf, password],
+      'SELECT id, cpf, nome, sobrenome, senha FROM pacientes WHERE cpf = ?',
+      [cpf],
       (err, row) => {
         if (err) {
           console.error(err);
           res.status(500).send('Erro ao autenticar paciente.');
+        } else if (row) {
+          bcrypt.compare(password, row.senha, (compareErr, match) => {
+            if (compareErr) {
+              console.error(compareErr);
+              res.status(500).send('Erro ao verificar senha.');
+            } else if (match) {
+              res.status(200).json({
+                success: true,
+                message: 'Login paciente bem-sucedido.',
+                id: row.id,
+                cpf: row.cpf,
+                nome: row.nome,
+                sobrenome: row.sobrenome
+              });
+            } else {
+              res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+            }
+          });
         } else {
-          if (row) {
-            res.status(200).json({
-              success: true,
-              message: 'Login paciente bem-sucedido.',
-              id: row.id,
-              cpf: row.cpf,
-              nome: row.nome,
-              sobrenome: row.sobrenome
-            });
-          } else {
-            res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
-          }
+          res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
         }
       }
     );
