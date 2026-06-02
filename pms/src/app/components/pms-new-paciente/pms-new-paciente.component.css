@@ -7,8 +7,6 @@
   background-attachment: fixed;
   min-height: 100vh;
   padding: 70px 20px;
-  display: flex;
-  align-items: center;
 }
 
 @media (max-width: 768px) {
@@ -16,12 +14,12 @@
     padding: 80px 15px 100px;
     background-attachment: scroll;
   }
-  
+
   .card {
     width: 100%;
     margin: 0;
   }
-  
+
   .form-control {
     font-size: 14px;
   }
