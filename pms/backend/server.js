@@ -324,11 +324,32 @@ app.post('/login', (req, res) => {
                 sobrenome: row.sobrenome
               });
             } else {
-              res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+              res.status(401).json({
+                success: false,
+                message: 'Credenciais inválidas.',
+                debug: {
+                  userFound: true,
+                  crmFound: row.crm,
+                  estadoFound: row.estado,
+                  passwordMatch: false,
+                  storedHash: row.senha ? row.senha.substring(0, 20) + '...' : null
+                }
+              });
             }
           });
         } else {
-          res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+          db.all('SELECT crm, estado, nome, sobrenome FROM medico', (allErr, allRows) => {
+            res.status(401).json({
+              success: false,
+              message: 'Credenciais inválidas.',
+              debug: {
+                userFound: false,
+                searchedCrm: crm,
+                searchedEstado: estado,
+                allDoctors: allRows || []
+              }
+            });
+          });
         }
       }
     );
@@ -356,11 +377,30 @@ app.post('/login', (req, res) => {
                 sobrenome: row.sobrenome
               });
             } else {
-              res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+              res.status(401).json({
+                success: false,
+                message: 'Credenciais inválidas.',
+                debug: {
+                  userFound: true,
+                  cpfFound: row.cpf,
+                  passwordMatch: false,
+                  storedHash: row.senha ? row.senha.substring(0, 20) + '...' : null
+                }
+              });
             }
           });
         } else {
-          res.status(401).json({ success: false, message: 'Credenciais inválidas.' });
+          db.all('SELECT id, cpf, nome, sobrenome FROM pacientes', (allErr, allRows) => {
+            res.status(401).json({
+              success: false,
+              message: 'Credenciais inválidas.',
+              debug: {
+                userFound: false,
+                searchedCpf: cpf,
+                allPatients: allRows || []
+              }
+            });
+          });
         }
       }
     );
