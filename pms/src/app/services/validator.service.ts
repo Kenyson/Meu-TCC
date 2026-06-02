@@ -18,12 +18,6 @@ export class ValidatorService {
     return /^\d+$/.test(cleanCRM) && cleanCRM.length > 0;
   }
 
-  validateEmail(email: string): boolean {
-    if (!email) return false;
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-  }
-
   validateTelefone(telefone: string): boolean {
     if (!telefone) return true;
     const cleanTel = telefone.replace(/\D/g, '');
@@ -72,12 +66,12 @@ export class ValidatorService {
     } else {
       value = eventOrValue.target.value.replace(/\D/g, '');
     }
-    if (value.length > 13) value = value.slice(0, 13);
-    
+    if (value.length > 12) value = value.slice(0, 12);
+
     if (value.length >= 12 && value.startsWith('39')) {
       return '+' + value.slice(0, 2) + ' ' + value.slice(2, 4) + ' ' + value.slice(4, 7) + ' ' + value.slice(7);
     }
-    
+
     if (value.length >= 9 && value.length <= 11) {
       return '(' + value.slice(0, 2) + ') ' + value.slice(2, 6) + '-' + value.slice(6);
     }

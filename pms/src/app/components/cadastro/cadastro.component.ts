@@ -36,18 +36,12 @@ export class CadastroComponent {
       if (!this.validator.validateCRM(this.medicoData.crm)) {
         this.invalidFields['medico_crm'] = true;
       }
-      if (!this.validator.validateEmail(this.medicoData.email)) {
-        this.invalidFields['medico_email'] = true;
-      }
       if (this.medicoData.telefone && !this.validator.validateTelefone(this.medicoData.telefone)) {
         this.invalidFields['medico_telefone'] = true;
       }
     } else if (this.selectedOption === 'paciente') {
       if (!this.validator.validateCPF(this.pacienteData.cpf)) {
         this.invalidFields['paciente_cpf'] = true;
-      }
-      if (!this.validator.validateEmail(this.pacienteData.email)) {
-        this.invalidFields['paciente_email'] = true;
       }
       if (!this.validator.validateTelefone(this.pacienteData.telefone)) {
         this.invalidFields['paciente_telefone'] = true;
@@ -106,7 +100,6 @@ export class CadastroComponent {
         !this.medicoData.nome ||
         !this.medicoData.sobrenome ||
         !this.medicoData.especialidade ||
-        !this.medicoData.email ||
         !this.medicoData.senha ||
         !this.medicoData.Confirmsenha
       ) {
@@ -143,7 +136,6 @@ export class CadastroComponent {
         !this.pacienteData.cpf ||
         !this.pacienteData.nome ||
         !this.pacienteData.sobrenome ||
-        !this.pacienteData.email ||
         !this.pacienteData.telefone ||
         !this.pacienteData.dataNascimento ||
         !this.pacienteData.endereco ||
@@ -162,7 +154,9 @@ export class CadastroComponent {
       }
 
       this.loading.show();
-      this.http.post(`${environment.apiUrl}/pacientes`, this.pacienteData).subscribe(
+      const pacienteDataRaw = { ...this.pacienteData };
+      pacienteDataRaw.cpf = this.pacienteData.cpf.replace(/\D/g, '');
+      this.http.post(`${environment.apiUrl}/pacientes`, pacienteDataRaw).subscribe(
         response => {
           this.loading.showSuccess();
           this.router.navigate(['/login']);

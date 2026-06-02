@@ -16,10 +16,7 @@ export class AppComponent {
   constructor(
     private translateService: TranslateService,
     private loadingService: LoadingService
-  ) {
-    const savedLang = localStorage.getItem('language') || 'pt';
-    this.translateService.use(savedLang);
-  }
+  ) {}
 
   ngAfterViewInit(): void {
     this.loadingService.setComponent(this.loadingComponent);

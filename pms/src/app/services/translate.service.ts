@@ -11,13 +11,23 @@ export class TranslateService {
 
   constructor(private http: HttpClient) {
     this.translations = this.getDefaultTranslations();
-    const savedLang = localStorage.getItem('language') || 'pt';
-    this.currentLang = savedLang;
-    this.http.get(`${environment.i18nPath}${savedLang}.json`).subscribe({
+    const savedLang = localStorage.getItem('language');
+    const browserLang = this.detectBrowserLanguage();
+    const initialLang = savedLang || browserLang;
+    this.currentLang = initialLang;
+    this.http.get(`${environment.i18nPath}${initialLang}.json`).subscribe({
       next: (data) => {
         this.translations = data;
       }
     });
+  }
+
+  private detectBrowserLanguage(): string {
+    const lang = navigator.language || (navigator as any).userLanguage || 'en';
+    const code = lang.split('-')[0].toLowerCase();
+    if (code === 'it') return 'it';
+    if (code === 'pt') return 'pt';
+    return 'en';
   }
 
   private getDefaultTranslations(): any {
