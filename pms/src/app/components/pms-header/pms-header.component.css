@@ -3,11 +3,401 @@ header {
   width: 100%;
   height: 50px;
   background-color: #f5f5f5;
-  z-index: 1000;
+  z-index: 1050 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  overflow: visible;
 }
 
+header .navbar {
+  width: 100%;
+  padding: 0 !important;
+  display: flex;
+  align-items: center;
+  overflow: visible;
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+header .container-fluid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 0.3rem;
+  padding: 0 0.5rem !important;
+  overflow: visible;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0 0.25rem !important;
+  flex-shrink: 0;
+  min-width: fit-content;
+}
+
+.navbar-brand img {
+  height: 32px;
+  display: block;
+}
+
+/* Centralizar navbar items */
+header .navbar-nav {
+  display: flex !important;
+  flex-direction: row !important;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0 !important;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: fit-content;
+  position: relative;
+}
+
+.nav-item.dropdown {
+  position: relative !important;
+}
+
+.dropdown-menu {
+  background-color: white !important;
+  border: 1px solid #ddd !important;
+}
+
+.dropdown-item {
+  color: #333 !important;
+  background-color: white !important;
+}
+
+.nav-link {
+  padding: 0.3rem 0.5rem !important;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.sync-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  border: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  min-height: 32px;
+  min-width: fit-content;
+}
+
+.sync-button > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sync-button .sync-icon,
+.sync-button .sync-spinner {
+  margin: 0;
+}
+
+.sync-button:hover:not(:disabled) {
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.45);
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+}
+
+.sync-button:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+}
+
+.sync-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Tooltip customizado */
+.sync-button-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  min-width: fit-content;
+}
+
+.sync-tooltip {
+  visibility: hidden;
+  width: 180px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  padding: 6px 10px;
+  position: absolute;
+  z-index: 1001;
+  top: 110%;
+  left: 50%;
+  margin-left: -90px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: normal;
+  line-height: 1.2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.sync-tooltip::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  margin-left: -4px;
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent transparent #333 transparent;
+}
+
+.sync-button-wrapper:hover .sync-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.sync-icon {
+  display: inline-block;
+  width: 0.9em;
+  height: 0.9em;
+}
+
+.sync-spinner {
+  display: inline-block;
+  width: 0.85rem;
+  height: 0.85rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tablet (768px to 1024px) */
+@media (max-width: 1024px) {
+  header {
+    height: 48px;
+  }
+
+  header .container-fluid {
+    gap: 0.2rem;
+    padding: 0 0.4rem !important;
+  }
+
+  .navbar-brand img {
+    height: 28px;
+  }
+
+  header .navbar-nav {
+    gap: 0.15rem;
+    flex-direction: row !important;
+  }
+
+  .sync-button {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.75rem;
+    gap: 0.3rem;
+    min-height: 30px;
+  }
+
+  .nav-link {
+    padding: 0.25rem 0.4rem !important;
+    font-size: 0.8rem;
+  }
+
+  .sync-tooltip {
+    width: 160px;
+    margin-left: -80px;
+    font-size: 0.65rem;
+    padding: 5px 8px;
+  }
+
+  .dropdown-menu {
+    font-size: 0.8rem;
+  }
+}
+
+/* Celular (480px to 768px) */
 @media (max-width: 768px) {
   header {
-    height: 60px;
+    height: 46px;
+  }
+
+  header .container-fluid {
+    gap: 0.08rem;
+    padding: 0 0.25rem !important;
+  }
+
+  .navbar-brand {
+    padding: 0 0.15rem !important;
+  }
+
+  .navbar-brand img {
+    height: 26px;
+  }
+
+  header .navbar-nav {
+    gap: 0.05rem;
+    flex-direction: row !important;
+  }
+
+  .sync-button {
+    padding: 0.34rem 0.45rem;
+    font-size: 0.62rem;
+    gap: 0.15rem;
+    min-height: 28px;
+  }
+
+  .nav-link {
+    padding: 0.2rem 0.25rem !important;
+    font-size: 0.72rem;
+  }
+
+  .nav-link span {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sync-tooltip {
+    width: 140px;
+    margin-left: -70px;
+    font-size: 0.6rem;
+    padding: 4px 6px;
+  }
+
+  .dropdown-menu {
+    font-size: 0.75rem;
+    min-width: 100px !important;
+    position: absolute !important;
+    z-index: 1051 !important;
+    background-color: white !important;
+  }
+
+  .dropdown-item {
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+}
+
+/* Celular pequeno (max-width 480px) */
+@media (max-width: 480px) {
+  header {
+    height: 44px;
+  }
+
+  header .container-fluid {
+    gap: 0.05rem;
+    padding: 0 0.15rem !important;
+  }
+
+  .navbar-brand {
+    padding: 0 0.1rem !important;
+  }
+
+  .navbar-brand img {
+    height: 24px;
+  }
+
+  header .navbar-nav {
+    gap: 0.03rem;
+    flex-direction: row !important;
+  }
+
+  .sync-button {
+    padding: 0.3rem 0.35rem;
+    font-size: 0.58rem;
+    gap: 0.12rem;
+    min-height: 26px;
+  }
+
+  .sync-icon {
+    width: 0.8em;
+    height: 0.8em;
+  }
+
+  .sync-spinner {
+    width: 0.7rem;
+    height: 0.7rem;
+  }
+
+  .nav-link {
+    padding: 0.15rem 0.2rem !important;
+    font-size: 0.62rem;
+  }
+
+  .nav-link span {
+    max-width: 70px;
+  }
+
+  .sync-tooltip {
+    width: 120px;
+    margin-left: -60px;
+    font-size: 0.55rem;
+    padding: 3px 5px;
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-menu {
+    font-size: 0.62rem;
+    min-width: 80px !important;
+    position: absolute !important;
+    z-index: 1051 !important;
+    background-color: white !important;
+  }
+
+  .dropdown-item {
+    padding: 0.2rem 0.3rem !important;
   }
 }

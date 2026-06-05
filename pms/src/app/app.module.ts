@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,8 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TranslateService } from 'src/app/services/translate.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { LoadingService } from 'src/app/services/loading.service';
+import { SyncService } from './services/sync.service';
+import { SyncInterceptor } from './services/sync.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,18 @@ import { LoadingService } from 'src/app/services/loading.service';
     AppRoutingModule,
     RouterModule,
   ],
-  providers: [AuthService, TranslateService, ValidatorService, LoadingService],
+  providers: [
+    AuthService,
+    TranslateService,
+    ValidatorService,
+    LoadingService,
+    SyncService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SyncInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

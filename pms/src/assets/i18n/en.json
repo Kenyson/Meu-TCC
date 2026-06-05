@@ -64,7 +64,10 @@
   "header": {
     "home": "Home",
     "welcome": "Welcome,",
-    "logout": "Logout"
+    "logout": "Logout",
+    "sync": "Sync",
+    "syncing": "Syncing...",
+    "syncTooltip": "Synchronize database"
   },
   "medico": {
     "title": "Table of Patients of Dr.",

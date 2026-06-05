@@ -1,34 +1,40 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
+    <div class="container-fluid">
       <a class="navbar-brand" href="#" (click)="goToHome(); $event.preventDefault()">
-        <img src="assets/pms_logo.png" alt="PMS" style="height: 30px;">
+        <img src="assets/pms_logo.png" alt="PMS">
       </a>
-      <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button> -->
-      <!-- <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="#" (click)="goToHome(); $event.preventDefault()">{{ t('header.home') }}</a>
-          </li>
-        </ul>
-      </div> -->
-      <ul class="navbar-nav justify-content-end">
-        <li class="nav-item dropdown" (click)="$event.stopPropagation()">
-          <button class="nav-link dropdown-toggle btn btn-link" type="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <div class="sync-button-wrapper">
+            <button class="sync-button" (click)="manualSync()" [disabled]="isSyncing">
+              <span *ngIf="!isSyncing">
+                 {{ t('header.sync') }}
+              </span>
+              <span *ngIf="isSyncing">
+                <span class="sync-spinner"></span> {{ t('header.syncing') }}
+              </span>
+            </button>
+            <span class="sync-tooltip">{{ t('header.syncTooltip') }}</span>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             {{ currentLang.toUpperCase() }}
-          </button>
+          </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li><button class="dropdown-item" (click)="switchLanguage('pt')">PT</button></li>
             <li><button class="dropdown-item" (click)="switchLanguage('en')">EN</button></li>
             <li><button class="dropdown-item" (click)="switchLanguage('it')">IT</button></li>
           </ul>
         </li>
+
         <li class="nav-item" *ngIf="authService.isUsuarioAutenticado()">
           <span class="nav-link">{{ t('header.welcome') }} {{ authService.usuarioLogado?.nome }}</span>
         </li>
+
         <li class="nav-item" *ngIf="authService.isUsuarioAutenticado()">
           <button class="btn btn-link nav-link" (click)="logout()">{{ t('header.logout') }}</button>
         </li>

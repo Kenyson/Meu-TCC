@@ -60,7 +60,10 @@
   "header": {
     "home": "Home",
     "welcome": "Bem-vindo,",
-    "logout": "Logout"
+    "logout": "Logout",
+    "sync": "Sincronizar",
+    "syncing": "Sincronizando...",
+    "syncTooltip": "Sincronizar banco de dados"
   },
   "medico": {
     "title": "Tabela de Pacientes do Dr.",

@@ -63,7 +63,10 @@
   "header": {
     "home": "Home",
     "welcome": "Benvenuto,",
-    "logout": "Esci"
+    "logout": "Esci",
+    "sync": "Sincronizza",
+    "syncing": "Sincronizzazione...",
+    "syncTooltip": "Sincronizza database"
   },
   "medico": {
     "title": "Tabella Pazienti del Dr.",
