@@ -92,7 +92,9 @@ export class PmsNewPacienteComponent {
             this.preexiste = true;
             this.paciente = response[0];
           } else {
-            this.cpfExists = true;
+              this.cpfExists = true;
+              // preenche o campo CPF do formulário com o CPF informado anteriormente
+              this.paciente.cpf = this.cpf;
           }
         },
         (error) => {
