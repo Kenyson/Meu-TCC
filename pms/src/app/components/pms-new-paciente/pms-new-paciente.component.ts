@@ -1,4 +1,5 @@
 import { AuthService } from 'src/app/services/auth.service';
+import { SyncService, StoredAccount } from 'src/app/services/sync.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -7,8 +8,8 @@ import { TranslateService } from 'src/app/services/translate.service';
 import { ValidatorService } from 'src/app/services/validator.service';
 import { LoadingService } from 'src/app/services/loading.service';
 
-interface Medico {
-  crm: string;
+interface LocalMedico {
+  crm: number;
 }
 
 @Component({
@@ -34,6 +35,7 @@ export class PmsNewPacienteComponent {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
+    private syncService: SyncService,
     private translate: TranslateService,
     private validator: ValidatorService,
     private loading: LoadingService
@@ -132,11 +134,11 @@ export class PmsNewPacienteComponent {
 
     if (this.preexiste) {
       const conexao = {
-        medico_id: (this.authService.usuarioLogado as Medico).crm,
+        medico_id: Number((this.authService.usuarioLogado as any)?.crm),
         paciente_id: this.paciente.id
       };
       this.http.post(`${environment.apiUrl}/conexao`, conexao).subscribe({
-        next: (response) => {
+        next: (conexaoResponse) => {
           this.loading.showSuccess();
           this.goToMedicoScreen();
         },
@@ -156,14 +158,32 @@ export class PmsNewPacienteComponent {
       };
 
       this.http.post<any>(`${environment.apiUrl}/pacientes`, novoPaciente).subscribe({
-        next: (response: any) => {
+        next: async (response: any) => {
+          // Adicionar o paciente ao localStorage antes do sync
+          const storedAccount: StoredAccount = {
+            type: 'paciente',
+            id: response.id,
+            nome: response.nome || this.paciente.nome,
+            sobrenome: response.sobrenome || '',
+            cpf: cleanCPF,
+            telefone: cleanTelefone,
+            senha: null as any
+          };
+          this.syncService.addStoredAccount(storedAccount);
+
+          try {
+            await this.syncService.manualSync();
+          } catch (syncErr) {
+            console.error('Erro no sync após criar paciente:', syncErr);
+          }
+
           const conexao = {
-            medico_id: (this.authService.usuarioLogado as Medico).crm,
+            medico_id: Number((this.authService.usuarioLogado as any)?.crm),
             paciente_id: response.id
           };
 
           this.http.post(`${environment.apiUrl}/conexao`, conexao).subscribe({
-            next: (response) => {
+            next: (conexaoResp) => {
               this.loading.showSuccess();
               this.goToMedicoScreen();
             },

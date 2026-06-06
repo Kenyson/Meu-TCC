@@ -34,13 +34,15 @@ export class SyncInterceptor implements HttpInterceptor {
             this.syncService.manualSync().catch(err => console.error('Erro ao sincronizar após registro de médico:', err));
           }
 
-          // Se for um registro de novo paciente
+// Se for um registro de novo paciente
           if (req.method === 'POST' && url.includes('/pacientes') && (event.status === 201 || event.status === 200)) {
             const pacienteData = req.body;
             console.log('[SyncInterceptor] Novo paciente registrado:', pacienteData);
+            // Extract id from response body
+            const responseBody = event.body as { id?: number };
             this.syncService.addStoredAccount({
               type: 'paciente',
-              id: event.body?.id || Date.now(),
+              id: responseBody?.id || Date.now(),
               nome: pacienteData.nome,
               sobrenome: pacienteData.sobrenome,
               cpf: pacienteData.cpf,
@@ -49,8 +51,6 @@ export class SyncInterceptor implements HttpInterceptor {
               data_nascimento: pacienteData.dataNascimento,
               senha: pacienteData.senha
             });
-            // Fazer sync manual para garantir que a conta está no banco
-            this.syncService.manualSync().catch(err => console.error('Erro ao sincronizar após registro de paciente:', err));
           }
         }
       }),
