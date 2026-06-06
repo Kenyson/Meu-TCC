@@ -97,22 +97,47 @@ export class PmsMedicoComponent implements OnInit {
     if (crmMedicoLogado) {
       this.http
         .get<Paciente[]>(`${environment.apiUrl}/medico/${crmMedicoLogado}/pacientes`)
-        .subscribe((pacientes) => {
-          this.items = pacientes.map((paciente) => ({
-            ...paciente,
-            idade: this.calcularIdade(paciente.data_nascimento),
-          }));
+        .subscribe({
+          next: (pacientes) => {
+            this.items = pacientes.map((paciente) => ({
+              ...paciente,
+              idade: this.calcularIdade(paciente.data_nascimento),
+            }));
 
-          localStorage.setItem('pacientes', JSON.stringify(this.items));
+            localStorage.setItem('pacientes', JSON.stringify(this.items));
+          },
+          error: (err) => {
+            console.error('Erro ao obter pacientes:', err);
+            this.items = [];
+          }
         });
+    } else {
+      this.items = [];
     }
   }
 
   calcularIdade(dataNascimento: string): number {
     if (!dataNascimento) return 0;
-    const partes = dataNascimento.split('-');
-    if (partes.length !== 3) return 0;
-    const [dia, mes, ano] = partes.map(Number);
+    
+    // Handle both dd-mm-yyyy and yyyy-mm-dd formats
+    let dia: number, mes: number, ano: number;
+    if (dataNascimento.includes('-')) {
+      const partes = dataNascimento.split('-');
+      if (partes.length === 3) {
+        if (partes[0].length === 4) {
+          // yyyy-mm-dd format
+          [ano, mes, dia] = partes.map(Number);
+        } else {
+          // dd-mm-yyyy format
+          [dia, mes, ano] = partes.map(Number);
+        }
+      } else {
+        return 0;
+      }
+    } else {
+      return 0;
+    }
+    
     const hoje = new Date();
     const dataNasc = new Date(ano, mes - 1, dia);
     let idade = hoje.getFullYear() - dataNasc.getFullYear();

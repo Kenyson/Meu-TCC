@@ -67,14 +67,31 @@ export class LoginComponent {
     }
   }
 
+  clearInvalidFields() {
+    this.invalidFields = {};
+    this.errorMessage = '';
+  }
+
   validateCRMs() {
     this.invalidFields = {};
-    if (this.selectedOption === 'medico') {
-      this.invalidFields['crm'] = !this.validator.validateCRM(this.crm);
-      this.invalidFields['estado'] = !this.selectedEstado;
-    } else {
+    this.invalidFields['crm'] = !this.validator.validateCRM(this.crm);
+  }
+
+    validateCPFs() {
+    this.invalidFields = {};
+
       this.invalidFields['cpf'] = !this.validator.validateCPF(this.cpf);
-    }
+
+  }
+
+    validatePasswords() {
+    this.invalidFields = {};
+    this.invalidFields['password'] = !this.validator.validateCPF(this.cpf);
+  }
+
+    validateStates() {
+    this.invalidFields = {};
+    this.invalidFields['estado'] = !this.selectedEstado;
   }
 
   applyCPFMask(event: any) {
@@ -103,9 +120,15 @@ export class LoginComponent {
       if (!this.selectedEstado) {
         this.invalidFields['estado'] = true;
       }
+      if (!this.password) {
+        this.invalidFields['password'] = true;
+      }
     } else if (this.selectedOption === 'paciente') {
       if (!this.validator.validateCPF(this.cpf)) {
         this.invalidFields['cpf'] = true;
+      }
+      if (!this.password) {
+        this.invalidFields['password'] = true;
       }
     }
 

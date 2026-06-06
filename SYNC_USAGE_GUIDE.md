@@ -178,7 +178,7 @@ Exemplos de logs:
 **R**: Sistema ainda funciona, mas não armazena contas customizadas. Sincronização "manual" via contador de horas não funciona (faria sync toda vez).
 
 ### P: Posso testar localmente?
-**R**: Sim! Se estiver rodando o backend em http://localhost:3001, o SyncService detecta e usa essa URL em vez da do Render.
+**R**: Sim! Se estiver rodando o backend em http://localhost:3000, o SyncService detecta e usa essa URL em vez da do Render.
 
 ### P: Como faço um sync manual do UI?
 **R**: Atualmente não há botão. Você pode:

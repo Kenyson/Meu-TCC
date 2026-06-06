@@ -31,7 +31,7 @@ export class SyncService {
   private readonly SYNC_INTERVAL = 60 * 60 * 1000;
   private readonly SEED_URL = environment.production
     ? 'https://pms-backend-2-f6uy.onrender.com/api/seed'
-    : 'http://localhost:3001/api/seed';
+    : 'http://localhost:3000/api/seed';
   private readonly SEED_SECRET = 'pharma-seed-secret-2026';
   private isSyncing = false;
 
