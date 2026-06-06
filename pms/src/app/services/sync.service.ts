@@ -38,55 +38,38 @@ export class SyncService {
   constructor(
     private http: HttpClient,
     private loadingService: LoadingService
-  ) {}
+  ) { }
 
-  /**
-   * Obter o estado atual de sincronização
-   */
   private getSyncState(): SyncState {
     const stored = localStorage.getItem(this.SYNC_KEY);
     return stored ? JSON.parse(stored) : { lastSync: 0, customAccounts: [] };
   }
 
-  /**
-   * Salvar o estado de sincronização
-   */
   private saveSyncState(state: SyncState): void {
     localStorage.setItem(this.SYNC_KEY, JSON.stringify(state));
   }
 
-  /**
-   * Verificar se é necessário fazer o seeding
-   */
   private shouldSync(): boolean {
     const state = this.getSyncState();
     const now = Date.now();
 
-    // Se nunca sincronizou, precisa sincronizar
     if (state.lastSync === 0) {
       return true;
     }
 
-    // Se passou de 1 hora, precisa sincronizar
     const timeSinceLastSync = now - state.lastSync;
     return timeSinceLastSync > this.SYNC_INTERVAL;
   }
 
-  /**
-   * Obter as contas armazenadas localmente
-   */
   getStoredAccounts(): StoredAccount[] {
     const state = this.getSyncState();
     return state.customAccounts;
   }
 
-  /**
-   * Adicionar uma conta armazenada (usada quando um paciente/médico se registra)
-   */
+
   addStoredAccount(account: StoredAccount): void {
     const state = this.getSyncState();
 
-    // Evitar duplicatas
     const exists = state.customAccounts.some(
       acc => acc.type === account.type && (acc.crm === account.crm || acc.cpf === account.cpf || acc.id === account.id)
     );
@@ -97,18 +80,12 @@ export class SyncService {
     }
   }
 
-  /**
-   * Limpar contas armazenadas (opcional - chamar após sucesso do seeding)
-   */
   clearStoredAccounts(): void {
     const state = this.getSyncState();
     state.customAccounts = [];
     this.saveSyncState(state);
   }
 
-  /**
-   * Fazer o seeding automático se necessário
-   */
   async autoSync(): Promise<boolean> {
     if (this.isSyncing) {
       console.log('[SyncService] Sync já em progresso, ignorando');
@@ -143,9 +120,6 @@ export class SyncService {
     }
   }
 
-  /**
-   * Fazer o seeding sob demanda (útil para quando o usuário cria uma conta)
-   */
   async manualSync(): Promise<boolean> {
     if (this.isSyncing) {
       console.log('[SyncService] Sync já em progresso, ignorando');
@@ -175,15 +149,10 @@ export class SyncService {
     }
   }
 
-  /**
-   * Executar o seeding com os dados padrão + contas armazenadas
-   */
   private async performSync(): Promise<void> {
     return new Promise((resolve, reject) => {
-      // Importar dados padrão do seed
       const seedData = this.getDefaultSeedData();
 
-      // Adicionar contas armazenadas
       const state = this.getSyncState();
       if (state.customAccounts && state.customAccounts.length > 0) {
         console.log(`[SyncService] Adicionando ${state.customAccounts.length} contas armazenadas`);
@@ -231,17 +200,15 @@ export class SyncService {
     });
   }
 
-  /**
-   * Obter dados padrão do seeding (equivalente ao seed.html)
-   */
+
   private getDefaultSeedData(): any {
     return {
       medicos: [
         {
           crm: 99999,
           estado: 'São Paulo',
-          nome: 'Demo',
-          sobrenome: 'Silva',
+          nome: 'Marco',
+          sobrenome: 'Medici',
           telefone: '11999999999',
           especialidade: 'Clínico Geral',
           senha: 'doctor123'
@@ -283,24 +250,6 @@ export class SyncService {
           data_nascimento: null,
           telefone: '27997363811',
           senha: 'null'
-        },
-        {
-          id: 12,
-          nome: 'teste',
-          sobrenome: 'teste',
-          cpf: '11122233344',
-          data_nascimento: '03-06-2026',
-          telefone: '(11) 1611-11561',
-          senha: '0000'
-        },
-        {
-          id: 13,
-          nome: 'teste',
-          sobrenome: 'teste',
-          cpf: '99999999999',
-          data_nascimento: '2026-06-18',
-          telefone: '999999999999',
-          senha: '0000'
         }
       ],
       receitas: [
@@ -314,7 +263,7 @@ export class SyncService {
           data_prescricao: '15-05-2026',
           data_validade: '29-05-2026',
           posologia: '1 comprimido a cada 8 horas',
-          nomeMedico: 'Demo Silva'
+          nomeMedico: 'Marco Medici'
         },
         {
           id: 27,
@@ -326,7 +275,7 @@ export class SyncService {
           data_prescricao: '10-05-2026',
           data_validade: '28-05-2026',
           posologia: '1 comprimido a cada 12 horas',
-          nomeMedico: 'Demo Silva'
+          nomeMedico: 'Marco Medici'
         },
         {
           id: 28,
@@ -338,17 +287,293 @@ export class SyncService {
           data_prescricao: '15-05-2026',
           data_validade: '29-05-2026',
           posologia: '1 comprimido a cada 8 horas',
-          nomeMedico: 'Demo Silva'
+          nomeMedico: 'Marco Medici'
+        },
+        {
+          id: 29,
+          nome_comercial: 'Ibuprofeno',
+          principio_ativo: 'Brufen',
+          indicacao: 'Inflamação',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '10-05-2026',
+          data_validade: '28-05-2026',
+          posologia: '1 comprimido a cada 12 horas',
+          nomeMedico: 'Marco Medici'
+        },
+        {
+          id: 30,
+          nome_comercial: 'Paracetamol Expired',
+          principio_ativo: 'Acetaminofen',
+          indicacao: 'Dor e febre',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '15-05-2026',
+          data_validade: '28-05-2026',
+          posologia: '1 comprimido a cada 8 horas',
+          nomeMedico: 'Marco Medici'
+        },
+        {
+          id: 31,
+          nome_comercial: 'Ibuprofeno Expired',
+          principio_ativo: 'Brufen',
+          indicacao: 'Inflamação',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '10-05-2026',
+          data_validade: '29-05-2026',
+          posologia: '1 comprimido a cada 12 horas',
+          nomeMedico: 'Marco Medici'
+        },
+
+        {
+          id: 32,
+          nome_comercial: 'Aulin',
+          principio_ativo: 'Lansoprazolo',
+          indicacao: 'Gastrite e reflusso',
+          medico_id: 99999,
+          paciente_id: 11,
+          data_prescricao: '01-05-2026',
+          data_validade: '10-05-2026',
+          posologia: '1 compressa al mattino',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 33,
+          nome_comercial: 'Augmentin',
+          principio_ativo: 'Amoxicillina',
+          indicacao: 'Infezioni batteriche',
+          medico_id: 99999,
+          paciente_id: 11,
+          data_prescricao: '01-05-2026',
+          data_validade: '15-05-2026',
+          posologia: '1 compressa ogni 12 ore',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 34,
+          nome_comercial: 'Tachipirina',
+          principio_ativo: 'Paracetamolo',
+          indicacao: 'Dolore e febbre',
+          medico_id: 99999,
+          paciente_id: 10,
+          data_prescricao: '01-04-2026',
+          data_validade: '05-05-2026',
+          posologia: '1 compressa ogni 8 ore',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 35,
+          nome_comercial: 'Augmentin',
+          principio_ativo: 'Amoxicillina',
+          indicacao: 'Infezioni batteriche',
+          medico_id: 99999,
+          paciente_id: 10,
+          data_prescricao: '01-04-2026',
+          data_validade: '09-05-2026',
+          posologia: '1 compressa ogni 12 ore',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 36,
+          nome_comercial: 'Ciproxin',
+          principio_ativo: 'Ciprofloxacina',
+          indicacao: 'Infezioni urinarie',
+          medico_id: 99999,
+          paciente_id: 10,
+          data_prescricao: '01-04-2026',
+          data_validade: '10-05-2026',
+          posologia: '1 compressa al giorno',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+
+        {
+          id: 39,
+          nome_comercial: 'NiQuitin',
+          principio_ativo: 'Nicotina',
+          indicacao: 'Aiuto per smettere di fumare',
+          medico_id: 99999,
+          paciente_id: 9,
+          data_prescricao: '01-04-2026',
+          data_validade: '07-05-2026',
+          posologia: '1 compressa al giorno',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 40,
+          nome_comercial: 'Aulin',
+          principio_ativo: 'Lansoprazolo',
+          indicacao: 'Gastrite e reflusso',
+          medico_id: 99999,
+          paciente_id: 9,
+          data_prescricao: '01-04-2026',
+          data_validade: '08-05-2026',
+          posologia: '1 compressa al mattino',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 41,
+          nome_comercial: 'Moment',
+          principio_ativo: 'Lattosio',
+          indicacao: 'Digestivo',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '01-04-2026',
+          data_validade: '06-05-2026',
+          posologia: '1 compressa dopo pasti',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 42,
+          nome_comercial: 'Tachipirina',
+          principio_ativo: 'Paracetamolo',
+          indicacao: 'Dolore e febbre',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '01-05-2026',
+          data_validade: '15-06-2028',
+          posologia: '1 compressa ogni 8 ore',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 43,
+          nome_comercial: 'Augmentin',
+          principio_ativo: 'Amoxicillina',
+          indicacao: 'Infezioni batteriche',
+          medico_id: 99999,
+          paciente_id: 9,
+          data_prescricao: '01-05-2026',
+          data_validade: '05-07-2028',
+          posologia: '1 compressa ogni 12 ore',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 44,
+          nome_comercial: 'NiQuitin',
+          principio_ativo: 'Nicotina',
+          indicacao: 'Aiuto per smettere di fumare',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '01-05-2026',
+          data_validade: '25-06-2028',
+          posologia: '1 compressa al giorno',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 45,
+          nome_comercial: 'Aulin',
+          principio_ativo: 'Lansoprazolo',
+          indicacao: 'Gastrite e reflusso',
+          medico_id: 99999,
+          paciente_id: 9,
+          data_prescricao: '01-05-2026',
+          data_validade: '30-06-2028',
+          posologia: '1 compressa al mattino',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 46,
+          nome_comercial: 'Litalong',
+          principio_ativo: 'Litalong',
+          indicacao: 'Dolore artroso',
+          medico_id: 99999,
+          paciente_id: 10,
+          data_prescricao: '01-05-2026',
+          data_validade: '20-07-2028',
+          posologia: '1 compressa al pomeriggio',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 47,
+          nome_comercial: 'Polase',
+          principio_ativo: 'Ferro',
+          indicacao: 'Anemia',
+          medico_id: 99999,
+          paciente_id: 10,
+          data_prescricao: '01-05-2026',
+          data_validade: '25-07-2028',
+          posologia: '1 compressa al giorno',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 48,
+          nome_comercial: 'Rifampicina',
+          principio_ativo: 'Rifampicina',
+          indicacao: 'Tubercolosi',
+          medico_id: 99999,
+          paciente_id: 10,
+          data_prescricao: '01-05-2026',
+          data_validade: '15-07-2028',
+          posologia: '1 compressa al mattino',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 49,
+          nome_comercial: 'Tachipirina',
+          principio_ativo: 'Paracetamolo',
+          indicacao: 'Dolore e febbre',
+          medico_id: 99999,
+          paciente_id: 11,
+          data_prescricao: '01-05-2026',
+          data_validade: '15-06-2028',
+          posologia: '1 compressa ogni 8 ore',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 52,
+          nome_comercial: 'Moment',
+          principio_ativo: 'Lattosio',
+          indicacao: 'Digestivo',
+          medico_id: 99999,
+          paciente_id: 8,
+          data_prescricao: '01-05-2026',
+          data_validade: '20-06-2028',
+          posologia: '1 compressa dopo pasti',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 53,
+          nome_comercial: 'Ciproxin',
+          principio_ativo: 'Ciprofloxacina',
+          indicacao: 'Infezioni urinarie',
+          medico_id: 99999,
+          paciente_id: 9,
+          data_prescricao: '01-05-2026',
+          data_validade: '10-07-2028',
+          posologia: '1 compressa al giorno',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 54,
+          nome_comercial: 'Polase',
+          principio_ativo: 'Ferro',
+          indicacao: 'Anemia',
+          medico_id: 99999,
+          paciente_id: 11,
+          data_prescricao: '01-05-2026',
+          data_validade: '30-06-2028',
+          posologia: '1 compressa al giorno',
+          nomeMedico: 'Dr. Marco Medici'
+        },
+        {
+          id: 55,
+          nome_comercial: 'Linctus',
+          principio_ativo: 'Derivato codeina',
+          indicacao: 'Tosse secca',
+          medico_id: 99999,
+          paciente_id: 11,
+          data_prescricao: '01-05-2026',
+          data_validade: '30-07-2028',
+          posologia: '1 compressa al bisogno',
+          nomeMedico: 'Dr. Marco Medici'
         }
       ],
       conexoes: [
         { medico_id: 99999, paciente_id: 8 },
         { medico_id: 99999, paciente_id: 9 },
-        { medico_id: 99999, paciente_id: 10 },
-        { medico_id: 99999, paciente_id: 11 },
-        { medico_id: 99999, paciente_id: 12 },
-        { medico_id: 99999, paciente_id: 13 }
+        { medico_id: 99999, paciente_id: 10 }
       ]
     };
   }
 }
+
